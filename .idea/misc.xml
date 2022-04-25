@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_buttons.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_left_solid.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_log_in_edit_text.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_sign_in_icons.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shappe_sign_in_icons.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_or_client.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>
