@@ -49,9 +49,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/image_plant"
                 android:padding="18dp"
                 app:tint="@color/white" />
+                <!--android:src="@drawable/image_plant"-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -99,9 +100,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/image_orders"
                 android:padding="12dp"
                 app:tint="@color/white" />
+                <!--android:src="@drawable/image_orders"-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -149,9 +151,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/image_complaint"
                 android:padding="15dp"
                 app:tint="@color/white" />
+                <!--android:src="@drawable/image_complaint"-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
