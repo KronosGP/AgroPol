@@ -10,10 +10,11 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shappe_sign_in_icons.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_menu.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_or_client.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_menu.xml" value="0.10625" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.1" />
       </map>
     </option>
   </component>

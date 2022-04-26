@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.agropol.DBHelper.DBHelper;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class EmployeeSignIn extends AppCompatActivity {
 
     private TextInputEditText login, password;
     private Button btnLogIn;
+    private DBHelper AgroPol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
