@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,7 @@ public class Catalog extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Plant> plants = new ArrayList<>();
     private Button btnAddNewPlant;
+    private DBHelper AgroPol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,14 @@ public class Catalog extends AppCompatActivity {
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
         btnAddNewPlant=findViewById(R.id.btn_add_new_plant);
+        AgroPol=new DBHelper(Catalog.this);
     }
 
     private void loadData() {
         //zczytanie danych z bazy danych i dodanie do RecyclerView poprzez dodanie do listy plants
+        Cursor result= AgroPol.getDate("");//Todo Wymyslec selecta
+
+
     }
 
     private void startSettings() {

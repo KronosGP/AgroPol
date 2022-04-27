@@ -26,9 +26,9 @@ public class EmployeeSignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_employee_sign_in);
-        AgroPol=new DBHelper(EmployeeSignIn.this);
         findViews();
         createListeners();
+        AgroPol.showAllColumnsName();
     }
 
     private void createListeners() {
@@ -65,5 +65,6 @@ public class EmployeeSignIn extends AppCompatActivity {
         login=findViewById(R.id.login);
         password=findViewById(R.id.password);
         btnLogIn=findViewById(R.id.btn_log_in);
+        AgroPol=new DBHelper(EmployeeSignIn.this);
     }
 }
