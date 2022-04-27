@@ -21,46 +21,49 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS pracownik " +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS employee " +
                 "( ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT ," +
                 " Login VARCHAR(30) NOT NULL , " +
-                "Haslo VARCHAR(30) NOT NULL , " +
-                "Imie VARCHAR(30) NOT NULL , " +
-                "Nazwisko VARCHAR(30) NOT NULL , " +
-                "Tel INTEGER(9) NOT NULL);");
+                "Password VARCHAR(30) NOT NULL , " +
+                "Name VARCHAR(30) NOT NULL , " +
+                "Surname VARCHAR(30) NOT NULL , " +
+                "Tel VARCHAR(20) NOT NULL);");
 
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS klient " +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS client " +
                 "( ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , " +
-                "Imie VARCHAR(30) NOT NULL , " +
-                "Nazwisko VARCHAR(30) NOT NULL , " +
-                "Adres_Email TEXT NOT NULL , " +
-                "Tel INTEGER(9) NOT NULL);");
+                "Login VARCHAR(30) NOT NULL , " +
+                "Password VARCHAR(30) NOT NULL , " +
+                "Name VARCHAR(30) NOT NULL , " +
+                "Surname VARCHAR(30) NOT NULL , " +
+                "Email TEXT NOT NULL , " +
+                "Tel VARCHAR(20) NOT NULL);");
 
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS sadzonki " +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS plant " +
                 "( ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , " +
-                "Gatunek VARCHAR(30) NOT NULL , " +
-                "Odmiana VARCHAR(30) NOT NULL , " +
-                "Ilosc INTEGER NOT NULL , " +
-                "Cena FLOAT NOT NULL );");
+                "Species VARCHAR(30) NOT NULL , " +
+                "Variety VARCHAR(30) NOT NULL , " +
+                "Quantity INTEGER NOT NULL , " +
+                "Price FLOAT NOT NULL ," +
+                "Image INTEGER NOT NULL );");
 
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS zamowienie " +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS request " +
                 "( ID INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT , " +
-                "IDKlienta INTEGER NOT NULL , " +
-                "Cena FLOAT NOT NULL , " +
-                "Data_zamowienia DATE NOT NULL  );");
+                "IDClient INTEGER NOT NULL , " +
+                "Price Double NOT NULL , " +
+                "Date_of_request DATE NOT NULL  );");
 
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS szczegoly_zamowienia " +
-                "( IDZamowienia INTEGER NOT NULL , " +
-                "IDSadzonki INTEGER NOT NULL , " +
-                "Ilość INTEGER NOT NULL );");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS details_request " +
+                "( IDRequest INTEGER NOT NULL , " +
+                "IDPlant INTEGER NOT NULL , " +
+                "Quantity INTEGER NOT NULL );");
 
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS reklamacja " +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS complaint " +
                 "( ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , " +
-                "IDKlienta INTEGER NOT NULL , " +
-                "IDZamowienia INTEGER NOT NULL , " +
-                "IDPracownika INTEGER , " +
-                "Tresc TEXT NOT NULL , " +
-                "Stan TEXT NOT NULL );");
+                "IDClient INTEGER NOT NULL , " +
+                "IDRequest INTEGER NOT NULL , " +
+                "IDEmployee INTEGER , " +
+                "Contents TEXT NOT NULL , " +
+                "Status TEXT NOT NULL );");
 
         //sqLiteDatabase.execSQL("INSERT INTO pracownik (Login, Haslo, Imie, Nazwisko, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
 
@@ -69,7 +72,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onAlter()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("Alter Table sadzonki ADD obrazek INTEGER");
+        db.execSQL("Drop Table szczegoly_zamowienia");
+        db.execSQL("Drop Table sadzonki");
+        onCreate(db);
     }
 
 
@@ -101,28 +106,28 @@ public class DBHelper extends SQLiteOpenHelper {
     public void showAllColumnsName()//tymczasowa klasa
     {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor result=db.rawQuery("select * from pracownik",null);
-        System.out.println("pracownik");
+        Cursor result=db.rawQuery("select * from employee",null);
+        System.out.println("employee");
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nklient");
-        result=db.rawQuery("select * from klient",null);
+        System.out.println("\nclient");
+        result=db.rawQuery("select * from client",null);
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nsadzonki");
-        result=db.rawQuery("select * from sadzonki",null);
+        System.out.println("\nplant");
+        result=db.rawQuery("select * from plant",null);
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nzamowienie");
-        result=db.rawQuery("select * from zamowienie",null);
+        System.out.println("\nrequest");
+        result=db.rawQuery("select * from request",null);
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nszczegoly_zamowienia");
-        result=db.rawQuery("select * from szczegoly_zamowienia",null);
+        System.out.println("\ndetails_request");
+        result=db.rawQuery("select * from details_request",null);
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nreklamacja");
-        result=db.rawQuery("select * from reklamacja",null);
+        System.out.println("\ncomplaint");
+        result=db.rawQuery("select * from complaint",null);
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
         System.out.println();

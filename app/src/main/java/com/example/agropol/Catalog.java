@@ -49,9 +49,11 @@ public class Catalog extends AppCompatActivity {
 
     private void loadData() {
         //zczytanie danych z bazy danych i dodanie do RecyclerView poprzez dodanie do listy plants
-        Cursor result= AgroPol.getDate("");//Todo Wymyslec selecta
-
-
+        Cursor result= AgroPol.getDate("Select * from plant");
+        while (result.isAfterLast()==false){
+            plants.add(new Plant(result.getString(0),result.getString(1),(long)Integer.parseInt(result.getString(2)),Double.parseDouble(result.getString(3)),Integer.parseInt(result.getString(4))));
+        }//Todo cięzka rozkmina
+        recyclerView.setAdapter(adapter);
     }
 
     private void startSettings() {

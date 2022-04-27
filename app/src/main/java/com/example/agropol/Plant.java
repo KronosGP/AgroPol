@@ -15,6 +15,27 @@ public class Plant {
         this.price=price;
         this.image=image;
     }
+    public void setSpecies(String s)
+    {
+        this.species=s;
+    }
+    public void setVariety(String v)
+    {
+        this.variety=v;
+    }
+    public void setQuantity(long q)
+    {
+        this.quantity=q;
+    }
+    public void setPrice(double p)
+    {
+        this.price=p;
+    }
+    public void setImage(int i)
+    {
+        this.image=i;
+    }
+
     public String getSpecies()
     {
         return species;
