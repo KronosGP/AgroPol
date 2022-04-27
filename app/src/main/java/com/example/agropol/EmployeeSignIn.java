@@ -49,7 +49,7 @@ public class EmployeeSignIn extends AppCompatActivity {
     private boolean Logowanie() {
         //Już działa
         try {
-            Cursor result=AgroPol.getDate("Select Count(*) from pracownik where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
+            Cursor result=AgroPol.getDate("Select Count(*) from employee where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
             if(Integer.parseInt(result.getString(0))==1)
                 return true;
         }
