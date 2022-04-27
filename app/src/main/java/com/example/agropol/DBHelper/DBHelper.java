@@ -1,11 +1,15 @@
 package com.example.agropol.DBHelper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.io.Console;
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static String nazwaDB="agroPol.db";
@@ -57,8 +61,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "IDPracownika INTEGER , " +
                 "Tresc TEXT NOT NULL , " +
                 "Stan TEXT NOT NULL );");
-        sqLiteDatabase.execSQL("DELETE FROM pracownicy where Login like 'login';");
+
         sqLiteDatabase.execSQL("INSERT INTO pracownik (Login, Haslo, Imie, Nazwisko, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
+
     }
 
 
@@ -68,10 +73,16 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public Cursor getData(String log) {
-
+    public Cursor getDate(String sql) {
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor result=db.rawQuery(log,null);
+        Cursor result=db.rawQuery(sql,null);
+        result.moveToFirst();
+        return result;
+    }
+
+    public Cursor setDate(String sql) {
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor result=db.rawQuery(sql,null);
         result.moveToFirst();
         return result;
     }

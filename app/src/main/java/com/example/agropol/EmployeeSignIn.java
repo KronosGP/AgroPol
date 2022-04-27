@@ -35,7 +35,7 @@ public class EmployeeSignIn extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if (Logowanie() == true) {
+                //if (Logowanie() == true) { //zakomentować dla łatwiejszego przechodzenia
                     Intent intent = new Intent(EmployeeSignIn.super.getApplicationContext(),
                             EmployeeMenu.class);
                     startActivity(intent);
@@ -46,18 +46,16 @@ public class EmployeeSignIn extends AppCompatActivity {
     }
 
 
-    @SuppressLint("Range")
     private boolean Logowanie() {
-        //Nie do końca działa
+        //Już działa
         try {
-            String zapytanie=login.toString();
-            Cursor test = AgroPol.getData("SELECT count(*) FROM pracownik where Login  "+zapytanie+";");
-            if (Integer.parseInt(test.getString(0)) == 1)
+            Cursor result=AgroPol.getDate("Select Count(*) from pracownik where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
+            if(Integer.parseInt(result.getString(0))==1)
                 return true;
         }
         catch (SQLiteException ex)
         {
-            login.setText(ex.toString());
+            System.out.println(ex);
         }
         return false;
 
