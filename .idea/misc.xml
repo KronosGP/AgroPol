@@ -3,21 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_background_color_radius_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_buttons.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_green_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_left_solid.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_log_in_edit_text.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_sign_in_icons.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_spinner.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_white_circle.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_white_radius_block.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shappe_sign_in_icons.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_catalog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_add_plant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_catalog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_or_client.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_spinner_add_plant_row.xml" value="0.25416666666666665" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/item_of_catalog.xml" value="0.10989583333333333" />
-        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_catalog.xml" value="0.10989583333333333" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.10833333333333334" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_menu.xml" value="0.10625" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.128" />

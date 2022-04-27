@@ -71,20 +71,22 @@
                 android:textSize="22dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/how_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/how_price"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/main_container"
-            android:textAlignment="center"
-            android:text="Ilość sztuk:\n"
-            android:textColor="@color/black"
             android:fontFamily="@font/crete_round"
+            android:text="Ilość sztuk:\n"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="22dp"
-            />
+            app:layout_constraintBottom_toTopOf="@id/how_price"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintLeft_toRightOf="@id/main_container"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/how_price"
             android:layout_width="wrap_content"

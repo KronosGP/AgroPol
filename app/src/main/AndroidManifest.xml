@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPol">
         <activity
+            android:name=".AddPlant"
+            android:exported="false" />
+        <activity
             android:name=".Catalog"
             android:exported="false" />
         <activity

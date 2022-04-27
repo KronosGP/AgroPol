@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddPlant"
+    android:background="@color/background_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_green_rectangle">
+
+    <Spinner
+        android:id="@+id/how_species"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/shape_spinner"
+        android:popupBackground="@drawable/shape_white_radius_block"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/circle_layout"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:layout_constraintTop_toBottomOf="@id/how_species"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_white_circle">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="15dp"
+            android:src="@drawable/image_pepper"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toBottomOf="@id/top_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/shape_background_color_radius_rectangle"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/title_variety"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_variety"
+            android:text="Odmiana:"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="@drawable/shape_buttons"/>
+
+        <EditText
+            android:id="@+id/how_variety"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title_variety"
+            app:layout_constraintBottom_toTopOf="@id/title_quantity"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:textSize="18dp"
+            android:maxLength="30"
+            android:background="@drawable/shape_white_radius_block"
+            android:maxLines="1"
+            />
+
+        <TextView
+            android:id="@+id/title_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/how_variety"
+            app:layout_constraintBottom_toTopOf="@id/how_quantity"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/how_price"
+            android:text="Ilość sztuk:"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="@drawable/shape_buttons"/>
+
+        <EditText
+            android:id="@+id/how_quantity"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_white_radius_block"
+            android:inputType="text"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/how_price"
+            app:layout_constraintTop_toBottomOf="@id/title_quantity"
+            app:layout_constraintBottom_toTopOf="@id/btn_cancel"/>
+
+        <TextView
+            android:id="@+id/title_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/how_variety"
+            app:layout_constraintBottom_toTopOf="@id/how_price"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/how_quantity"
+            android:text="Cena:"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:padding="8dp"
+            android:background="@drawable/shape_buttons"/>
+
+        <EditText
+            android:id="@+id/how_price"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_white_radius_block"
+            android:inputType="text"
+            android:hint="[zł]"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/how_quantity"
+            app:layout_constraintTop_toBottomOf="@id/title_quantity"
+            app:layout_constraintBottom_toTopOf="@id/btn_accept"/>
+
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btn_accept"
+            app:layout_constraintTop_toBottomOf="@id/how_price"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="ANULUJ"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_buttons"/>
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btn_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/how_price"
+            android:text="ZATWIERDŹ"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_buttons"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +37,9 @@ public class Catalog extends AppCompatActivity {
         btnAddNewPlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Catalog.super.getApplicationContext(),
+                        AddPlant.class);
+                startActivity(intent);
             }
         });
     }
@@ -49,7 +52,7 @@ public class Catalog extends AppCompatActivity {
 
     private void loadData() {
         //zczytanie danych z bazy danych i dodanie do RecyclerView poprzez dodanie do listy plants
-        Cursor result= AgroPol.getDate("");//Todo Wymyslec selecta
+        //Cursor result= AgroPol.getDate("");//Todo Wymyslec selecta
 
 
     }
@@ -64,7 +67,9 @@ public class Catalog extends AppCompatActivity {
         adapter.setOnItemClickListener(new CatalogAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
-
+                //po kliknięciu na konkretny item zostanie otworzone okno dialogowe ze szczegółami,
+                // z pozycji którego będzie można edytować lub usunąć dany rekord
+                // Todo wykonać po stworzeniu intencji dodawania sadzonki do katalogu
             }
         });
     }
