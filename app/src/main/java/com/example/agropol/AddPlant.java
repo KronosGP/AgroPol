@@ -27,7 +27,9 @@ public class AddPlant extends AppCompatActivity {
 
     private int[] images =
             {
-                    R.drawable.image_pepper
+                    R.drawable.image_pepper, R.drawable.image_beans, R.drawable.image_aubergine,
+                    R.drawable.image_cabbagepekin, R.drawable.image_cucumber, R.drawable.image_carrot,
+                    R.drawable.image_parsley, R.drawable.image_pumkin, R.drawable.image_radish, R.drawable.image_tomato
             };
     private String currentSpecies;
 
@@ -85,6 +87,15 @@ public class AddPlant extends AppCompatActivity {
     private void startSettings() {
         addPlantSpinnerItems = new ArrayList<>();
         addPlantSpinnerItems.add(new AddPlantSpinnerItem("Papryka",R.drawable.image_pepper));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Fasola",R.drawable.image_beans));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Bakłażan",R.drawable.image_aubergine));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Kapusta Pekińska",R.drawable.image_cabbagepekin));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Ogórek",R.drawable.image_cucumber));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Marchewka",R.drawable.image_carrot));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pietruszka",R.drawable.image_parsley));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Dynia",R.drawable.image_pumkin));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Rzodkiewka",R.drawable.image_radish));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pomidor",R.drawable.image_tomato));
 
         adapter=new AddPlantSpinnerAdapter(this,addPlantSpinnerItems);
         howSpecies.setAdapter(adapter);

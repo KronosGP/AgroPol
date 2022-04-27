@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -29,14 +30,16 @@ public class Catalog extends AppCompatActivity {
         findViews();
         startSettings();
         createListeners();
-        loadData();
+       // loadData();
     }
 
     private void createListeners() {
         btnAddNewPlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Catalog.super.getApplicationContext(),
+                        AddPlant.class);
+                startActivity(intent);
             }
         });
     }
