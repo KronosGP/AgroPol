@@ -52,6 +52,7 @@ public class Catalog extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Catalog.super.getApplicationContext(),
                         AddPlant.class);
+                intent.putExtra("species","");
                 startActivity(intent);
             }
         });
@@ -67,8 +68,7 @@ public class Catalog extends AppCompatActivity {
         try {
             Cursor result = AgroPol.getDate("Select * from plant");
             while (result.isAfterLast() == false) {
-                plants.add(new Plant(result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
-                System.out.println(result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
+                plants.add(new Plant(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
                 result.moveToNext();
             }
             System.out.println(adapter.getItemCount());
@@ -79,6 +79,7 @@ public class Catalog extends AppCompatActivity {
         {
             System.out.println(ex);
         }
+
 
     }
 
@@ -104,13 +105,25 @@ public class Catalog extends AppCompatActivity {
         showWindow.setContentView(R.layout.layout_dialog_window_in_catalog);
         showWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         showWindow.show();
-        setNames(position);
         findAddItemDialogViews(showWindow);
+        setNames(position);
         createAndAddListeners(showWindow, position);
     }
 
     private void setNames(int position) {
         //ustawienie danych w oknie dialogowym danych z pozycji w którą klikneliśmy
+        try {
+            Cursor result = AgroPol.getDate("select * from plant where id=" + plants.get(position).getId());
+            imageOfVegetable.setImageResource(Integer.parseInt(result.getString(5)));
+            howVariety.setText("Odmiana: " + result.getString(2));
+            howQuantity.setText("Ilość dostępnych sztuk:\n" + result.getString(3));
+            howPrice.setText("Cena:\n"+result.getString(4));
+            System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
     }
 
     private void createAndAddListeners(Dialog showWindow, int position) {
@@ -124,8 +137,15 @@ public class Catalog extends AppCompatActivity {
                     {
                         //spakowanie danych w paczkę i wysłanie do aktywności Addplant w calu ich wyświetlenia
                         //i ewentualnej edycji
+                        Cursor result = AgroPol.getDate("select * from plant where id=" + plants.get(position).getId());
                         Intent intent = new Intent(Catalog.super.getApplicationContext(),
                                 AddPlant.class);
+                        intent.putExtra("variety",result.getString(2));
+                        intent.putExtra("species",result.getString(1));
+                        intent.putExtra("quantity",result.getString(3));
+                        intent.putExtra("price",result.getString(4));
+                        intent.putExtra("image",result.getString(5));
+                        intent.putExtra("id",result.getString(0));
                         startActivity(intent);
 
                     }break;

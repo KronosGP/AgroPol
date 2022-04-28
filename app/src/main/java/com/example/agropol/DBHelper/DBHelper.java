@@ -79,6 +79,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("Drop Table IF EXISTS klient");
         db.execSQL("Drop Table IF EXISTS zamowienie");
         db.execSQL("Drop Table IF EXISTS reklamacja");
+        db.execSQL("Drop Table IF EXISTS employee");
+        db.execSQL("Drop Table IF EXISTS client");
+        db.execSQL("Drop Table IF EXISTS plant");
+        db.execSQL("Drop Table IF EXISTS request");
+        db.execSQL("Drop Table IF EXISTS details_request");
+        db.execSQL("Drop Table IF EXISTS complaint");
         onCreate(db);
     }
 

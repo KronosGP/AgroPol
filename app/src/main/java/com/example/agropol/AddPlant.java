@@ -27,7 +27,9 @@ public class AddPlant extends AppCompatActivity {
     private Button btnCancel, btnAccept;
     private TextView textViewRow;
 
+    private int editOrNew=0;
     private String currentImage;
+    private String id;
 
     private int[] images =
             {
@@ -44,6 +46,24 @@ public class AddPlant extends AppCompatActivity {
         findViews();
         startSettings();
         createListeners();
+        setInformation();
+    }
+
+    private void setInformation() {
+        Bundle bundle=getIntent().getExtras();
+        if(bundle.getString("species")!="")
+        {
+            editOrNew=1;
+            currentSpecies=bundle.getString("species");
+            for(int i=0;i<howSpecies.getAdapter().getCount();i++) {
+                if (addPlantSpinnerItems.get(i).getText().contains(currentSpecies))
+                    howSpecies.setSelection(i);
+            }
+            howVariety.setText(bundle.getString("variety"));
+            howPrice.setText(bundle.getString("price"));
+            howQuantity.setText(bundle.getString("quantity"));
+            id=bundle.getString("id");
+        }
     }
 
     private void createListeners() {
@@ -56,11 +76,16 @@ public class AddPlant extends AppCompatActivity {
                     case R.id.btn_accept:
                     {
                         //dodanie pozycji do bazy danych chyba raczej bez żadnej walidacji danych
-
-                        String[] col={"Species","Variety","Quantity","Price","Image"};
-                        String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
-                        AgroPol.setData("plant",col,value);//wpisanie danych do bazy
-
+                        if(editOrNew==0) {
+                            String[] col={"Species","Variety","Quantity","Price","Image"};
+                            String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
+                            AgroPol.setData("plant",col,value);
+                        }//wpisanie danych do bazy
+                        else{
+                            String[] col={"Species","Variety","Quantity","Price","Image"};
+                            String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
+                            AgroPol.editData("plant","where id="+id,col,value);
+                        }
                         //powrót do aktywności Katalogu
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
                                 Catalog.class);
