@@ -1,6 +1,7 @@
 package com.example.agropol.DBHelper;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -91,17 +92,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean setData(String sql) {
-        try {
-            SQLiteDatabase db = this.getWritableDatabase();
-            db.execSQL(sql, null);
-            return true;
-        }
-        catch (Exception ex)
+    public void setData(String table,String[] col,String[] value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        for(int i=0;i<col.length;i++)
         {
-            System.out.println(ex);
-            return false;
+            contentValues.put(col[i],value[i]);
         }
+        db.insert(table,null,contentValues);
+        System.out.println("wykonano");
+    }
+
+    public void delData(String table,String where) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(table,where,null);
+    }
+
+    public void editData(String table,String where,String[] col,String[] value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        for(int i=0;i<col.length;i++)
+        {
+            contentValues.put(col[i],value[i]);
+        }
+        db.update(table,contentValues,where,null);
+        System.out.println("wykonano");
     }
     public void showAllColumnsName()//tymczasowa klasa
     {

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class Catalog extends AppCompatActivity {
         findViews();
         startSettings();
         createListeners();
-       // loadData();
+        loadData();
     }
 
     private void createListeners() {
@@ -51,9 +52,19 @@ public class Catalog extends AppCompatActivity {
     }
 
     private void loadData() {
-        //zczytanie danych z bazy danych i dodanie do RecyclerView poprzez dodanie do listy plants
-        Cursor result= AgroPol.getDate("");//Todo Wymyslec selecta
+        try {
+            Cursor result = AgroPol.getDate("Select * from plant");
+            while (result.isAfterLast() == false) {
+                plants.add(new Plant(result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
+                result.moveToNext();
+            }
 
+
+        }
+        catch (SQLiteException ex)
+        {
+            System.out.println(ex);
+        }
 
     }
 
@@ -63,6 +74,7 @@ public class Catalog extends AppCompatActivity {
         adapter = new CatalogAdapter(plants);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
 
         adapter.setOnItemClickListener(new CatalogAdapter.OnItemClickListener() {
             @Override

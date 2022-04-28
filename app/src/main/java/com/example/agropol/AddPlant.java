@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.agropol.DBHelper.DBHelper;
+
 import java.util.ArrayList;
 
 public class AddPlant extends AppCompatActivity {
@@ -19,11 +21,13 @@ public class AddPlant extends AppCompatActivity {
     private Spinner howSpecies;
     private ArrayList<AddPlantSpinnerItem> addPlantSpinnerItems;
     private AddPlantSpinnerAdapter adapter;
-
+    private DBHelper AgroPol;
     private ImageView icon;
     private EditText howVariety, howQuantity, howPrice;
     private Button btnCancel, btnAccept;
     private TextView textViewRow;
+
+    private String currentImage;
 
     private int[] images =
             {
@@ -52,6 +56,11 @@ public class AddPlant extends AppCompatActivity {
                     case R.id.btn_accept:
                     {
                         //dodanie pozycji do bazy danych
+
+                        String[] col={"Species","Variety","Quantity","Price","Image"};
+                        String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
+                        AgroPol.setData("plant",col,value);//wpisanie danych do bazy
+
                         //powrót do aktywności Katalogu
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
                                 Catalog.class);
@@ -74,6 +83,7 @@ public class AddPlant extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 textViewRow= view.findViewById(R.id.text_view_row);
                 icon.setImageResource(images[position]);
+                currentImage=Integer.toString(images[position]);
                 currentSpecies=textViewRow.getText().toString();
             }
 
@@ -110,6 +120,7 @@ public class AddPlant extends AppCompatActivity {
         icon=findViewById(R.id.icon);
         btnCancel=findViewById(R.id.btn_cancel);
         btnAccept=findViewById(R.id.btn_accept);
+        AgroPol=new DBHelper(AddPlant.this);
 
     }
 }

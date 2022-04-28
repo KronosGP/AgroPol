@@ -28,7 +28,7 @@ public class EmployeeSignIn extends AppCompatActivity {
         setContentView(R.layout.layout_employee_sign_in);
         findViews();
         createListeners();
-        //AgroPol.showAllColumnsName();
+        AgroPol.showAllColumnsName();
     }
 
     private void createListeners() {
