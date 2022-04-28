@@ -82,16 +82,9 @@ public class AddPlant extends AppCompatActivity {
                             AgroPol.setData("plant",col,value);
                         }//wpisanie danych do bazy
                         else{
-                            try {
                                 String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
                                 String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
-                                System.out.println(currentSpecies+" "+ howVariety.getText().toString()+" "+ howQuantity.getText().toString()+" "+ howPrice.getText().toString()+" "+ currentImage);
                                 AgroPol.editData("plant", "Id=" + idOfPlant, col, value);
-                            }
-                            catch (Exception ex)
-                            {
-                                System.out.println(ex);
-                            }
                         }
                         //powrót do aktywności Katalogu
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
