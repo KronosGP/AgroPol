@@ -68,8 +68,10 @@ public class Catalog extends AppCompatActivity {
             Cursor result = AgroPol.getDate("Select * from plant");
             while (result.isAfterLast() == false) {
                 plants.add(new Plant(result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
+                System.out.println(result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
                 result.moveToNext();
             }
+            System.out.println(adapter.getItemCount());
 
 
         }

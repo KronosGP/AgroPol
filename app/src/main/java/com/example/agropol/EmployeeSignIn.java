@@ -29,7 +29,7 @@ public class EmployeeSignIn extends AppCompatActivity {
         findViews();
         createListeners();
         //AgroPol.showAllColumnsName();
-        AgroPol.onAlter();
+        //AgroPol.onAlter();
     }
 
     private void createListeners() {
