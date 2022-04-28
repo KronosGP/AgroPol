@@ -29,7 +29,7 @@ public class AddPlant extends AppCompatActivity {
 
     private int editOrNew=0;
     private String currentImage;
-    private String id;
+    private String idOfPlant;
 
     private int[] images =
             {
@@ -62,7 +62,7 @@ public class AddPlant extends AppCompatActivity {
             howVariety.setText(bundle.getString("variety"));
             howPrice.setText(bundle.getString("price"));
             howQuantity.setText(bundle.getString("quantity"));
-            id=bundle.getString("id");
+            idOfPlant=bundle.getString("id");
         }
     }
 
@@ -82,9 +82,16 @@ public class AddPlant extends AppCompatActivity {
                             AgroPol.setData("plant",col,value);
                         }//wpisanie danych do bazy
                         else{
-                            String[] col={"Species","Variety","Quantity","Price","Image"};
-                            String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
-                            AgroPol.editData("plant","where id="+id,col,value);
+                            try {
+                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
+                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
+                                System.out.println(currentSpecies+" "+ howVariety.getText().toString()+" "+ howQuantity.getText().toString()+" "+ howPrice.getText().toString()+" "+ currentImage);
+                                AgroPol.editData("plant", "Id=" + idOfPlant, col, value);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.out.println(ex);
+                            }
                         }
                         //powrót do aktywności Katalogu
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
