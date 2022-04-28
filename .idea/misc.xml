@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_green_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_left_solid.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_log_in_edit_text.xml" value="0.1515" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_main_color_radius_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_rectangle.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_sign_in_icons.xml" value="0.1515" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/drawable/shape_spinner.xml" value="0.1515" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_add_plant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_catalog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_dialog_window_in_catalog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_or_client.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_spinner_add_plant_row.xml" value="0.25416666666666665" />

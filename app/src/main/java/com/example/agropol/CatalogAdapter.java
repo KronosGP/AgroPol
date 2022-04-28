@@ -72,7 +72,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogA
         holder.howSpecies.setText(holder.howSpecies.getText()+currentItem.getSpecies());
         holder.howVariety.setText(holder.howVariety.getText()+currentItem.getVariety());
         holder.howQuantity.setText(holder.howQuantity.getText()+String.valueOf(currentItem.getQuantity()));
-        holder.howPrice.setText(holder.howPrice.getText()+String.valueOf(currentItem.getPrice()));
+        holder.howPrice.setText(holder.howPrice.getText()+String.valueOf(currentItem.getPrice()) + " zł");
 
     }
 

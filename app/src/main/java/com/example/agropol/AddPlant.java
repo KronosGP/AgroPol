@@ -55,7 +55,7 @@ public class AddPlant extends AppCompatActivity {
                 {
                     case R.id.btn_accept:
                     {
-                        //dodanie pozycji do bazy danych
+                        //dodanie pozycji do bazy danych chyba raczej bez żadnej walidacji danych
 
                         String[] col={"Species","Variety","Quantity","Price","Image"};
                         String[] value={currentSpecies,howVariety.getText().toString(),howQuantity.getText().toString(),howPrice.getText().toString(),currentImage};
