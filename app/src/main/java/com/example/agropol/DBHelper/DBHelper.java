@@ -73,8 +73,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onAlter()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("Drop Table szczegoly_zamowienia");
-        db.execSQL("Drop Table sadzonki");
+        db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
+        db.execSQL("Drop Table IF EXISTS sadzonki");
+        db.execSQL("Drop Table IF EXISTS pracownik");
+        db.execSQL("Drop Table IF EXISTS klient");
+        db.execSQL("Drop Table IF EXISTS zamowienie");
+        db.execSQL("Drop Table IF EXISTS reklamacja");
         onCreate(db);
     }
 
