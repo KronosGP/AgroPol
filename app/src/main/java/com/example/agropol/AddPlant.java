@@ -64,6 +64,7 @@ public class AddPlant extends AppCompatActivity {
             howPrice.setText(bundle.getString("price"));
             howQuantity.setText(bundle.getString("quantity"));
             idOfPlant=bundle.getString("id");
+            howVariety.setEnabled(false);
         }
     }
 
