@@ -30,17 +30,17 @@ public class ClientSignIn extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Logowanie()==true) {
+                if(Logowanie()==true) {//
                     //Todo dodać intencje
 
-                }
+                }//
             }
         });
     }
 
     private boolean Logowanie() {
         try {
-            Cursor result=AgroPol.getDate("Select Count(*) from klient where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
+            Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
             if(Integer.parseInt(result.getString(0))==1)
                 return true;
         }
