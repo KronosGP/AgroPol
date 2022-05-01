@@ -49,6 +49,7 @@ public class AddPlant extends AppCompatActivity {
         setInformation();
     }
 
+
     private void setInformation() {
         Bundle bundle=getIntent().getExtras();
         if(bundle.getString("species").equals("")==false)
@@ -89,13 +90,13 @@ public class AddPlant extends AppCompatActivity {
 
                         //powrót do aktywności Katalogu
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
-                                Catalog.class);
+                                EmployeeCatalog.class);
                         startActivity(intent);
                     }break;
                     case R.id.btn_cancel:
                     {
                         Intent intent = new Intent(AddPlant.super.getApplicationContext(),
-                                Catalog.class);
+                                EmployeeCatalog.class);
                         startActivity(intent);
                     }break;
                 }

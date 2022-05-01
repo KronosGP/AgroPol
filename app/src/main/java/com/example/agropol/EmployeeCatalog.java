@@ -21,7 +21,7 @@ import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
-public class Catalog extends AppCompatActivity {
+public class EmployeeCatalog extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private CatalogAdapter adapter;
@@ -32,14 +32,14 @@ public class Catalog extends AppCompatActivity {
 
     //---------------------------SHOW WINDOWS VIEWS--------------------------------//
 
-    private TextView howSpecies, howVariety, howQuantity, howPrice;
+    private TextView  howVariety, howQuantity, howPrice;
     private ImageView imageOfVegetable;
     private Button btnEdit, btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_catalog);
+        setContentView(R.layout.layout_employee_catalog);
         findViews();
         startSettings();
         createListeners();
@@ -50,7 +50,7 @@ public class Catalog extends AppCompatActivity {
         btnAddNewPlant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Catalog.super.getApplicationContext(),
+                Intent intent = new Intent(EmployeeCatalog.super.getApplicationContext(),
                         AddPlant.class);
                 intent.putExtra("species","");
                 startActivity(intent);
@@ -61,7 +61,7 @@ public class Catalog extends AppCompatActivity {
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
         btnAddNewPlant=findViewById(R.id.btn_add_new_plant);
-        AgroPol=new DBHelper(Catalog.this);
+        AgroPol=new DBHelper(EmployeeCatalog.this);
     }
 
     private void loadData() {
@@ -118,7 +118,7 @@ public class Catalog extends AppCompatActivity {
             imageOfVegetable.setImageResource(Integer.parseInt(result.getString(5)));
             howVariety.setText("Odmiana: " + result.getString(2));
             howQuantity.setText("Ilość dostępnych sztuk:\n" + result.getString(3));
-            howPrice.setText("Cena:\n"+result.getString(4));
+            howPrice.setText("Cena:\n"+result.getString(4)+ " zł");
             System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
         }
         catch (Exception ex)
@@ -139,7 +139,7 @@ public class Catalog extends AppCompatActivity {
                         //spakowanie danych w paczkę i wysłanie do aktywności Addplant w calu ich wyświetlenia
                         //i ewentualnej edycji
                         Cursor result = AgroPol.getDate("select * from plant where id=" + plants.get(position).getId());
-                        Intent intent = new Intent(Catalog.super.getApplicationContext(),
+                        Intent intent = new Intent(EmployeeCatalog.super.getApplicationContext(),
                                 AddPlant.class);
                         intent.putExtra("variety",result.getString(2));
                         intent.putExtra("species",result.getString(1));
@@ -163,7 +163,6 @@ public class Catalog extends AppCompatActivity {
     }
 
     private void findAddItemDialogViews(Dialog showWindow) {
-        howSpecies=showWindow.findViewById(R.id.how_species);
         howVariety=showWindow.findViewById(R.id.how_variety);
         howQuantity=showWindow.findViewById(R.id.how_quantity);
         howPrice=showWindow.findViewById(R.id.how_price);

@@ -2,6 +2,7 @@ package com.example.agropol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
@@ -30,10 +31,11 @@ public class ClientSignIn extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Logowanie()==true) {
-                    //Todo dodać intencje
-
-                }
+                //if(Logowanie()==true) {
+                    Intent intent = new Intent(ClientSignIn.super.getApplicationContext(),
+                            ClientMenu.class);
+                    startActivity(intent);
+               // }
             }
         });
     }

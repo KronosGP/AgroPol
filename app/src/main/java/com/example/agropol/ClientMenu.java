@@ -7,16 +7,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class EmployeeMenu extends AppCompatActivity {
+public class ClientMenu extends AppCompatActivity {
 
-    private ConstraintLayout btnPlantCatalog, btnViewOrder, btnViewComplaint;
+    private ConstraintLayout btnPlantCatalog, btnOrder, btnComplaint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_employee_menu);
+        setContentView(R.layout.layout_client_menu);
         findViews();
         createListeners();
+    }
+
+    private void findViews() {
+        btnPlantCatalog=findViewById(R.id.btn_plant_catalog);
+        btnOrder=findViewById(R.id.btn_order);
+        btnComplaint=findViewById(R.id.btn_complaint);
     }
 
     private void createListeners() {
@@ -28,15 +34,17 @@ public class EmployeeMenu extends AppCompatActivity {
                 {
                     case R.id.btn_plant_catalog:
                     {
-                        Intent intent = new Intent(EmployeeMenu.super.getApplicationContext(),
-                                EmployeeCatalog.class);
+                        Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
+                                ClientCatalog.class);
                         startActivity(intent);
                     }break;
-                    case R.id.btn_view_order:
+                    case R.id.btn_order:
                     {
-
+                        Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
+                                Orders.class);
+                        startActivity(intent);
                     }break;
-                    case R.id.btn_view_complaint:
+                    case R.id.btn_complaint:
                     {
 
                     }break;
@@ -44,13 +52,7 @@ public class EmployeeMenu extends AppCompatActivity {
             }
         };
         btnPlantCatalog.setOnClickListener(listener);
-        btnViewOrder.setOnClickListener(listener);
-        btnViewComplaint.setOnClickListener(listener);
-    }
-
-    private void findViews() {
-        btnPlantCatalog=findViewById(R.id.btn_plant_catalog);
-        btnViewOrder=findViewById(R.id.btn_view_order);
-        btnViewComplaint=findViewById(R.id.btn_view_complaint);
+        btnOrder.setOnClickListener(listener);
+        btnComplaint.setOnClickListener(listener);
     }
 }
