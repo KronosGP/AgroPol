@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPol">
         <activity
+            android:name=".SummaryOfOrder"
+            android:exported="false" />
+        <activity
             android:name=".MakeOrder"
             android:exported="false" />
         <activity
