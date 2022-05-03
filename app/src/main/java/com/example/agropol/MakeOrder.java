@@ -1,8 +1,6 @@
 package com.example.agropol;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,17 +12,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 public class MakeOrder extends AppCompatActivity {
 
-    private TextView titleOfID, name, surname, adress, email, number;
+    private TextView titleOfID;
     private Button btnAddPosition, btnContinue;
-    private RecyclerView recyclerView;
-    private DataOfOrdersAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
-
 
     private TextView priceOfTransport;
     private Button btnWithoutTransport, btnWithTransport;
@@ -35,20 +26,6 @@ public class MakeOrder extends AppCompatActivity {
         setContentView(R.layout.layout_make_order);
         findViews();
         createListeners();
-        startSettings();
-        loadData();
-    }
-
-    private void loadData() {
-        //wczytanie danych do textView
-    }
-
-    private void startSettings() {
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new DataOfOrdersAdapter(dataOfOrders);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
     }
 
     private void createListeners() {
@@ -124,12 +101,6 @@ public class MakeOrder extends AppCompatActivity {
     }
 
     private void findViews() {
-        name=findViewById(R.id.name);
-        surname=findViewById(R.id.surname);
-        adress=findViewById(R.id.adress);
-        email=findViewById(R.id.email);
-        number=findViewById(R.id.number);
-        recyclerView=findViewById(R.id.recycler_view);
         titleOfID=findViewById(R.id.title_of_id);
         btnAddPosition=findViewById(R.id.btn_add_position);
         btnContinue=findViewById(R.id.btn_continue);

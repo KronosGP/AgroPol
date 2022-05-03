@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -26,11 +27,14 @@ public class ClientCatalog extends AppCompatActivity {
     private CatalogAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Plant> plants = new ArrayList<>();
-    private DBHelper AgroPol;
 
     private TextInputEditText howQuantity;
     private TextView attention;
     private Button btnCancel, btnAdd;
+
+    private DBHelper AgroPol;
+    private int flag;
+    private int IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +60,8 @@ public class ClientCatalog extends AppCompatActivity {
         adapter.setOnItemClickListener(new CatalogAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
-                //tutaj trzeba dać ifa jeżeli katalog bedzie otwierany z pozycji pierwszego modułu klienta
-                //(katalog sadzonek) wówczas ta opcja ma być nie dostępna, ona będzie dostępna tylko wtedy kiedy,
-                // będzie otwierany ten katalog podczas składania zamówienia czyli dodawania nowej, czy kolejnej
-                //pozycji do zamówienia, z odpowienich intencji trzeba wysłać flagę mówiącą w jakim trybie otwarcia
-                //będzie działał katalog
-                openHowQuantityDialog(position);
+                if(flag==1)
+                    openHowQuantityDialog(position);
             }
         });
     }
@@ -88,6 +88,24 @@ public class ClientCatalog extends AppCompatActivity {
                         //walidacja danych w sensie czy liczba sadzonek nie jest liczbą ujemną lub
                         // jest większa od tej w katalogu, jeżeli coś się nie zgadza wyświetlenie
                         //uwagi w textView (attention) a wcześniej jej pokazanie bo domyślnie jest niewidoczna
+                        Cursor result=AgroPol.getDate("Select ID,Quantity from plant where ID="+plants.get(position).getId());
+                        if(Integer.parseInt(result.getString(1))<Integer.parseInt(howQuantity.getText().toString())){
+                            attention.setVisibility(View.VISIBLE);
+                            attention.setText("Za duża ilość!!!");
+                        }
+                        else if(Integer.parseInt(howQuantity.getText().toString())<0) {
+                            attention.setVisibility(View.VISIBLE);
+                            attention.setText("Mniejsze od zera!!!");
+                        }
+                        else
+                        {
+                            //AgroPol.setData("details_request");
+                            /*Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
+                                    MakeOrder.class);
+                            startActivity(intent);*///moje testy Adam
+                        }
+
+
                     }break;
                     case R.id.btn_cancel:
                     {
@@ -109,15 +127,14 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
+            Bundle get=getIntent().getExtras();
+            flag=Integer.parseInt(get.getString("flag"));
             Cursor result = AgroPol.getDate("Select * from plant");
             while (result.isAfterLast() == false) {
                 plants.add(new Plant(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
                 //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
                 result.moveToNext();
             }
-            System.out.println(adapter.getItemCount());
-
-
         }
         catch (SQLiteException ex)
         {

@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.agropol.DBHelper.DBHelper;
+
 public class SummaryOfOrder extends AppCompatActivity {
 
     private TextView howClient, howDateOfOrder, howDateOfDelivery,
                      howCostOfPlants, howCostOfDelivery, howTotalSum;
     private Button btnAddOrder, btnCancelOrder;
+    private DBHelper AgroPol;
+    private int IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     // danych
                     case R.id.btn_add_order:
                     {
+                        //AgroPol.setData("request",new String[]{},new String[]{});
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    Orders.class);
                         startActivity(intent);
@@ -59,5 +64,6 @@ public class SummaryOfOrder extends AppCompatActivity {
         howTotalSum=findViewById(R.id.how_total_sum);
         btnAddOrder=findViewById(R.id.btn_add_order);
         btnCancelOrder=findViewById(R.id.btn_cancel_order);
+        AgroPol = new DBHelper(SummaryOfOrder.this);
     }
 }

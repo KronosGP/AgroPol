@@ -37,7 +37,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Name VARCHAR(30) NOT NULL , " +
                 "Surname VARCHAR(30) NOT NULL , " +
                 "Email TEXT NOT NULL , " +
-                "Tel VARCHAR(20) NOT NULL);");
+                "Tel VARCHAR(20) NOT NULL," +
+                "Address TEXT NOT NULL," +
+                "City TEXT NOT NULL);");
 
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS plant " +
                 "( ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , " +
@@ -50,8 +52,9 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS request " +
                 "( ID INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT , " +
                 "IDClient INTEGER NOT NULL , " +
-                "Price Double NOT NULL , " +
-                "Date_of_request DATE NOT NULL  );");
+                "Price Double, " +
+                "Date_of_request DATE,  " +
+                "Reception VARCHAR(30));");
 
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS details_request " +
                 "( IDRequest INTEGER NOT NULL , " +
@@ -73,7 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onAlter()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
+        /*db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
         db.execSQL("Drop Table IF EXISTS sadzonki");
         db.execSQL("Drop Table IF EXISTS pracownik");
         db.execSQL("Drop Table IF EXISTS klient");
@@ -85,7 +88,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("Drop Table IF EXISTS request");
         db.execSQL("Drop Table IF EXISTS details_request");
         db.execSQL("Drop Table IF EXISTS complaint");
-        onCreate(db);
+        onCreate(db);//Resetowanie Bazy danych*/
+        db.close();
     }
 
 
@@ -98,6 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
         Cursor result=db.rawQuery(sql,null);
         result.moveToFirst();
+        db.close();
         return result;
     }
 
@@ -110,11 +115,13 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         db.insert(table,null,contentValues);
         System.out.println("wykonano");
+        db.close();
     }
 
     public void delData(String table,String where) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(table,where,null);
+        db.close();
     }
 
     public void editData(String table,String where,String[] col,String[] value) {
@@ -126,6 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         db.update(table,contentValues,where,null);
         System.out.println("wykonano");
+        db.close();
     }
     public void showAllColumnsName()//tymczasowa klasa
     {
@@ -155,5 +163,6 @@ public class DBHelper extends SQLiteOpenHelper {
         for(int i=0;i<result.getColumnCount();i++)
             System.out.print(result.getColumnName(i)+" ");
         System.out.println();
+        db.close();
     }
 }
