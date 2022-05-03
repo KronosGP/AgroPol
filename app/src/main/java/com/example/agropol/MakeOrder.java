@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.agropol.DBHelper.DBHelper;
 
 public class MakeOrder extends AppCompatActivity {
 
@@ -20,12 +23,23 @@ public class MakeOrder extends AppCompatActivity {
     private TextView priceOfTransport;
     private Button btnWithoutTransport, btnWithTransport;
 
+    private DBHelper AgroPol;
+    private int IdUser;
+    private int IdRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_make_order);
         findViews();
         createListeners();
+        /*Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");*/
+        newRecord();
+    }
+
+    private void newRecord() {
+        //AgroPol.setData("request",new String[]{"IdClient"},new String[]{IdUser+""});
     }
 
     private void createListeners() {
@@ -41,6 +55,8 @@ public class MakeOrder extends AppCompatActivity {
                         //tej intencji
                         Intent intent = new Intent(MakeOrder.super.getApplicationContext(),
                                                    ClientCatalog.class);
+                        intent.putExtra("flag","1");
+                        //intent.putExtra("IdRequest",);
                         startActivity(intent);
                     }break;
                     case R.id.btn_continue:
@@ -104,5 +120,6 @@ public class MakeOrder extends AppCompatActivity {
         titleOfID=findViewById(R.id.title_of_id);
         btnAddPosition=findViewById(R.id.btn_add_position);
         btnContinue=findViewById(R.id.btn_continue);
+        AgroPol =new DBHelper(MakeOrder.this);
     }
 }

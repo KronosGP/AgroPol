@@ -11,6 +11,7 @@ public class Orders extends AppCompatActivity {
 
 
     Button btnAddOrder;
+    private int IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,8 @@ public class Orders extends AppCompatActivity {
         setContentView(R.layout.layout_orders);
         findViews();
         createListeners();
+        /*Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");*/
     }
 
     private void createListeners() {
@@ -26,6 +29,7 @@ public class Orders extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Orders.super.getApplicationContext(),
                                            MakeOrder.class);
+                //intent.putExtra("IdUser",IdUser);
                 startActivity(intent);
             }
         });

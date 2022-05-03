@@ -11,12 +11,16 @@ public class ClientMenu extends AppCompatActivity {
 
     private ConstraintLayout btnPlantCatalog, btnOrder, btnComplaint;
 
+    private int IdUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_client_menu);
         findViews();
         createListeners();
+        /*Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");*/
     }
 
     private void findViews() {
@@ -36,12 +40,14 @@ public class ClientMenu extends AppCompatActivity {
                     {
                         Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
                                 ClientCatalog.class);
+                        intent.putExtra("flag","0");
                         startActivity(intent);
                     }break;
                     case R.id.btn_order:
                     {
                         Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
                                 Orders.class);
+                        //intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_complaint:

@@ -17,6 +17,7 @@ public class ClientSignIn extends AppCompatActivity {
     private TextInputEditText login, password;
     private Button btnLogIn;
     private DBHelper AgroPol;
+    private int IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,8 @@ public class ClientSignIn extends AppCompatActivity {
         setContentView(R.layout.layout_client_sign_in);
         findViews();
         createListeners();
-        AgroPol.showAllColumnsName();
+        //AgroPol.onAlter();
+        //AgroPol.showAllColumnsName();
     }
 
     private void createListeners() {
@@ -35,6 +37,7 @@ public class ClientSignIn extends AppCompatActivity {
                     //Todo dodać intencje
                 Intent intent = new Intent(ClientSignIn.super.getApplicationContext(),
                                            ClientMenu.class);
+                //intent.putExtra("IdUser",IdUser);
                 startActivity(intent);
                 //}
             }
@@ -43,7 +46,8 @@ public class ClientSignIn extends AppCompatActivity {
 
     private boolean Logowanie() {
         try {
-            Cursor result=AgroPol.getDate("Select Count(*) from klient where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
+            Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
+            //IdUser=Integer.parseInt(AgroPol.getDate("Select ID from client where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';").getString(0));
             if(Integer.parseInt(result.getString(0))==1)
                 return true;
         }
