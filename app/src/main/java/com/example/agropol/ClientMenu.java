@@ -19,8 +19,9 @@ public class ClientMenu extends AppCompatActivity {
         setContentView(R.layout.layout_client_menu);
         findViews();
         createListeners();
-        /*Bundle bundle=getIntent().getExtras();
-        IdUser=bundle.getInt("IdUser");*/
+        Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");
+        System.out.println(IdUser);
     }
 
     private void findViews() {
@@ -45,10 +46,10 @@ public class ClientMenu extends AppCompatActivity {
                     }break;
                     case R.id.btn_order:
                     {
-                        Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
-                                Orders.class);
-                        //intent.putExtra("IdUser",IdUser);
-                        startActivity(intent);
+                            Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
+                                    Orders.class);
+                            intent.putExtra("IdUser", IdUser);
+                            startActivity(intent);
                     }break;
                     case R.id.btn_complaint:
                     {

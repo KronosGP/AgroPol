@@ -27,27 +27,29 @@ public class ClientSignIn extends AppCompatActivity {
         createListeners();
         //AgroPol.onAlter();
         //AgroPol.showAllColumnsName();
+        //AgroPol.setData("client",new String[]{"Login","Password","Name","Surname","Email","Tel","Address","City"},new String[]{"asd","asd","asd","asd","asd","asd","asd","asd"});
     }
 
     private void createListeners() {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(Logowanie()==true) {
+                if(Logowanie()==true) {
                     //Todo dodać intencje
                 Intent intent = new Intent(ClientSignIn.super.getApplicationContext(),
                                            ClientMenu.class);
-                //intent.putExtra("IdUser",IdUser);
+                intent.putExtra("IdUser",IdUser);
                 startActivity(intent);
-                //}
+                }
             }
         });
     }
 
     private boolean Logowanie() {
         try {
-            Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';");
-            //IdUser=Integer.parseInt(AgroPol.getDate("Select ID from client where Login like '"+login.getText().toString()+"' and Haslo like '"+password.getText().toString()+"';").getString(0));
+            Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
+            IdUser=Integer.parseInt(AgroPol.getDate("Select ID from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';").getString(0));
+            System.out.println(IdUser);
             if(Integer.parseInt(result.getString(0))==1)
                 return true;
         }

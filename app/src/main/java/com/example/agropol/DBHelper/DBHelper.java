@@ -54,7 +54,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "IDClient INTEGER NOT NULL , " +
                 "Price Double, " +
                 "Date_of_request DATE,  " +
-                "Reception VARCHAR(30));");
+                "Reception VARCHAR(30)," +
+                "Status TEXT NOT NULL);");
 
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS details_request " +
                 "( IDRequest INTEGER NOT NULL , " +

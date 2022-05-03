@@ -34,7 +34,7 @@ public class ClientCatalog extends AppCompatActivity {
 
     private DBHelper AgroPol;
     private int flag;
-    private int IdUser;
+    private int IdRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,9 @@ public class ClientCatalog extends AppCompatActivity {
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
         AgroPol=new DBHelper(ClientCatalog.this);
+        Bundle bundle=getIntent().getExtras();
+        flag=bundle.getInt("flag");
+        IdRequest=bundle.getInt("IdRequest");
     }
 
     private void startSettings() {
@@ -103,6 +106,7 @@ public class ClientCatalog extends AppCompatActivity {
                             /*Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                     MakeOrder.class);
                             startActivity(intent);*///moje testy Adam
+                            finish();
                         }
 
 
@@ -127,8 +131,6 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Bundle get=getIntent().getExtras();
-            flag=Integer.parseInt(get.getString("flag"));
             Cursor result = AgroPol.getDate("Select * from plant");
             while (result.isAfterLast() == false) {
                 plants.add(new Plant(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
