@@ -17,7 +17,7 @@ public class ClientSignIn extends AppCompatActivity {
     private TextInputEditText login, password;
     private Button btnLogIn;
     private DBHelper AgroPol;
-    private int IdUser;
+    private int IdUser=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,12 @@ public class ClientSignIn extends AppCompatActivity {
     private boolean Logowanie() {
         try {
             Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
-            IdUser=Integer.parseInt(AgroPol.getDate("Select ID from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';").getString(0));
-            System.out.println(IdUser);
-            if(Integer.parseInt(result.getString(0))==1)
+            if(Integer.parseInt(result.getString(0))==1) {
+                IdUser=Integer.parseInt(AgroPol.getDate("Select ID from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';").getString(0));
                 return true;
+            }
+            else
+                return false;
         }
         catch (SQLiteException ex)
         {

@@ -52,10 +52,12 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS request " +
                 "( ID INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT , " +
                 "IDClient INTEGER NOT NULL , " +
-                "Price Double, " +
+                "Price Float, " +
                 "Date_of_request DATE,  " +
-                "Reception VARCHAR(30)," +
-                "Status TEXT NOT NULL);");
+                "Date_of_delivery DATE, " +
+                "Reception VARCHAR(30), " +
+                "Status TEXT, " +
+                "Delivery Float);");
 
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS details_request " +
                 "( IDRequest INTEGER NOT NULL , " +
@@ -77,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onAlter()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-        /*db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
+        db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
         db.execSQL("Drop Table IF EXISTS sadzonki");
         db.execSQL("Drop Table IF EXISTS pracownik");
         db.execSQL("Drop Table IF EXISTS klient");

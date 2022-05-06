@@ -54,15 +54,37 @@ public class MakeOrder extends AppCompatActivity {
         email.setText(result.getString(5));
         number.setText(result.getString(6));
         adress.setText(result.getString(7));
-            result = AgroPol.getDate("Select ID from request where IDClient=" + IdUser + " order by ID desc");
+        try {
+            result = AgroPol.getDate("Select * from request where IDClient=" + IdUser);
+            result.moveToLast();
+            System.out.println(result.getString(0));
             IdRequest = Integer.parseInt(result.getString(0));
-            titleOfID.setText("Id zamówienia: "+String.valueOf(IdRequest));
+            titleOfID.setText("Id zamówienia: " + String.valueOf(IdRequest));
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
 
-        result=AgroPol.getDate("Select plant.Species,plant.Variety,details_request.Quantity,plant.Price from details_request,plant where IDRequest ="+IdRequest+" and plant.ID= details_request.IDPlant");
+        result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
+        //plant.Species,plant.Variety,plant.Price
+
         while(result.isAfterLast()==false)
         {
-            Double sum=Double.parseDouble(result.getString(3))*Integer.parseInt(result.getString(2));
-            dataOfOrders.add(new DataOfOrders(result.getString(0),result.getString(1),Integer.parseInt(result.getString(2)),Double.parseDouble(result.getString(3)),sum));
+            Cursor result1=AgroPol.getDate("Select Species,Variety,Price from Plant where ID="+result.getString(0));
+            int Quantity=Integer.parseInt(result.getString(1));
+            Double price=Double.parseDouble(result1.getString(2));
+            Double sum=Quantity*price;
+            String species=result1.getString(0);
+            String Variety=result1.getString(1);
+            try{
+            dataOfOrders.add(new DataOfOrders(species,Variety,Quantity,price,sum));
+        }
+        catch (Exception ex)
+            {
+                System.out.println(ex);
+            }
+            result.moveToNext();
         }
 
 
@@ -91,6 +113,7 @@ public class MakeOrder extends AppCompatActivity {
                                 ClientCatalog.class);
                         intent.putExtra("flag", 1);
                         intent.putExtra("IdRequest", IdRequest);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_continue:
@@ -126,14 +149,32 @@ public class MakeOrder extends AppCompatActivity {
                     //podsumowanie zamówienia, tylko trzeba gdzieś zapamiętać czy zamówienie z dostawą czy odbiór osobisty
                     case R.id.btn_without_transport:
                     {
+                        try {
+                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery"}, new String[]{"0.0"});
+                        }
+                        catch (Exception ex)
+                        {
+                            System.out.println(ex);
+                        }
                         Intent intent = new Intent(MakeOrder.super.getApplicationContext(),
                                 SummaryOfOrder.class);
+                        intent.putExtra("IdOrder",IdRequest);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_with_transport:
                     {
+                        try {
+                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery"}, new String[]{"5.0"});
+                        }
+                        catch (Exception ex)
+                        {
+                            System.out.println(ex);
+                        }
                         Intent intent = new Intent(MakeOrder.super.getApplicationContext(),
                                 SummaryOfOrder.class);
+                        intent.putExtra("IdOrder",IdRequest);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                 }

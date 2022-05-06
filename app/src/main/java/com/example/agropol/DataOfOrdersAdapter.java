@@ -45,7 +45,7 @@ public class DataOfOrdersAdapter extends RecyclerView.Adapter<DataOfOrdersAdapte
         holder.species.setText(holder.species.getText()+currentItem.getSpecies());
         holder.variety.setText(holder.variety.getText()+currentItem.getVariety());
         holder.quantity.setText(holder.quantity.getText()+String.valueOf(currentItem.getQuantity()));
-        holder.price.setText(holder.quantity.getText()+String.valueOf(currentItem.getPrice()));
+        holder.price.setText(holder.price.getText()+String.valueOf(currentItem.getPrice()));
         holder.sum.setText(holder.sum.getText()+String.valueOf(currentItem.getSum()));
     }
 

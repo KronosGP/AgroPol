@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
@@ -21,11 +25,18 @@ public class DetailsOfOrder extends AppCompatActivity {
     private CatalogOfOrderAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
+    private int IdUser;
+    private int IdRequest;
+    private DBHelper AgroPol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_details_of_order);
+        Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");
+        IdRequest=bundle.getInt("IdOrder");
+        System.out.println(IdRequest);
         findViews();
         startSettings();
         createListeners();
@@ -33,7 +44,27 @@ public class DetailsOfOrder extends AppCompatActivity {
     }
 
     private void loadData() {
-        //wczytanie danych do textView i recyclerview
+        Cursor result = AgroPol.getDate("Select * from client where ID=" + IdUser);
+        howClient.setText(result.getString(3) + " " + result.getString(4));
+
+        result = AgroPol.getDate("Select * from request where Id=" + IdRequest);
+        howDateOfOrder.setText("\n"+result.getString(3));
+        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
+        Double cost = Double.parseDouble(result.getString(2));
+        howCostOfPlants.setText(" "+String.valueOf(cost));
+        Double delivery = Double.parseDouble(result.getString(7));
+        howCostOfDelivery.setText(" "+String.valueOf(delivery));
+        howTotalSum.setText("\n"+String.valueOf(cost + delivery));
+
+
+        result=AgroPol.getDate("Select plant.Species,plant.Variety,details_request.Quantity,plant.Price from details_request,plant where IDRequest ="+IdRequest+" and plant.ID= details_request.IDPlant");
+        while(result.isAfterLast()==false)
+        {
+            //Todo dokończyć wspisanie do listy
+            result.moveToNext();
+        }
+
+
     }
 
     private void createListeners() {
@@ -42,6 +73,7 @@ public class DetailsOfOrder extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent= new Intent(DetailsOfOrder.super.getApplicationContext(),
                                           Orders.class);
+                intent.putExtra("IdUser",IdUser);
                 startActivity(intent);
             }
         });
@@ -65,6 +97,7 @@ public class DetailsOfOrder extends AppCompatActivity {
         howTotalSum=findViewById(R.id.how_total_sum);
         btnComeBack=findViewById(R.id.btn_come_back);
         recyclerView=findViewById(R.id.recycler_view);
+        AgroPol=new DBHelper(DetailsOfOrder.this);
 
     }
 }

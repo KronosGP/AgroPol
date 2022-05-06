@@ -35,6 +35,7 @@ public class ClientCatalog extends AppCompatActivity {
     private DBHelper AgroPol;
     private int flag;
     private int IdRequest;
+    private int IdUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ClientCatalog extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         flag=bundle.getInt("flag");
         IdRequest=bundle.getInt("IdRequest");
+        IdUser=bundle.getInt("IdUser");
     }
 
     private void startSettings() {
@@ -102,11 +104,24 @@ public class ClientCatalog extends AppCompatActivity {
                         }
                         else
                         {
-                            //AgroPol.setData("details_request");
-                            /*Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
-                                    MakeOrder.class);
-                            startActivity(intent);*///moje testy Adam
-                            finish();
+                            try {
+                                AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plants.get(position).getId()), howQuantity.getText().toString()});
+                                result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
+                                Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())*plants.get(position).getPrice();
+                                AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
+                                int update= (int) (plants.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
+                                AgroPol.editData("plant","ID="+plants.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                                Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
+                                        MakeOrder.class);
+                                intent.putExtra("IdUser",IdUser);
+                                startActivity(intent);//moje testy Adam
+                                //finish();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.out.println(ex);
+                            }
+                            //finish();
                         }
 
 

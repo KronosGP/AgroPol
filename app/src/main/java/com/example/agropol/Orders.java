@@ -12,7 +12,12 @@ import android.widget.Button;
 
 import com.example.agropol.DBHelper.DBHelper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Orders extends AppCompatActivity {
 
@@ -37,12 +42,26 @@ public class Orders extends AppCompatActivity {
     }
 
     private void loadData() {
+        //usunięcie pustych zamówień
+        Cursor result = AgroPol.getDate("Select * from request where IDClient = " + IdUser);
+        while(result.isAfterLast()==false)
+        {
+            Cursor result1=AgroPol.getDate("Select count(*) from details_request where IDRequest="+result.getString(0));
+            if(Integer.parseInt(result1.getString(0))==0)
+                AgroPol.delData("request","ID="+result.getString(0));
+            result.moveToNext();
+        }
         //wczytanie zamówień z bazy danych do recyclerView
-            Cursor result = AgroPol.getDate("Select ID,Date_of_request,Price from request where IDClient = " + IdUser);
-            System.out.println(result.isAfterLast());
+            result=AgroPol.getDate("Select * from request where IDClient = " + IdUser);
             try {
                 while (result.isAfterLast() == false) {
-                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(Integer.parseInt(result.getString(0)), result.getString(1), Double.parseDouble(result.getString(2))));
+                    Double price=Double.parseDouble(result.getString(2));
+                    Double delivey=Double.parseDouble(result.getString(7));
+                    int id=Integer.parseInt(result.getString(0));
+                    String data=result.getString(3);
+                    Double sum=price+delivey;
+                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum));
+                    System.out.println(Integer.parseInt(result.getString(0))+" "+ result.getString(3)+" "+sum);
                     result.moveToNext();
                 }
             }
@@ -50,6 +69,7 @@ public class Orders extends AppCompatActivity {
             {
                 System.out.println(ex);
             }
+
     }
 
     private void startSettings() {
@@ -64,6 +84,7 @@ public class Orders extends AppCompatActivity {
             public void onShowClick(int position) {
                 Intent intent = new Intent(Orders.super.getApplicationContext(),
                         DetailsOfOrder.class);
+                intent.putExtra("IdUser",IdUser);
                 intent.putExtra("IdOrder",itemOfRecyclerViewOrders.get(position).getId());
                 startActivity(intent);
             }
@@ -75,9 +96,11 @@ public class Orders extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+
+                    AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0"});
+                    System.out.println(AgroPol.getDate("Select * from request").getString(0));
                     Intent intent = new Intent(Orders.super.getApplicationContext(),
                             MakeOrder.class);
-                    AgroPol.setData("request", new String[]{"IDClient"}, new String[]{String.valueOf(IdUser)});
                     intent.putExtra("IdUser", IdUser);
                     startActivity(intent);
                 }
@@ -87,6 +110,42 @@ public class Orders extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String DataN() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar oldDate=Calendar.getInstance();
+        String Date=simpleDateFormat.format(oldDate.getTime());
+        Calendar c = Calendar.getInstance();
+        try{
+            //Setting the date to the given date
+            c.setTime(simpleDateFormat.parse(Date));
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        //Number of Days to add
+        c.add(Calendar.DAY_OF_MONTH, 0);
+        //Date after adding the days to the given date
+        String newDate = simpleDateFormat.format(c.getTime());
+        return newDate;
+    }
+
+    private String newDate(String oldDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try{
+            //Setting the date to the given date
+            c.setTime(sdf.parse(oldDate));
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        //Number of Days to add
+        c.add(Calendar.DAY_OF_MONTH, 14);
+        //Date after adding the days to the given date
+        String newDate = sdf.format(c.getTime());
+        return newDate;
     }
 
     private void findViews() {

@@ -3,6 +3,7 @@ package com.example.agropol;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,13 +18,30 @@ public class SummaryOfOrder extends AppCompatActivity {
     private Button btnAddOrder, btnCancelOrder;
     private DBHelper AgroPol;
     private int IdUser;
+    private int IdRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_summary_of_order);
+        Bundle bundle=getIntent().getExtras();
+        IdRequest=bundle.getInt("IdOrder");
+        IdUser=bundle.getInt("IdUser");
         findViews();
         createListeners();
+        loadDate();
+    }
+
+    private void loadDate() {
+        Cursor result =AgroPol.getDate("Select * from client where ID="+IdUser);
+        howClient.setText(result.getString(3)+" "+result.getString(4));
+        result=AgroPol.getDate("Select * from request where ID="+IdRequest);
+        howDateOfOrder.setText("\n"+result.getString(3));
+        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
+        howCostOfPlants.setText(result.getString(2)+" zł");
+        howCostOfDelivery.setText(result.getString(7)+" zł");
+        Double sum=Double.parseDouble(result.getString(2))+Double.parseDouble(result.getString(7));
+        howTotalSum.setText("\n"+sum+" zł");
     }
 
     private void createListeners() {
@@ -37,15 +55,28 @@ public class SummaryOfOrder extends AppCompatActivity {
                     // danych
                     case R.id.btn_add_order:
                     {
-                        //AgroPol.setData("request",new String[]{},new String[]{});
+                        AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    Orders.class);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_cancel_order:
                     {
+                        Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
+                        while(result.isAfterLast()==false)
+                        {
+                            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
+                            int update=result1.getInt(3)+result.getInt(2);
+                            AgroPol.editData("plant","ID="+result.getString(1),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                            result.moveToNext();
+                        }
+                        AgroPol.delData("details_request","IDRequest="+IdRequest);
+                        AgroPol.delData("request","ID="+IdRequest);
+
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 Orders.class);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                 }
