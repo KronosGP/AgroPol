@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.agropol.DBHelper.DBHelper;
@@ -39,6 +43,28 @@ public class Orders extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         IdUser=bundle.getInt("IdUser");
         loadData();
+        //trzeba przekazać znowu flagę w przypadku otwarcia katalogu zamówień z pozycji składania reklamacji
+        //tak aby pokazało się okno informacyjnie a następnie aby pokliknięcu na konkretny item
+        // zatwierdzało zamówienie którego dotyczyć ma reklamacja, następnie powrót do MakeComplaint
+        //showInfoWindow();
+    }
+
+    private void showInfoWindow() {
+        Dialog showInfoWindow = new Dialog(this);
+        showInfoWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        showInfoWindow.setContentView(R.layout.layout_info_dialog);
+        showInfoWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        showInfoWindow.show();
+
+        Button btnOk=findViewById(R.id.btn_ok);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoWindow.dismiss();
+            }
+        });
+
     }
 
     private void loadData() {
@@ -79,7 +105,7 @@ public class Orders extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new CatalogAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CatalogOfOrderAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
                 Intent intent = new Intent(Orders.super.getApplicationContext(),
@@ -87,6 +113,14 @@ public class Orders extends AppCompatActivity {
                 intent.putExtra("IdUser",IdUser);
                 intent.putExtra("IdOrder",itemOfRecyclerViewOrders.get(position).getId());
                 startActivity(intent);
+
+                //tak jak wyżej wspomniałem tutaj flaga która będzie decydowałą czy wyświetlamy szczegóły
+                //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
+
+//                Intent intentt = new Intent(Orders.super.getApplicationContext(),
+//                                           MakeComplaint.class);
+//                startActivity(intentt);
+
             }
         });
     }

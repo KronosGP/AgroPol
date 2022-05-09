@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPol">
         <activity
+            android:name=".MakeComplaint"
+            android:exported="false" />
+        <activity
+            android:name=".Complaints"
+            android:exported="false" />
+        <activity
             android:name=".DetailsOfOrder"
             android:exported="false" />
         <activity

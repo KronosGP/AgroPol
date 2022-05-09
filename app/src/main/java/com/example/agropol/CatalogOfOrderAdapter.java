@@ -13,20 +13,20 @@ import java.util.List;
 
 public class CatalogOfOrderAdapter extends RecyclerView.Adapter<CatalogOfOrderAdapter.CatalogOfOrderViewHolder> {
     private List<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders;
-    private CatalogAdapter.OnItemClickListener adapterListener;
+    private CatalogOfOrderAdapter.OnItemClickListener adapterListener;
 
-    public interface OnItemClickListener { ;
+    public interface OnItemClickListener {
         void onShowClick(int position);
     }
 
-    public void setOnItemClickListener(CatalogAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(CatalogOfOrderAdapter.OnItemClickListener listener) {
         adapterListener = listener;
     }
 
     public static class CatalogOfOrderViewHolder extends RecyclerView.ViewHolder {
         public TextView how_id, how_date_of_order, how_total_sum;
 
-        public CatalogOfOrderViewHolder(View itemView, final CatalogAdapter.OnItemClickListener listener) {
+        public CatalogOfOrderViewHolder(View itemView, final CatalogOfOrderAdapter.OnItemClickListener listener) {
             super(itemView);
             how_id=itemView.findViewById(R.id.how_id);
             how_date_of_order=itemView.findViewById(R.id.how_date_of_order);

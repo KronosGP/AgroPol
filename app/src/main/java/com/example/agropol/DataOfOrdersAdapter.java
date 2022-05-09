@@ -14,7 +14,6 @@ import java.util.List;
 public class DataOfOrdersAdapter extends RecyclerView.Adapter<DataOfOrdersAdapter.DataOfOrdersViewHolder> {
     private List<DataOfOrders> dataOfOrders;
 
-
     public static class DataOfOrdersViewHolder extends RecyclerView.ViewHolder {
         public TextView species, variety, quantity, price, sum;
 

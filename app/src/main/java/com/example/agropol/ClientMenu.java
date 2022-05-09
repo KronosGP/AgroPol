@@ -46,6 +46,8 @@ public class ClientMenu extends AppCompatActivity {
                     }break;
                     case R.id.btn_order:
                     {
+                        //wysyłanie flagi do aktywności świadczącej o otwarciu katalogu Orders w trybie
+                        //wyświetlania zamówień
                             Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
                                     Orders.class);
                             intent.putExtra("IdUser", IdUser);
@@ -53,6 +55,9 @@ public class ClientMenu extends AppCompatActivity {
                     }break;
                     case R.id.btn_complaint:
                     {
+                        Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
+                                Complaints.class);
+                        startActivity(intent);
 
                     }break;
                 }
