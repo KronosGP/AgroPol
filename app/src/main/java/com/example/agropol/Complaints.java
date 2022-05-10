@@ -43,7 +43,11 @@ public class Complaints extends AppCompatActivity {
         adapter.setOnItemClickListener(new DataOfComplaintsAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
-                //wyświetlanie szczegółów reklamacji w oknie dialogowym
+                //otwarcie intencji szczegółów reklamacj
+                //trzeba wysłać dane z konkretnego itemu do tej reklamacji
+                Intent intent = new Intent(Complaints.super.getApplicationContext(),
+                                           DetailsOfComplaints.class);
+                startActivity(intent);
             }
         });
 
