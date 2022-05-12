@@ -31,6 +31,7 @@ public class Orders extends AppCompatActivity {
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
     private DBHelper AgroPol;
     private int IdUser;
+    private int Flag;
     Button btnAddOrder;
 
     @Override
@@ -42,6 +43,7 @@ public class Orders extends AppCompatActivity {
         createListeners();
         Bundle bundle=getIntent().getExtras();
         IdUser=bundle.getInt("IdUser");
+        Flag=bundle.getInt("Flag");
         loadData();
         //trzeba przekazać znowu flagę w przypadku otwarcia katalogu zamówień z pozycji składania reklamacji
         //tak aby pokazało się okno informacyjnie a następnie aby pokliknięcu na konkretny item
@@ -95,6 +97,7 @@ public class Orders extends AppCompatActivity {
             {
                 System.out.println(ex);
             }
+        if(Flag==1){/*showInfoWindow();*/}//coś z przyciskiem nie działa(btnOk)
 
     }
 
@@ -108,19 +111,34 @@ public class Orders extends AppCompatActivity {
         adapter.setOnItemClickListener(new CatalogOfOrderAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
-                Intent intent = new Intent(Orders.super.getApplicationContext(),
-                        DetailsOfOrder.class);
-                intent.putExtra("IdUser",IdUser);
-                intent.putExtra("IdOrder",itemOfRecyclerViewOrders.get(position).getId());
-                startActivity(intent);
+                if(Flag==0) {
+                        Intent intent = new Intent(Orders.super.getApplicationContext(),
+                                DetailsOfOrder.class);
+                        intent.putExtra("IdUser", IdUser);
+                        intent.putExtra("IdOrder", itemOfRecyclerViewOrders.get(position).getId());
+                        startActivity(intent);
+               }
 
-                //tak jak wyżej wspomniałem tutaj flaga która będzie decydowałą czy wyświetlamy szczegóły
-                //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
+                    //tak jak wyżej wspomniałem tutaj flaga która będzie decydowałą czy wyświetlamy szczegóły
+                    //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
+                else{
+                    try {
 
-//                Intent intentt = new Intent(Orders.super.getApplicationContext(),
-//                                           MakeComplaint.class);
-//                startActivity(intentt);
+                        AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
+                        Cursor result=AgroPol.getDate("Select ID from complaint where IDClient="+IdUser);
+                        result.moveToLast();
+                        Intent intent = new Intent(Orders.super.getApplicationContext(),
+                                MakeComplaint.class);
+                        intent.putExtra("IdUser",IdUser);
+                        intent.putExtra("IdComplaint",result.getInt(0));
+                        startActivity(intent);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.out.println(ex);
+                    }
 
+                }
             }
         });
     }

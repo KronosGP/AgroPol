@@ -41,15 +41,20 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_orders.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_spinner_add_plant_row.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_summary_of_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_details_of_complaints.xml" value="0.24728260869565216" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/item_of_catalog.xml" value="0.1" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/item_of_data_of_orders.xml" value="0.1308876811594203" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/item_of_order.xml" value="0.2" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_add_plant.xml" value="0.1" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_client_sign_in.xml" value="0.10833333333333334" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_details_of_order.xml" value="0.20658135283363802" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_dialog_window_in_catalog.xml" value="0.1" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_menu.xml" value="0.10625" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_employee_sign_in.xml" value="0.128" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_info_dialog.xml" value="0.25" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_make_complaint.xml" value="0.24728260869565216" />
+        <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_orders.xml" value="0.25" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/layout_spinner_add_plant_row.xml" value="0.1" />
       </map>
     </option>

@@ -22,9 +22,9 @@ public class DetailsOfOrder extends AppCompatActivity {
             howCostOfPlants, howCostOfDelivery, howTotalSum;
     private Button btnComeBack;
     private RecyclerView recyclerView;
-    private CatalogOfOrderAdapter adapter;
+    private DataOfOrdersAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
+    private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
     private int IdUser;
     private int IdRequest;
     private DBHelper AgroPol;
@@ -33,14 +33,20 @@ public class DetailsOfOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_details_of_order);
-        Bundle bundle=getIntent().getExtras();
-        IdUser=bundle.getInt("IdUser");
-        IdRequest=bundle.getInt("IdOrder");
-        System.out.println(IdRequest);
-        findViews();
-        startSettings();
-        createListeners();
-        loadData();
+        try {
+            Bundle bundle = getIntent().getExtras();
+            IdUser = bundle.getInt("IdUser");
+            IdRequest = bundle.getInt("IdOrder");
+            System.out.println(IdRequest);
+            findViews();
+            startSettings();
+            createListeners();
+            loadData();
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
     }
 
     private void loadData() {
@@ -57,10 +63,17 @@ public class DetailsOfOrder extends AppCompatActivity {
         howTotalSum.setText("\n"+String.valueOf(cost + delivery));
 
 
-        result=AgroPol.getDate("Select plant.Species,plant.Variety,details_request.Quantity,plant.Price from details_request,plant where IDRequest ="+IdRequest+" and plant.ID= details_request.IDPlant");
-        while(result.isAfterLast()==false)
-        {
-            //Todo dokończyć wspisanie do listy
+        result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
+        //plant.Species,plant.Variety,plant.Price
+
+        while(result.isAfterLast()==false) {
+            Cursor result1 = AgroPol.getDate("Select Species,Variety,Price from Plant where ID=" + result.getString(0));
+            int Quantity = Integer.parseInt(result.getString(1));
+            Double price = Double.parseDouble(result1.getString(2));
+            Double sum = Quantity * price;
+            String species = result1.getString(0);
+            String Variety = result1.getString(1);
+            dataOfOrders.add(new DataOfOrders(species, Variety, Quantity, price, sum));
             result.moveToNext();
         }
 
@@ -71,10 +84,11 @@ public class DetailsOfOrder extends AppCompatActivity {
         btnComeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(DetailsOfOrder.super.getApplicationContext(),
+                /*Intent intent= new Intent(DetailsOfOrder.super.getApplicationContext(),
                                           Orders.class);
                 intent.putExtra("IdUser",IdUser);
-                startActivity(intent);
+                startActivity(intent);*/
+                finish();
             }
         });
     }
@@ -82,7 +96,7 @@ public class DetailsOfOrder extends AppCompatActivity {
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CatalogOfOrderAdapter(itemOfRecyclerViewOrders);
+        adapter = new DataOfOrdersAdapter(dataOfOrders);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }

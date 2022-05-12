@@ -70,7 +70,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "IDRequest INTEGER NOT NULL , " +
                 "IDEmployee INTEGER , " +
                 "Contents TEXT NOT NULL , " +
-                "Status TEXT NOT NULL );");
+                "Status TEXT NOT NULL," +
+                "Date_of_Complaint Date NOT NULL );");
 
         //sqLiteDatabase.execSQL("INSERT INTO pracownik (Login, Haslo, Imie, Nazwisko, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
 

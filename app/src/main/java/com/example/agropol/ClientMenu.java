@@ -51,12 +51,14 @@ public class ClientMenu extends AppCompatActivity {
                             Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
                                     Orders.class);
                             intent.putExtra("IdUser", IdUser);
+                            intent.putExtra("Flag",0);
                             startActivity(intent);
                     }break;
                     case R.id.btn_complaint:
                     {
                         Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
                                 Complaints.class);
+                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
 
                     }break;

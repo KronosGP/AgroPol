@@ -5,10 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
@@ -20,10 +23,15 @@ public class Complaints extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataOfComplaints> dataOfComplaints = new ArrayList<>();
 
+    private DBHelper AgroPol;
+    private int IdUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_complaints);
+        Bundle bundle=getIntent().getExtras();
+        IdUser=bundle.getInt("IdUser");
         findViews();
         startSettings();
         createListeners();
@@ -31,6 +39,14 @@ public class Complaints extends AppCompatActivity {
     }
 
     private void loadData() {
+        AgroPol.delData("complaint","Status like 'In Make' and IDClient="+IdUser);
+        Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
+        while (result.isAfterLast()==false)
+        {
+            dataOfComplaints.add(new DataOfComplaints(result.getInt(0),result.getString(5)));
+            result.moveToNext();
+        }
+
     }
 
     private void startSettings() {
@@ -45,9 +61,11 @@ public class Complaints extends AppCompatActivity {
             public void onShowClick(int position) {
                 //otwarcie intencji szczegółów reklamacj
                 //trzeba wysłać dane z konkretnego itemu do tej reklamacji
-                Intent intent = new Intent(Complaints.super.getApplicationContext(),
-                                           DetailsOfComplaints.class);
-                startActivity(intent);
+                    Intent intent = new Intent(Complaints.super.getApplicationContext(),
+                            DetailsOfComplaints.class);
+                    intent.putExtra("IdUser", IdUser);
+                    intent.putExtra("IdComplaint", dataOfComplaints.get(position).getId());
+                    startActivity(intent);
             }
         });
 
@@ -61,6 +79,8 @@ public class Complaints extends AppCompatActivity {
                 //składania reklamacji
                 Intent intent = new Intent(Complaints.super.getApplicationContext(),
                         Orders.class);
+                intent.putExtra("IdUser",IdUser);
+                intent.putExtra("Flag",1);
                 startActivity(intent);
             }
         });
@@ -69,5 +89,6 @@ public class Complaints extends AppCompatActivity {
     private void findViews() {
         btnAddComplaint=findViewById(R.id.btn_add_complaint);
         recyclerView=findViewById(R.id.recycler_view);
+        AgroPol=new DBHelper(Complaints.this);
     }
 }
