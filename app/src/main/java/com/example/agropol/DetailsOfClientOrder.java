@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +14,10 @@ import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
-public class DetailsOfOrder extends AppCompatActivity {
+public class DetailsOfClientOrder extends AppCompatActivity {
 
     private TextView howId, howClient, howDateOfOrder, howDateOfDelivery,
-            howCostOfPlants, howCostOfDelivery, howTotalSum;
+            howCostOfPlants, howCostOfDelivery, howTotalSum, howStatus;
     private Button btnComeBack;
     private RecyclerView recyclerView;
     private DataOfOrdersAdapter adapter;
@@ -28,11 +26,16 @@ public class DetailsOfOrder extends AppCompatActivity {
     private int IdUser;
     private int IdRequest;
     private DBHelper AgroPol;
+    int mainImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_details_of_order);
+        setContentView(R.layout.layout_details_of_client_order);
+        startOperations();
+    }
+
+    private void startOperations() {
         try {
             Bundle bundle = getIntent().getExtras();
             IdUser = bundle.getInt("IdUser");
@@ -61,6 +64,8 @@ public class DetailsOfOrder extends AppCompatActivity {
         Double delivery = Double.parseDouble(result.getString(7));
         howCostOfDelivery.setText(" "+String.valueOf(delivery));
         howTotalSum.setText("\n"+String.valueOf(cost + delivery));
+        //trzeba zczytać z bazy danych
+        //howStatus.setText();
 
 
         result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
@@ -73,11 +78,28 @@ public class DetailsOfOrder extends AppCompatActivity {
             Double sum = Quantity * price;
             String species = result1.getString(0);
             String Variety = result1.getString(1);
-            dataOfOrders.add(new DataOfOrders(species, Variety, Quantity, price, sum));
+            getMainImage(species);
+            dataOfOrders.add(new DataOfOrders(species, Variety, Quantity, price, sum, mainImage));
             result.moveToNext();
         }
 
 
+    }
+
+    private void getMainImage(String species) {
+        switch (species)
+        {
+            case "Papryka":mainImage=R.drawable.image_pepper;break;
+            case "Fasola":mainImage=R.drawable.image_beans;break;
+            case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
+            case "Kapusta pekińska":mainImage=R.drawable.image_cabbagepekin;break;
+            case "Ogórek":mainImage=R.drawable.image_cucumber;break;
+            case "Marchewka":mainImage=R.drawable.image_carrot;break;
+            case "Pietruszka":mainImage=R.drawable.image_parsley;break;
+            case "Dynia":mainImage=R.drawable.image_pumkin;break;
+            case "Rzodkiweka":mainImage=R.drawable.image_radish;break;
+            case "Pomidor":mainImage=R.drawable.image_tomato;break;
+        }
     }
 
     private void createListeners() {
@@ -109,9 +131,10 @@ public class DetailsOfOrder extends AppCompatActivity {
         howCostOfPlants=findViewById(R.id.how_cost_of_plants);
         howCostOfDelivery=findViewById(R.id.how_cost_of_delivery);
         howTotalSum=findViewById(R.id.how_total_sum);
+        howStatus=findViewById(R.id.how_status);
         btnComeBack=findViewById(R.id.btn_come_back);
         recyclerView=findViewById(R.id.recycler_view);
-        AgroPol=new DBHelper(DetailsOfOrder.this);
+        AgroPol=new DBHelper(DetailsOfClientOrder.this);
 
     }
 }

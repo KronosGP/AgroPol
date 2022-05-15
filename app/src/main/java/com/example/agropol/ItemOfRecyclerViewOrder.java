@@ -4,12 +4,14 @@ public class ItemOfRecyclerViewOrder {
     private int id;
     private String date;
     private double price;
+    private String status;
 
-    ItemOfRecyclerViewOrder(int id, String date, double price)
+    ItemOfRecyclerViewOrder(int id, String date, double price, String status)
     {
         this.id=id;
         this.date=date;
         this.price=price;
+        this.status=status;
     }
 
     public int getId()
@@ -23,5 +25,9 @@ public class ItemOfRecyclerViewOrder {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

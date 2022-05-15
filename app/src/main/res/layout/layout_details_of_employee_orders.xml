@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsOfOrder">
+    tools:context=".DetailsOfEmployeeOrders">
 
     <TextView
         android:id="@+id/title_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/crete_round"
-        android:text="Zamówienie\nID:"
+        android:text="Klient ID:"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
@@ -112,16 +112,23 @@
             android:text="Łączny koszt \nzamówienia:"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_line"
+            app:layout_constraintBottom_toTopOf="@id/title_of_status"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_of_cost_delivery" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottom_line"
+        <TextView
+            android:id="@+id/title_of_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Status zamówienia:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_total_sum" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/half"
@@ -210,9 +217,27 @@
             android:text="\n0 zł"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_line"
+            app:layout_constraintBottom_toTopOf="@id/how_status"
             app:layout_constraintLeft_toLeftOf="@id/half"
             app:layout_constraintTop_toBottomOf="@id/how_cost_of_delivery" />
+
+        <TextView
+            android:id="@+id/how_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Złożono"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/half"
+            app:layout_constraintTop_toBottomOf="@id/how_total_sum" />
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -250,10 +275,24 @@
         app:layout_constraintTop_toBottomOf="@id/recycler_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:textSize="25sp"
+        app:layout_constraintRight_toLeftOf="@id/btn_change_status"
+        android:textSize="15sp"
         android:textColor="@color/white"
         android:text="POWRÓT"
         android:background="@drawable/shape_buttons"/>
+
+    <Button
+        android:id="@+id/btn_change_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_come_back"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:text="Zmiana statusu"
+        android:background="@drawable/shape_buttons"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

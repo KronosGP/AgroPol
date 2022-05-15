@@ -49,7 +49,7 @@ public class ClientMenu extends AppCompatActivity {
                         //wysyłanie flagi do aktywności świadczącej o otwarciu katalogu Orders w trybie
                         //wyświetlania zamówień
                             Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
-                                    Orders.class);
+                                    ClientOrders.class);
                             intent.putExtra("IdUser", IdUser);
                             intent.putExtra("Flag",0);
                             startActivity(intent);

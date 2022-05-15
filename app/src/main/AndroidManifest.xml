@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.agropol">
+    package="com.example.agropol" >
 
     <application
         android:allowBackup="true"
@@ -8,9 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AgroPol">
+        android:theme="@style/Theme.AgroPol" >
         <activity
-            android:name=".DetailsOfComplaints"
+            android:name=".DetailsOfEmployeeOrders"
+            android:exported="false" />
+        <activity
+            android:name=".EmployeOrders"
+            android:exported="false" />
+        <activity
+            android:name=".DetailsOfClientComplaints"
             android:exported="false" />
         <activity
             android:name=".MakeComplaint"
@@ -19,7 +25,7 @@
             android:name=".Complaints"
             android:exported="false" />
         <activity
-            android:name=".DetailsOfOrder"
+            android:name=".DetailsOfClientOrder"
             android:exported="false" />
         <activity
             android:name=".SummaryOfOrder"
@@ -28,7 +34,7 @@
             android:name=".MakeOrder"
             android:exported="false" />
         <activity
-            android:name=".Orders"
+            android:name=".ClientOrders"
             android:exported="false" />
         <activity
             android:name=".ClientCatalog"
@@ -53,7 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".EmployeeOrClient"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

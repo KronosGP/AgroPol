@@ -16,17 +16,15 @@ import android.widget.Button;
 
 import com.example.agropol.DBHelper.DBHelper;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
-public class Orders extends AppCompatActivity {
+public class ClientOrders extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private CatalogOfOrderAdapter adapter;
+    private CatalogOfOrderClientAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
     private DBHelper AgroPol;
@@ -37,7 +35,7 @@ public class Orders extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_orders);
+        setContentView(R.layout.layout_client_orders);
         findViews();
         startSettings();
         createListeners();
@@ -88,7 +86,7 @@ public class Orders extends AppCompatActivity {
                     int id=Integer.parseInt(result.getString(0));
                     String data=result.getString(3);
                     Double sum=price+delivey;
-                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum));
+                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,"Złożono"));
                     System.out.println(Integer.parseInt(result.getString(0))+" "+ result.getString(3)+" "+sum);
                     result.moveToNext();
                 }
@@ -104,16 +102,16 @@ public class Orders extends AppCompatActivity {
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CatalogOfOrderAdapter(itemOfRecyclerViewOrders);
+        adapter = new CatalogOfOrderClientAdapter(itemOfRecyclerViewOrders);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new CatalogOfOrderAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CatalogOfOrderClientAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
                 if(Flag==0) {
-                        Intent intent = new Intent(Orders.super.getApplicationContext(),
-                                DetailsOfOrder.class);
+                        Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
+                                DetailsOfClientOrder.class);
                         intent.putExtra("IdUser", IdUser);
                         intent.putExtra("IdOrder", itemOfRecyclerViewOrders.get(position).getId());
                         startActivity(intent);
@@ -127,7 +125,7 @@ public class Orders extends AppCompatActivity {
                         AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
                         Cursor result=AgroPol.getDate("Select ID from complaint where IDClient="+IdUser);
                         result.moveToLast();
-                        Intent intent = new Intent(Orders.super.getApplicationContext(),
+                        Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                                 MakeComplaint.class);
                         intent.putExtra("IdUser",IdUser);
                         intent.putExtra("IdComplaint",result.getInt(0));
@@ -151,7 +149,7 @@ public class Orders extends AppCompatActivity {
 
                     AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0"});
                     System.out.println(AgroPol.getDate("Select * from request").getString(0));
-                    Intent intent = new Intent(Orders.super.getApplicationContext(),
+                    Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);
                     intent.putExtra("IdUser", IdUser);
                     startActivity(intent);
@@ -203,6 +201,6 @@ public class Orders extends AppCompatActivity {
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
         btnAddOrder=findViewById(R.id.btn_add_order);
-        AgroPol=new DBHelper(Orders.this);
+        AgroPol=new DBHelper(ClientOrders.this);
     }
 }

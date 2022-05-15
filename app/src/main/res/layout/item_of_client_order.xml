@@ -14,18 +14,28 @@
         android:padding="5dp"
         android:layout_margin="5dp"
         >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/how_id"
+            app:layout_constraintRight_toLeftOf="@id/how_status"
+            android:src="@drawable/image_orders"/>
+
         <TextView
             android:id="@+id/how_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_date_of_order"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/how_date_of_order"
-            android:layout_margin="5dp"
+            app:layout_constraintRight_toLeftOf="@id/image"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:fontFamily="@font/crete_round"
             android:text="ID\nzamówienia:\n"/>
 
@@ -33,14 +43,13 @@
             android:id="@+id/how_date_of_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/how_id"
-            app:layout_constraintRight_toLeftOf="@id/how_total_sum"
+            app:layout_constraintTop_toBottomOf="@id/how_id"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/image"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:fontFamily="@font/crete_round"
             android:text="Data złożenia\nzamówienia:\n"/>
 
@@ -48,16 +57,29 @@
             android:id="@+id/how_total_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/how_status"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/how_date_of_order"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_margin="5dp"
+            app:layout_constraintLeft_toRightOf="@id/image"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:fontFamily="@font/crete_round"
             android:text="Łączny koszt\nzamówienia:\n"/>
+
+        <TextView
+            android:id="@+id/how_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/how_total_sum"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/image"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:fontFamily="@font/crete_round"
+            android:text="Status\nzamówienia:\n"/>
 
 
 

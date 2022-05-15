@@ -2,7 +2,6 @@ package com.example.agropol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
 
-public class DetailsOfComplaints extends AppCompatActivity {
+public class DetailsOfClientComplaints extends AppCompatActivity {
 
     private TextView howComplaintId, howClient, howDateOfComplaint, howIdOfOrder, howStatus, howDescribe;
     private Button btnComeBack;
@@ -22,7 +21,7 @@ public class DetailsOfComplaints extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details_of_complaints);
+        setContentView(R.layout.layout_details_of_complaints);
         Bundle bundle =getIntent().getExtras();
         IdUser=bundle.getInt("IdUser");
         IdComplaint=bundle.getInt("IdComplaint");
@@ -65,6 +64,6 @@ public class DetailsOfComplaints extends AppCompatActivity {
             howStatus = findViewById(R.id.how_status);
             howDescribe = findViewById(R.id.how_describe);
             btnComeBack=findViewById(R.id.btn_come_back);
-            AgroPol = new DBHelper(DetailsOfComplaints.this);
+            AgroPol = new DBHelper(DetailsOfClientComplaints.this);
     }
 }

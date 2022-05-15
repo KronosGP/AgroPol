@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
 
@@ -62,7 +61,7 @@ public class Complaints extends AppCompatActivity {
                 //otwarcie intencji szczegółów reklamacj
                 //trzeba wysłać dane z konkretnego itemu do tej reklamacji
                     Intent intent = new Intent(Complaints.super.getApplicationContext(),
-                            DetailsOfComplaints.class);
+                            DetailsOfClientComplaints.class);
                     intent.putExtra("IdUser", IdUser);
                     intent.putExtra("IdComplaint", dataOfComplaints.get(position).getId());
                     startActivity(intent);
@@ -78,7 +77,7 @@ public class Complaints extends AppCompatActivity {
                 //wysyłyanie flagi do aktywności świadczącej o otwarciu katalogu Orders w trybie
                 //składania reklamacji
                 Intent intent = new Intent(Complaints.super.getApplicationContext(),
-                        Orders.class);
+                        ClientOrders.class);
                 intent.putExtra("IdUser",IdUser);
                 intent.putExtra("Flag",1);
                 startActivity(intent);

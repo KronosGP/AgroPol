@@ -6,14 +6,16 @@ public class DataOfOrders {
     private int quantity;
     private double price;
     private double sum;
+    private int image;
 
-    DataOfOrders(String species, String variety, int quantity, double price, double sum)
+    DataOfOrders(String species, String variety, int quantity, double price, double sum, int image)
     {
         this.species=species;
         this.variety=variety;
         this.quantity=quantity;
         this.price=price;
         this.sum=sum;
+        this.image=image;
     }
 
     public String getSpecies()
@@ -35,5 +37,9 @@ public class DataOfOrders {
     public double getSum()
     {
         return sum;
+    }
+
+    public int getImage() {
+        return image;
     }
 }

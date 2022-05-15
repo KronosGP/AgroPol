@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsOfClientComplaints">
+
+    <TextView
+        android:id="@+id/how_complaint_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/crete_round"
+        android:text="Reklamacja\nID:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@id/data_frame"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/data_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/how_complaint_id"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title_describe"
+        android:background="@drawable/shape_white_radius_block"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/title_of_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Reklamujący:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/title_of_date_of_complaint"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_of_date_of_complaint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Data złożenia\nreklamacji:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/title_of_id_of_order"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_client" />
+
+        <TextView
+            android:id="@+id/title_of_id_of_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Id zamówienia:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/title_status"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_date_of_complaint" />
+
+        <TextView
+            android:id="@+id/title_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Status\nreklamacji:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_of_id_of_order" />
+
+
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/half"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.55" />
+
+        <TextView
+            android:id="@+id/how_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Jan Kowalski"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/how_date_of_complaint"
+            app:layout_constraintLeft_toLeftOf="@id/half"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/how_date_of_complaint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="\n01.01.2022"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/how_id_of_order"
+            app:layout_constraintLeft_toLeftOf="@id/half"
+            app:layout_constraintTop_toBottomOf="@id/how_client" />
+
+        <TextView
+            android:id="@+id/how_id_of_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/how_status"
+            app:layout_constraintLeft_toLeftOf="@id/half"
+            app:layout_constraintTop_toBottomOf="@id/how_date_of_complaint" />
+
+        <TextView
+            android:id="@+id/how_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/crete_round"
+            android:text="Rozpatrzono\npozytywnie"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/half"
+            app:layout_constraintTop_toBottomOf="@id/how_id_of_order" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/title_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/crete_round"
+        android:text="Treść reklamacji"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintTop_toBottomOf="@id/data_frame"
+        app:layout_constraintBottom_toTopOf="@id/how_describe"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+         />
+
+    <TextView
+        android:id="@+id/how_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/crete_round"
+        android:text="Rozsada, którą otzymaliśmy od państwa była zasuszona w wyniku czego w późniejszym etapie rozwoju spadły wszystkie zawiązki pąkowe, co skutokowało znacznie niższym plonem."
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_describe"
+        app:layout_constraintBottom_toTopOf="@id/btn_come_back"
+        android:background="@drawable/shape_white_radius_block"/>
+
+    <Button
+        android:id="@+id/btn_come_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/how_describe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        android:textColor="@color/white"
+        android:text="Powrót"
+        android:background="@drawable/shape_buttons"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

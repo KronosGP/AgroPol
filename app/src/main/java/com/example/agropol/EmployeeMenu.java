@@ -34,7 +34,9 @@ public class EmployeeMenu extends AppCompatActivity {
                     }break;
                     case R.id.btn_view_order:
                     {
-
+                        Intent intent = new Intent(EmployeeMenu.super.getApplicationContext(),
+                                EmployeOrders.class);
+                        startActivity(intent);
                     }break;
                     case R.id.btn_view_complaint:
                     {

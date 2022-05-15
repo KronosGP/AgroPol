@@ -35,6 +35,7 @@ public class MakeOrder extends AppCompatActivity {
     private DBHelper AgroPol;
     private int IdUser;
     private int IdRequest;
+    int mainImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,9 @@ public class MakeOrder extends AppCompatActivity {
             Double sum=Quantity*price;
             String species=result1.getString(0);
             String Variety=result1.getString(1);
+            getMainImage(species);
             try{
-            dataOfOrders.add(new DataOfOrders(species,Variety,Quantity,price,sum));
+            dataOfOrders.add(new DataOfOrders(species,Variety,Quantity,price,sum, mainImage));
         }
         catch (Exception ex)
             {
@@ -88,6 +90,22 @@ public class MakeOrder extends AppCompatActivity {
         }
 
 
+    }
+
+    private void getMainImage(String species) {
+        switch (species)
+        {
+            case "Papryka":mainImage=R.drawable.image_pepper;break;
+            case "Fasola":mainImage=R.drawable.image_beans;break;
+            case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
+            case "Kapusta pekińska":mainImage=R.drawable.image_cabbagepekin;break;
+            case "Ogórek":mainImage=R.drawable.image_cucumber;break;
+            case "Marchewka":mainImage=R.drawable.image_carrot;break;
+            case "Pietruszka":mainImage=R.drawable.image_parsley;break;
+            case "Dynia":mainImage=R.drawable.image_pumkin;break;
+            case "Rzodkiweka":mainImage=R.drawable.image_radish;break;
+            case "Pomidor":mainImage=R.drawable.image_tomato;break;
+        }
     }
 
     private void startSettings() {

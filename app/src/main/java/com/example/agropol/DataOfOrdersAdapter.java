@@ -3,6 +3,7 @@ package com.example.agropol;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class DataOfOrdersAdapter extends RecyclerView.Adapter<DataOfOrdersAdapte
 
     public static class DataOfOrdersViewHolder extends RecyclerView.ViewHolder {
         public TextView species, variety, quantity, price, sum;
+        public ImageView image;
 
         public DataOfOrdersViewHolder(View itemView) {
             super(itemView);
@@ -24,6 +26,7 @@ public class DataOfOrdersAdapter extends RecyclerView.Adapter<DataOfOrdersAdapte
             quantity=itemView.findViewById(R.id.quantity);
             price=itemView.findViewById(R.id.price);
             sum=itemView.findViewById(R.id.sum);
+            image=itemView.findViewById(R.id.image);
         }
     }
 
@@ -46,6 +49,7 @@ public class DataOfOrdersAdapter extends RecyclerView.Adapter<DataOfOrdersAdapte
         holder.quantity.setText(holder.quantity.getText()+String.valueOf(currentItem.getQuantity()));
         holder.price.setText(holder.price.getText()+String.valueOf(currentItem.getPrice()));
         holder.sum.setText(holder.sum.getText()+String.valueOf(currentItem.getSum()));
+        holder.image.setImageResource(currentItem.getImage());
     }
 
     @Override

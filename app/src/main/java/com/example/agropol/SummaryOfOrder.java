@@ -57,7 +57,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     {
                         AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
-                                                   Orders.class);
+                                                   ClientOrders.class);
                         intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
@@ -75,7 +75,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                         AgroPol.delData("request","ID="+IdRequest);
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
-                                Orders.class);
+                                ClientOrders.class);
                         intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
