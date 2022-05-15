@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Complaints"
+    tools:context=".EmployeeComplaints"
     android:background="@color/background_color">
 
     <TextView
@@ -18,14 +18,14 @@
         android:textSize="30sp"
         android:textColor="@color/black"
         android:fontFamily="@font/crete_round"
-        android:text="Moje reklamacje"/>
+        android:text="Lista reklamacji"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toTopOf="@id/btn_add_order"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:padding="2dp"
@@ -35,20 +35,6 @@
         android:layout_marginBottom="5dp"
         android:background="@color/background_color"/>
 
-    <Button
-        android:id="@+id/btn_add_complaint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:fontFamily="@font/crete_round"
-        android:text="Dodaj reklamację"
-        android:background="@drawable/shape_buttons"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@ public class MakeComplaint extends AppCompatActivity {
                 if(!howComplaint.getText().toString().equals(""))
                 {
                     AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Considered"});
-                    Intent intent=new Intent(MakeComplaint.super.getApplicationContext(),Complaints.class);
+                    Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
                     intent.putExtra("IdUser",IdUser);
                     startActivity(intent);
                 }

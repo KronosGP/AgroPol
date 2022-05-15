@@ -21,7 +21,7 @@ public class DetailsOfClientComplaints extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_details_of_complaints);
+        setContentView(R.layout.layout_details_of_client_complaints);
         Bundle bundle =getIntent().getExtras();
         IdUser=bundle.getInt("IdUser");
         IdComplaint=bundle.getInt("IdComplaint");

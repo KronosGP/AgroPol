@@ -1,11 +1,11 @@
 package com.example.agropol;
 
-public class DataOfComplaints {
+public class DataOfClientComplaints {
 
     private int id;
     private String status;
 
-    DataOfComplaints(int id, String status)
+    DataOfClientComplaints(int id, String status)
     {
         this.id=id;
         this.status=status;

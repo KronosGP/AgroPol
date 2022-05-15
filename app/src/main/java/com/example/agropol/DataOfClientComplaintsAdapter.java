@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 
-public class DataOfComplaintsAdapter extends RecyclerView.Adapter<DataOfComplaintsAdapter.DataOfComplaintsViewHolder> {
-    private List<DataOfComplaints> dataOfComplaints;
-    private DataOfComplaintsAdapter.OnItemClickListener adapterListener;
+public class DataOfClientComplaintsAdapter extends RecyclerView.Adapter<DataOfClientComplaintsAdapter.DataOfComplaintsViewHolder> {
+    private List<DataOfClientComplaints> dataOfClientComplaints;
+    private DataOfClientComplaintsAdapter.OnItemClickListener adapterListener;
 
     public interface OnItemClickListener { ;
         void onShowClick(int position);
     }
 
-    public void setOnItemClickListener(DataOfComplaintsAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(DataOfClientComplaintsAdapter.OnItemClickListener listener) {
         adapterListener = listener;
     }
 
@@ -27,7 +27,7 @@ public class DataOfComplaintsAdapter extends RecyclerView.Adapter<DataOfComplain
     public static class DataOfComplaintsViewHolder extends RecyclerView.ViewHolder {
         public TextView howId, howStatus;
 
-        public DataOfComplaintsViewHolder(View itemView, final DataOfComplaintsAdapter.OnItemClickListener listener) {
+        public DataOfComplaintsViewHolder(View itemView, final DataOfClientComplaintsAdapter.OnItemClickListener listener) {
             super(itemView);
             howId=itemView.findViewById(R.id.how_id);
             howStatus=itemView.findViewById(R.id.how_status);
@@ -46,13 +46,13 @@ public class DataOfComplaintsAdapter extends RecyclerView.Adapter<DataOfComplain
         }
     }
 
-    public DataOfComplaintsAdapter(List<DataOfComplaints> dataOfComplaints) {
-        this.dataOfComplaints = dataOfComplaints;
+    public DataOfClientComplaintsAdapter(List<DataOfClientComplaints> dataOfClientComplaints) {
+        this.dataOfClientComplaints = dataOfClientComplaints;
     }
 
     @Override
     public DataOfComplaintsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_of_data_of_complaint, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_of_data_of_client_complaint, parent, false);
         DataOfComplaintsViewHolder docvh = new DataOfComplaintsViewHolder(v,adapterListener);
         return docvh;
     }
@@ -60,14 +60,14 @@ public class DataOfComplaintsAdapter extends RecyclerView.Adapter<DataOfComplain
     @Override
     public void onBindViewHolder(@NonNull DataOfComplaintsViewHolder holder, int position) {
 
-        DataOfComplaints currentItem = dataOfComplaints.get(position);
+        DataOfClientComplaints currentItem = dataOfClientComplaints.get(position);
         holder.howId.setText(holder.howId.getText()+String.valueOf(currentItem.getId()));
         holder.howStatus.setText(holder.howStatus.getText()+currentItem.getStatus());
     }
 
     @Override
     public int getItemCount() {
-        return dataOfComplaints.size();
+        return dataOfClientComplaints.size();
     }
 
 }

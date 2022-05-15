@@ -14,13 +14,13 @@ import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
 
-public class Complaints extends AppCompatActivity {
+public class ClientComplaints extends AppCompatActivity {
 
     private Button btnAddComplaint;
     private RecyclerView recyclerView;
-    private DataOfComplaintsAdapter adapter;
+    private DataOfClientComplaintsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<DataOfComplaints> dataOfComplaints = new ArrayList<>();
+    private ArrayList<DataOfClientComplaints> dataOfClientComplaints = new ArrayList<>();
 
     private DBHelper AgroPol;
     private int IdUser;
@@ -28,7 +28,7 @@ public class Complaints extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_complaints);
+        setContentView(R.layout.layout_client_complaints);
         Bundle bundle=getIntent().getExtras();
         IdUser=bundle.getInt("IdUser");
         findViews();
@@ -42,7 +42,7 @@ public class Complaints extends AppCompatActivity {
         Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
         while (result.isAfterLast()==false)
         {
-            dataOfComplaints.add(new DataOfComplaints(result.getInt(0),result.getString(5)));
+            dataOfClientComplaints.add(new DataOfClientComplaints(result.getInt(0),result.getString(5)));
             result.moveToNext();
         }
 
@@ -51,19 +51,19 @@ public class Complaints extends AppCompatActivity {
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new DataOfComplaintsAdapter(dataOfComplaints);
+        adapter = new DataOfClientComplaintsAdapter(dataOfClientComplaints);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new DataOfComplaintsAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new DataOfClientComplaintsAdapter.OnItemClickListener() {
             @Override
             public void onShowClick(int position) {
                 //otwarcie intencji szczegółów reklamacj
                 //trzeba wysłać dane z konkretnego itemu do tej reklamacji
-                    Intent intent = new Intent(Complaints.super.getApplicationContext(),
+                    Intent intent = new Intent(ClientComplaints.super.getApplicationContext(),
                             DetailsOfClientComplaints.class);
                     intent.putExtra("IdUser", IdUser);
-                    intent.putExtra("IdComplaint", dataOfComplaints.get(position).getId());
+                    intent.putExtra("IdComplaint", dataOfClientComplaints.get(position).getId());
                     startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class Complaints extends AppCompatActivity {
             public void onClick(View v) {
                 //wysyłyanie flagi do aktywności świadczącej o otwarciu katalogu Orders w trybie
                 //składania reklamacji
-                Intent intent = new Intent(Complaints.super.getApplicationContext(),
+                Intent intent = new Intent(ClientComplaints.super.getApplicationContext(),
                         ClientOrders.class);
                 intent.putExtra("IdUser",IdUser);
                 intent.putExtra("Flag",1);
@@ -88,6 +88,6 @@ public class Complaints extends AppCompatActivity {
     private void findViews() {
         btnAddComplaint=findViewById(R.id.btn_add_complaint);
         recyclerView=findViewById(R.id.recycler_view);
-        AgroPol=new DBHelper(Complaints.this);
+        AgroPol=new DBHelper(ClientComplaints.this);
     }
 }
