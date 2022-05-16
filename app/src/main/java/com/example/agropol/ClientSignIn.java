@@ -25,9 +25,9 @@ public class ClientSignIn extends AppCompatActivity {
         setContentView(R.layout.layout_client_sign_in);
         findViews();
         createListeners();
-//        AgroPol.onAlter();
+        //AgroPol.onAlter();
 //        AgroPol.showAllColumnsName();
-//        AgroPol.setData("client",new String[]{"Login","Password","Name","Surname","Email","Tel","Address","City"},new String[]{"asd","asd","asd","asd","asd","asd","asd","asd"});
+       // AgroPol.setData("client",new String[]{"Login","Password","Name","Surname","Email","Tel","Address","City"},new String[]{"asd","asd","asd","asd","asd","asd","asd","asd"});
     }
 
     private void createListeners() {

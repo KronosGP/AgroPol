@@ -42,16 +42,16 @@
         android:id="@+id/price_of_transport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/top"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/crete_round"
+        android:text="Koszt dostawy dla twojego zamówienia wynosi\n"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@id/btn_without_transport"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="20dp"
-        android:textSize="25dp"
-        android:textColor="@color/black"
-        android:textAlignment="center"
-        android:fontFamily="@font/crete_round"
-        android:text="Koszt dostawy dla twojego zamówienia wynosi\n0 zł"/>
+        app:layout_constraintTop_toBottomOf="@id/top" />
 
 
     <Button

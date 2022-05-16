@@ -86,7 +86,8 @@ public class ClientOrders extends AppCompatActivity {
                     int id=Integer.parseInt(result.getString(0));
                     String data=result.getString(3);
                     Double sum=price+delivey;
-                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,"Złożono"));
+                    String status=result.getString(6);
+                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,status));
                     System.out.println(Integer.parseInt(result.getString(0))+" "+ result.getString(3)+" "+sum);
                     result.moveToNext();
                 }
@@ -95,6 +96,7 @@ public class ClientOrders extends AppCompatActivity {
             {
                 System.out.println(ex);
             }
+            AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
         if(Flag==1){/*showInfoWindow();*/}//coś z przyciskiem nie działa(btnOk)
 
     }
@@ -147,7 +149,7 @@ public class ClientOrders extends AppCompatActivity {
             public void onClick(View v) {
                 try {
 
-                    AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0"});
+                    AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery","Status"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie"});
                     System.out.println(AgroPol.getDate("Select * from request").getString(0));
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);

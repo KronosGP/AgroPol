@@ -35,6 +35,8 @@ public class MakeOrder extends AppCompatActivity {
     private DBHelper AgroPol;
     private int IdUser;
     private int IdRequest;
+    private double sumAll=0.0;
+    private double delivery;
     int mainImage;
 
     @Override
@@ -69,13 +71,14 @@ public class MakeOrder extends AppCompatActivity {
 
         result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
         //plant.Species,plant.Variety,plant.Price
-
+        Double sumAll=0.0;
         while(result.isAfterLast()==false)
         {
             Cursor result1=AgroPol.getDate("Select Species,Variety,Price from Plant where ID="+result.getString(0));
             int Quantity=Integer.parseInt(result.getString(1));
             Double price=Double.parseDouble(result1.getString(2));
             Double sum=Quantity*price;
+            sumAll+=sum;
             String species=result1.getString(0);
             String Variety=result1.getString(1);
             getMainImage(species);
@@ -88,7 +91,6 @@ public class MakeOrder extends AppCompatActivity {
             }
             result.moveToNext();
         }
-
 
     }
 
@@ -154,6 +156,22 @@ public class MakeOrder extends AppCompatActivity {
         transportDialogWindow.show();
         findTransportDialogWindowViews(transportDialogWindow);
         createAndAddListeners(transportDialogWindow);
+        if(sumAll>20000) {
+            priceOfTransport.setText(priceOfTransport.getText().toString() + "0 zł");
+            delivery=0.0;
+        }
+        else if(sumAll>10000) {
+            priceOfTransport.setText(priceOfTransport.getText().toString() + "50 zł");
+            delivery=50.0;
+        }
+        else if(sumAll>5000) {
+            priceOfTransport.setText(priceOfTransport.getText().toString() + "100 zł");
+            delivery=100.0;
+        }
+        else {
+            delivery=200.0;
+            priceOfTransport.setText(priceOfTransport.getText().toString() + "200 zł");
+        }
     }
 
     private void createAndAddListeners(Dialog transportDialogWindow) {
@@ -168,7 +186,7 @@ public class MakeOrder extends AppCompatActivity {
                     case R.id.btn_without_transport:
                     {
                         try {
-                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery"}, new String[]{"0.0"});
+                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
                         }
                         catch (Exception ex)
                         {
@@ -183,7 +201,7 @@ public class MakeOrder extends AppCompatActivity {
                     case R.id.btn_with_transport:
                     {
                         try {
-                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery"}, new String[]{"5.0"});
+                            AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
                         }
                         catch (Exception ex)
                         {

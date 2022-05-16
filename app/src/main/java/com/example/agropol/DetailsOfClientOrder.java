@@ -65,7 +65,7 @@ public class DetailsOfClientOrder extends AppCompatActivity {
         howCostOfDelivery.setText(" "+String.valueOf(delivery));
         howTotalSum.setText("\n"+String.valueOf(cost + delivery));
         //trzeba zczytać z bazy danych
-        //howStatus.setText();
+        howStatus.setText(String.valueOf(result.getString(6)));
 
 
         result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
