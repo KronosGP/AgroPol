@@ -35,6 +35,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
     private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
     private int mainImage;
     private int IdRequest;
+    private int IdItem;
     private DBHelper AgroPol;
     private String saveData;
 
@@ -48,6 +49,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         setContentView(R.layout.layout_details_of_employee_orders);
         Bundle bundle=getIntent().getExtras();
         IdRequest=bundle.getInt("IdRequest");
+        IdItem=bundle.getInt("IdItem");
         findViews();
         startSettings();
         createListeners();
@@ -184,6 +186,9 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                                                    EmployeOrders.class);
                         startActivity(intent);*/
                         AgroPol.editData("Request","ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
+                        Intent wynik=new Intent();
+                        wynik.putExtra("ID",IdItem);
+                        setResult(1,wynik);
                         finish();
                     }break;
                     case R.id.btn_cancel:

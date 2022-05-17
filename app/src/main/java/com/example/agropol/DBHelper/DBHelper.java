@@ -73,7 +73,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Status TEXT NOT NULL," +
                 "Date_of_Complaint Date NOT NULL );");
 
-        //sqLiteDatabase.execSQL("INSERT INTO pracownik (Login, Haslo, Imie, Nazwisko, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
+        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
+        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('haslo', 'login', 'Marian', 'Wajda', '987654321');");
+        sqLiteDatabase.execSQL("INSERT INTO client (Login,Password,Name,Surname,Email,Tel,Address,City) VALUES ('','','','','','918273645','',''),('','','','','','918273645','','');");
 
     }
 

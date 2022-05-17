@@ -1,5 +1,6 @@
 package com.example.agropol;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +15,27 @@ import java.util.ArrayList;
 
 public class EmployeOrders extends AppCompatActivity {
 
+
     private RecyclerView recyclerView;
     private CatalogOfOrderEmployeeAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
     private DBHelper AgroPol;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == 1) {
+                Bundle bundle = data.getExtras();
+                itemOfRecyclerViewOrders.get(bundle.getInt("ID")).setStatus("Zamówienie gotowe");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +73,8 @@ public class EmployeOrders extends AppCompatActivity {
                 //wyświetlenie w nowej aktywności szczegółów zamówienia
                     Intent intent = new Intent(EmployeOrders.super.getApplicationContext(), DetailsOfEmployeeOrders.class);
                     intent.putExtra("IdRequest", itemOfRecyclerViewOrders.get(position).getId());
-                    startActivity(intent);
+                    intent.putExtra("IdItem",position);
+                    startActivityForResult(intent,1);
             }
         });
     }

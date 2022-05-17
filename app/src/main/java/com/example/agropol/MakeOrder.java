@@ -71,7 +71,6 @@ public class MakeOrder extends AppCompatActivity {
 
         result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
         //plant.Species,plant.Variety,plant.Price
-        Double sumAll=0.0;
         while(result.isAfterLast()==false)
         {
             Cursor result1=AgroPol.getDate("Select Species,Variety,Price from Plant where ID="+result.getString(0));
@@ -156,21 +155,23 @@ public class MakeOrder extends AppCompatActivity {
         transportDialogWindow.show();
         findTransportDialogWindowViews(transportDialogWindow);
         createAndAddListeners(transportDialogWindow);
+        System.out.println(sumAll);
         if(sumAll>20000) {
-            priceOfTransport.setText(priceOfTransport.getText().toString() + "0 zł");
             delivery=0.0;
+            priceOfTransport.setText(priceOfTransport.getText().toString() + delivery+" zł");
         }
-        else if(sumAll>10000) {
-            priceOfTransport.setText(priceOfTransport.getText().toString() + "50 zł");
+        else if(sumAll>10000 && sumAll<=20000) {
             delivery=50.0;
+            priceOfTransport.setText(priceOfTransport.getText().toString() +delivery +" zł");
+
         }
-        else if(sumAll>5000) {
-            priceOfTransport.setText(priceOfTransport.getText().toString() + "100 zł");
+        else if(sumAll>5000 && sumAll<=10000) {
             delivery=100.0;
+            priceOfTransport.setText(priceOfTransport.getText().toString() + delivery+" zł");
         }
-        else {
+        else if(sumAll>0 && sumAll<=5000) {
             delivery=200.0;
-            priceOfTransport.setText(priceOfTransport.getText().toString() + "200 zł");
+            priceOfTransport.setText(priceOfTransport.getText().toString() + delivery+" zł");
         }
     }
 

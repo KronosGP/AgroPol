@@ -36,11 +36,11 @@ public class EmployeeSignIn extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // if (Logowanie()) {
+                //if (Logowanie()) {
                     Intent intent = new Intent(EmployeeSignIn.super.getApplicationContext(),
                             EmployeeMenu.class);
                     startActivity(intent);
-               // }
+                //}
 
             }
         });
