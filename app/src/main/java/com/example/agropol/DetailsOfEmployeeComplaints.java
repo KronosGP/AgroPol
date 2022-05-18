@@ -66,7 +66,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     case R.id.btn_change_status:
                     {
                         String status=howStatus.getText().toString();
-                        if(status.equals("W Przygotowaniu"))
+                        if(status.equals("Przetwarzane"))
                         openChangeStatusWindow();
                     }break;
                 }
