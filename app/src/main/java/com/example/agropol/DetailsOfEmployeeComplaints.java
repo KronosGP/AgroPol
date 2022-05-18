@@ -98,6 +98,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     {
                         //update na bazie danych ze statusu złożono na rozparzono pozytywnie
                         //przejście do aktywności z listą reklamacji
+                        //
                         AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                                    EmployeeComplaints.class);
@@ -105,7 +106,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     }break;
                     case R.id.btn_negative_complaint:
                     {
-                        //update na bazie danych ze statusu złożono na rozparzono pozytywnie
+                        //update na bazie danych ze statusu złożono na rozparzono negatywnie
                         //przejście do aktywności z listą reklamacji
                         AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),

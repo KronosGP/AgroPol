@@ -111,11 +111,14 @@ public class ClientCatalog extends AppCompatActivity {
                         else
                         {
                             try {
+                                //Dodanie sadzonki oraz jej ilość do szczegółów zamówienia
                                 AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plants.get(position).getId()), howQuantity.getText().toString()});
                                 result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
                                 Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())*plants.get(position).getPrice();
+                                //zmiana ceny zamówienia
                                 AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
                                 int update= (int) (plants.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
+                                //zmiana ilość sztuk w szklarniach
                                 AgroPol.editData("plant","ID="+plants.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);

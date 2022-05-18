@@ -38,7 +38,9 @@ public class ClientComplaints extends AppCompatActivity {
     }
 
     private void loadData() {
+        //Usuwanie nie dokończonych reklamacji
         AgroPol.delData("complaint","Status like 'In Make' and IDClient="+IdUser);
+        //Wczytanie danych z bazy danych do listy
         Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
         while (result.isAfterLast()==false)
         {

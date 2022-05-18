@@ -61,6 +61,7 @@ public class EmployeOrders extends AppCompatActivity {
             String dataC=result.getString(4);
             LocalDate dataN= LocalDate.now();
             LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1]),Integer.parseInt(dataC.split("-")[2]));
+            //Zmiana statusu zamówienia z Zamówienie gotowe na Dostarczone
             if(date.isEqual(dataN) || date.isBefore(dataN))
                 AgroPol.editData("request","ID="+ID,new String[]{"Status"},new String[]{"Dostarczono"});
             result.moveToNext();

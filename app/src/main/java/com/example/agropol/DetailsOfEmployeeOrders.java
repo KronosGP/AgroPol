@@ -186,6 +186,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                         /*Intent intent = new Intent(DetailsOfEmployeeOrders.super.getApplicationContext(),
                                                    EmployeOrders.class);
                         startActivity(intent);*/
+                        //Edycja tabli Request(zamówienie) zmiana z Przetwarzanie na Zamówienie Gotowe oraz zmiana w dacie dostarczenia
                         AgroPol.editData("Request","ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
                         Intent wynik=new Intent();
                         wynik.putExtra("ID",IdItem);

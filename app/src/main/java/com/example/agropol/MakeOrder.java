@@ -187,6 +187,7 @@ public class MakeOrder extends AppCompatActivity {
                     case R.id.btn_without_transport:
                     {
                         try {
+                            //zmiana statusu zamówienia oraz ustawienie ceny dostawy
                             AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
                         }
                         catch (Exception ex)
@@ -202,6 +203,7 @@ public class MakeOrder extends AppCompatActivity {
                     case R.id.btn_with_transport:
                     {
                         try {
+                            //zmiana statusu zamówienia oraz ustawienie ceny dostawy
                             AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
                         }
                         catch (Exception ex)
