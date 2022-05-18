@@ -5,7 +5,7 @@ public class DataOfClientComplaints {
     private int id;
     private String status;
 
-    DataOfClientComplaints(int id, String status)
+    public DataOfClientComplaints(int id, String status)
     {
         this.id=id;
         this.status=status;

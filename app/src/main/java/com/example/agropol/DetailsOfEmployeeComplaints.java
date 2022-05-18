@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.agropol.DBHelper.Complaint;
 import com.example.agropol.DBHelper.DBHelper;
 
 public class DetailsOfEmployeeComplaints extends AppCompatActivity {
@@ -92,6 +93,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int id=v.getId();
+                Complaint complaint=new Complaint();
                 switch (id)
                 {
                     case R.id.btn_positive_complaint:
@@ -99,7 +101,8 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                         //update na bazie danych ze statusu złożono na rozparzono pozytywnie
                         //przejście do aktywności z listą reklamacji
                         //
-                        AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
+                        //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
+                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                                    EmployeeComplaints.class);
                         startActivity(intent);
@@ -108,7 +111,8 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     {
                         //update na bazie danych ze statusu złożono na rozparzono negatywnie
                         //przejście do aktywności z listą reklamacji
-                        AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
+                        //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
+                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                 EmployeeComplaints.class);
                         startActivity(intent);

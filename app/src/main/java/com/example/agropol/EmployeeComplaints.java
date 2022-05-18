@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import com.example.agropol.DBHelper.Complaint;
 import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class EmployeeComplaints extends AppCompatActivity {
 
     private void loadData() {
         //wczytanie danych do recyclerView
-        Cursor result= AgroPol.getDate("Select * from complaint where Status not like 'In Make'");
+       /* Cursor result= AgroPol.getDate("Select * from complaint where Status not like 'In Make'");
         while(result.isAfterLast()==false)
         {
             int IdClient=result.getInt(1);
@@ -39,7 +40,9 @@ public class EmployeeComplaints extends AppCompatActivity {
             String status=result.getString(5);
             dataOfEmployeeComplaints.add(new DataOfEmployeeComplaints(IdClient,IdComplaint,status));
             result.moveToNext();
-        }
+        }*/
+        Complaint complaint=new Complaint();
+        dataOfEmployeeComplaints=complaint.loadEmployeeComplaint(getApplicationContext(),dataOfEmployeeComplaints);
     }
 
     private void startSettings() {

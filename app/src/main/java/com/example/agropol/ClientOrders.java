@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.agropol.DBHelper.Complaint;
 import com.example.agropol.DBHelper.DBHelper;
 import com.example.agropol.DBHelper.Order;
 
@@ -128,7 +129,9 @@ public class ClientOrders extends AppCompatActivity {
                 else{
                     try {
                         //Tworzenie reklamacji
-                        AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
+                        //AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
+                        Complaint complaint=new Complaint();
+                        complaint.addComplaint(getApplicationContext(),String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN());
 
                         Cursor result=AgroPol.getDate("Select ID from complaint where IDClient="+IdUser);
                         result.moveToLast();

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.agropol.DBHelper.Complaint;
 import com.example.agropol.DBHelper.DBHelper;
 
 import java.util.ArrayList;
@@ -41,12 +42,14 @@ public class ClientComplaints extends AppCompatActivity {
         //Usuwanie nie dokończonych reklamacji
         AgroPol.delData("complaint","Status like 'In Make' and IDClient="+IdUser);
         //Wczytanie danych z bazy danych do listy
-        Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
+        /*Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
         while (result.isAfterLast()==false)
         {
             dataOfClientComplaints.add(new DataOfClientComplaints(result.getInt(0),result.getString(5)));
             result.moveToNext();
-        }
+        }*/
+        Complaint complaint=new Complaint();
+        dataOfClientComplaints=complaint.loadClientComplaint(getApplicationContext(),dataOfClientComplaints,IdUser);
 
     }
 

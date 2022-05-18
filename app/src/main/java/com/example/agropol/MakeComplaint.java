@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.agropol.DBHelper.Complaint;
 import com.example.agropol.DBHelper.DBHelper;
 
 public class MakeComplaint extends AppCompatActivity {
@@ -67,7 +68,9 @@ public class MakeComplaint extends AppCompatActivity {
                 if(!howComplaint.getText().toString().equals(""))
                 {
                     //Zmiana Statusu oraz teści reklamacji
-                    AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
+                    //AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
+                    Complaint complaint=new Complaint();
+                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
                     Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
                     intent.putExtra("IdUser",IdUser);
                     startActivity(intent);

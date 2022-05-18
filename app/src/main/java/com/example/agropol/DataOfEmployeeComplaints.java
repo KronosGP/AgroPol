@@ -6,7 +6,7 @@ public class DataOfEmployeeComplaints {
     private int complaint_id;
     private String status;
 
-    DataOfEmployeeComplaints(int client_id, int complaint_id, String status)
+    public DataOfEmployeeComplaints(int client_id, int complaint_id, String status)
     {
         this.client_id=client_id;
         this.complaint_id=complaint_id;
