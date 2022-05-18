@@ -6,7 +6,7 @@ public class ItemOfRecyclerViewOrder {
     private double price;
     private String status;
 
-    ItemOfRecyclerViewOrder(int id, String date, double price, String status)
+    public ItemOfRecyclerViewOrder(int id, String date, double price, String status)
     {
         this.id=id;
         this.date=date;

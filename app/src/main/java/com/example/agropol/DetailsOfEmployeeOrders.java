@@ -17,6 +17,7 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Order;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,7 +71,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         result=AgroPol.getDate("Select Name,Surname from client where ID="+result.getString(1));
         howClient.setText(result.getString(0)+" "+result.getString(1));
         //zamówienie
-        result=AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
+        /*result=AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
         while(result.isAfterLast()==false)
         {
             Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
@@ -82,7 +83,9 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
             int image=result1.getInt(5);
             dataOfOrders.add(new DataOfOrders(species,variety,quantity,price,sum,image));
             result.moveToNext();
-        }
+        }*/
+        Order order = new Order();
+        dataOfOrders=order.loadDetailsOrder(getApplicationContext(),dataOfOrders,IdRequest);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar oldDate=Calendar.getInstance();
@@ -187,7 +190,9 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                                                    EmployeOrders.class);
                         startActivity(intent);*/
                         //Edycja tabli Request(zamówienie) zmiana z Przetwarzanie na Zamówienie Gotowe oraz zmiana w dacie dostarczenia
-                        AgroPol.editData("Request","ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
+                        //AgroPol.editData("Request","ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
+                        Order order=new Order();
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
                         Intent wynik=new Intent();
                         wynik.putExtra("ID",IdItem);
                         setResult(1,wynik);

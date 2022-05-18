@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Order;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class ClientOrders extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
     private DBHelper AgroPol;
+    Order order;
     private int IdUser;
     private int Flag;
     Button btnAddOrder;
@@ -80,7 +82,7 @@ public class ClientOrders extends AppCompatActivity {
             result.moveToNext();
         }
         //wczytanie zamówień z bazy danych do recyclerView
-            result=AgroPol.getDate("Select * from request where IDClient = " + IdUser);
+           /* result=AgroPol.getDate("Select * from request where IDClient = " + IdUser);
             try {
                 while (result.isAfterLast() == false) {
                     Double price=Double.parseDouble(result.getString(2));
@@ -96,7 +98,8 @@ public class ClientOrders extends AppCompatActivity {
             catch (Exception ex)
             {
                 System.out.println(ex);
-            }
+            }*/
+        itemOfRecyclerViewOrders=order.loadOrder(getApplicationContext(),itemOfRecyclerViewOrders,IdUser);
 
         if(Flag==1){/*showInfoWindow();*/}//coś z przyciskiem nie działa(btnOk)
 
@@ -126,6 +129,7 @@ public class ClientOrders extends AppCompatActivity {
                     try {
                         //Tworzenie reklamacji
                         AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
+
                         Cursor result=AgroPol.getDate("Select ID from complaint where IDClient="+IdUser);
                         result.moveToLast();
                         Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
@@ -150,8 +154,8 @@ public class ClientOrders extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     //Tworzenie zamówienia
-                    AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery","Status"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie"});
-                    System.out.println(AgroPol.getDate("Select * from request").getString(0));
+                    //AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery","Status"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie"});
+                    order.AddOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie");
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);
                     intent.putExtra("IdUser", IdUser);
@@ -205,5 +209,6 @@ public class ClientOrders extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycler_view);
         btnAddOrder=findViewById(R.id.btn_add_order);
         AgroPol=new DBHelper(ClientOrders.this);
+        order=new Order();
     }
 }

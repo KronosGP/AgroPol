@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Order;
 import com.example.agropol.DBHelper.Plant;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -112,15 +113,20 @@ public class ClientCatalog extends AppCompatActivity {
                         else
                         {
                             try {
+                                Order order=new Order();
                                 //Dodanie sadzonki oraz jej ilość do szczegółów zamówienia
-                                AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString()});
+                                //AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString()});
+                                order.AddDetailsOrder(getApplicationContext(),String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString());
                                 result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
                                 Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())* plantItems.get(position).getPrice();
                                 //zmiana ceny zamówienia
-                                AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
+                                //AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
+                                order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
                                 int update= (int) (plantItems.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
                                 //zmiana ilość sztuk w szklarniach
-                                AgroPol.editData("plant","ID="+ plantItems.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                                //AgroPol.editData("plant","ID="+ plantItems.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                                Plant plant=new Plant();
+                                plant.editPlant(getApplicationContext(),String.valueOf(plantItems.get(position).getId()),plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(),String.valueOf(update),String.valueOf(plantItems.get(position).getPrice()),String.valueOf(plantItems.get(position).getImage()));
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);
                                 intent.putExtra("IdUser",IdUser);

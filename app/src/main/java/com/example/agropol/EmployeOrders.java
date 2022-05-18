@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Order;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class EmployeOrders extends AppCompatActivity {
     }
     private void loadData() {
 //        wczytanie zamówień do recyclerView
-        Cursor result =AgroPol.getDate("Select ID,Date_of_request,Price,Status,Date_of_delivery from request where Status not like 'tworzenie'");
+        /*Cursor result =AgroPol.getDate("Select ID,Date_of_request,Price,Status,Date_of_delivery from request where Status not like 'tworzenie'");
 
         while(result.isAfterLast()==false)
         {
@@ -65,7 +66,9 @@ public class EmployeOrders extends AppCompatActivity {
             if(date.isEqual(dataN) || date.isBefore(dataN))
                 AgroPol.editData("request","ID="+ID,new String[]{"Status"},new String[]{"Dostarczono"});
             result.moveToNext();
-        }
+        }*/
+        Order order=new Order();
+        itemOfRecyclerViewOrders=order.loadOrder(getApplicationContext(),itemOfRecyclerViewOrders,0);
     }
 
     private void startSettings() {

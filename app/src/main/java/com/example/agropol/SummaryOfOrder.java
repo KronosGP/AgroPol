@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Order;
+import com.example.agropol.DBHelper.Plant;
 
 public class SummaryOfOrder extends AppCompatActivity {
 
@@ -56,7 +58,9 @@ public class SummaryOfOrder extends AppCompatActivity {
                     case R.id.btn_add_order:
                     {
                         //zmiana statusu zamówienia
-                        AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
+                        Order order=new Order();
+                        //AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    ClientOrders.class);
                         intent.putExtra("IdUser",IdUser);
@@ -65,12 +69,14 @@ public class SummaryOfOrder extends AppCompatActivity {
                     case R.id.btn_cancel_order:
                     {
                         //dodanie z powrotem do możliwości zakupu sadzonki które były dodane do zamówienia
+                        Plant plant=new Plant();
                         Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
                         while(result.isAfterLast()==false)
                         {
                             Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
                             int update=result1.getInt(3)+result.getInt(2);
-                            AgroPol.editData("plant","ID="+result.getString(1),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                            //AgroPol.editData("plant","ID="+result.getString(1),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
                             result.moveToNext();
                         }
                         AgroPol.delData("details_request","IDRequest="+IdRequest);
