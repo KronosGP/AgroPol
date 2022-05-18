@@ -13,12 +13,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recycler_view"
         android:layout_marginStart="5dp"
         android:textSize="30sp"
         android:textColor="@color/black"
         android:fontFamily="@font/crete_round"
-        android:text="Moje zamówienia"/>
+        android:text="Lista zamówień"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

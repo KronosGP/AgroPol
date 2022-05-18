@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/crete_round"
-        android:text="Reklamacja\nID:"
+        android:text="Reklamacja"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"

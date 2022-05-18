@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/crete_round"
-        android:text="Klient ID:"
+        android:text="Zamówienie"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
@@ -247,12 +247,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/data_frame"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recycler_view"
         android:layout_marginStart="5dp"
         android:textSize="28sp"
         android:textColor="@color/black"
         android:fontFamily="@font/crete_round"
-        android:text="Dane zamówienia"/>
+        android:text="Pozycje zamówienia"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

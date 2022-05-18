@@ -31,6 +31,7 @@ public class ClientCatalog extends AppCompatActivity {
     private TextInputEditText howQuantity;
     private TextView attention;
     private Button btnCancel, btnAdd;
+    private TextView title;
 
     private DBHelper AgroPol;
     private int flag;
@@ -48,6 +49,7 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
+        title=findViewById(R.id.title);
         AgroPol=new DBHelper(ClientCatalog.this);
         Bundle bundle=getIntent().getExtras();
         flag=bundle.getInt("flag");
@@ -61,6 +63,10 @@ public class ClientCatalog extends AppCompatActivity {
         adapter = new CatalogAdapter(plants);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        if(flag==1)
+            title.setText("Dodaj pozycję");
+        else
+            title.setText("Katalog sadzonek");
 
         adapter.setOnItemClickListener(new CatalogAdapter.OnItemClickListener() {
             @Override

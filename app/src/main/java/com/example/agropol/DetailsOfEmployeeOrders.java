@@ -33,7 +33,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
     private DataOfOrdersAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
-    private int mainImage;
     private int IdRequest;
     private int IdItem;
     private DBHelper AgroPol;
@@ -209,23 +208,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         btnAccept=changeStatusWindow.findViewById(R.id.btn_accept);
         btnCancel=changeStatusWindow.findViewById(R.id.btn_cancel);
 
-    }
-
-    //funkcja ustawiająca rysunek w recyclerview ze itemami zamówienia
-    private void getMainImage(String species) {
-        switch (species)
-        {
-            case "Papryka":mainImage=R.drawable.image_pepper;break;
-            case "Fasola":mainImage=R.drawable.image_beans;break;
-            case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
-            case "Kapusta pekińska":mainImage=R.drawable.image_cabbagepekin;break;
-            case "Ogórek":mainImage=R.drawable.image_cucumber;break;
-            case "Marchewka":mainImage=R.drawable.image_carrot;break;
-            case "Pietruszka":mainImage=R.drawable.image_parsley;break;
-            case "Dynia":mainImage=R.drawable.image_pumkin;break;
-            case "Rzodkiweka":mainImage=R.drawable.image_radish;break;
-            case "Pomidor":mainImage=R.drawable.image_tomato;break;
-        }
     }
 
     private void startSettings() {
