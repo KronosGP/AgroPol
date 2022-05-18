@@ -55,7 +55,7 @@ public class DetailsOfClientOrder extends AppCompatActivity {
     private void loadData() {
         Cursor result = AgroPol.getDate("Select * from client where ID=" + IdUser);
         howClient.setText(result.getString(3) + " " + result.getString(4));
-        howId.setText(String.valueOf(IdRequest));
+        //howId.setText(String.valueOf(IdRequest));
         result = AgroPol.getDate("Select * from request where Id=" + IdRequest);
         howDateOfOrder.setText("\n"+result.getString(3));
         howDateOfDelivery.setText("\n"+result.getString(4)+"\n");

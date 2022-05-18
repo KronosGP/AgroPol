@@ -106,6 +106,8 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                     }break;
                     case R.id.btn_change_status:
                     {
+                        String status =howStatus.getText().toString();
+                        if(status.equals("złożono"))
                         openChangeStatusWindow();
                     }break;
                 }

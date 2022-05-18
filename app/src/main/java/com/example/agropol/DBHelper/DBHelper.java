@@ -75,7 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
         sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('haslo', 'login', 'Marian', 'Wajda', '987654321');");
-        sqLiteDatabase.execSQL("INSERT INTO client (Login,Password,Name,Surname,Email,Tel,Address,City) VALUES ('','','','','','918273645','',''),('','','','','','918273645','','');");
+        sqLiteDatabase.execSQL("INSERT INTO client (Login,Password,Name,Surname,Email,Tel,Address,City) VALUES ('klient1','klient1','Kamil','Poradnik','Poradnik@wp.pl','918273645','Radom','Fajny adres 25/6'),('klient2','klient2','Adam','Rychlicki','rychlicki@wp.pl','918273645','Radom','Jakaś inna ulica');");
 
     }
 

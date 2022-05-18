@@ -18,6 +18,7 @@ import com.example.agropol.DBHelper.DBHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -69,6 +70,7 @@ public class ClientOrders extends AppCompatActivity {
 
     private void loadData() {
         //usunięcie pustych zamówień
+        AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
         Cursor result = AgroPol.getDate("Select * from request where IDClient = " + IdUser);
         while(result.isAfterLast()==false)
         {
@@ -88,7 +90,11 @@ public class ClientOrders extends AppCompatActivity {
                     Double sum=price+delivey;
                     String status=result.getString(6);
                     itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,status));
-                    System.out.println(Integer.parseInt(result.getString(0))+" "+ result.getString(3)+" "+sum);
+                    String dataC=result.getString(4);
+                    LocalDate dataN= LocalDate.now();
+                    LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1])-1,Integer.parseInt(dataC.split("-")[2]));
+                    if(date.isEqual(dataN) || date.isBefore(dataN))
+                        AgroPol.editData("request","ID="+id,new String[]{"Status"},new String[]{"Dostarczono"});
                     result.moveToNext();
                 }
             }
@@ -96,7 +102,7 @@ public class ClientOrders extends AppCompatActivity {
             {
                 System.out.println(ex);
             }
-            AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
+
         if(Flag==1){/*showInfoWindow();*/}//coś z przyciskiem nie działa(btnOk)
 
     }
