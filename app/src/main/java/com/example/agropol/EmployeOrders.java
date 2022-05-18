@@ -60,7 +60,7 @@ public class EmployeOrders extends AppCompatActivity {
             ));
             String dataC=result.getString(4);
             LocalDate dataN= LocalDate.now();
-            LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1])-1,Integer.parseInt(dataC.split("-")[2]));
+            LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1]),Integer.parseInt(dataC.split("-")[2]));
             if(date.isEqual(dataN) || date.isBefore(dataN))
                 AgroPol.editData("request","ID="+ID,new String[]{"Status"},new String[]{"Dostarczono"});
             result.moveToNext();
