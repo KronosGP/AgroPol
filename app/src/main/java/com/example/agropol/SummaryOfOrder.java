@@ -55,6 +55,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     // danych
                     case R.id.btn_add_order:
                     {
+                        //zmiana statusu zamówienia
                         AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    ClientOrders.class);
@@ -63,6 +64,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     }break;
                     case R.id.btn_cancel_order:
                     {
+                        //dodanie z powrotem do możliwości zakupu sadzonki które były dodane do zamówienia
                         Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
                         while(result.isAfterLast()==false)
                         {

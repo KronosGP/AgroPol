@@ -90,11 +90,6 @@ public class ClientOrders extends AppCompatActivity {
                     Double sum=price+delivey;
                     String status=result.getString(6);
                     itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,status));
-                    String dataC=result.getString(4);
-                    LocalDate dataN= LocalDate.now();
-                    LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1]),Integer.parseInt(dataC.split("-")[2]));
-                    if(date.isEqual(dataN) || date.isBefore(dataN))
-                        AgroPol.editData("request","ID="+id,new String[]{"Status"},new String[]{"Dostarczono"});
                     result.moveToNext();
                 }
             }
@@ -129,7 +124,7 @@ public class ClientOrders extends AppCompatActivity {
                     //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
                 else{
                     try {
-
+                        //Tworzenie reklamacji
                         AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
                         Cursor result=AgroPol.getDate("Select ID from complaint where IDClient="+IdUser);
                         result.moveToLast();
@@ -154,7 +149,7 @@ public class ClientOrders extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-
+                    //Tworzenie zamówienia
                     AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery","Status"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie"});
                     System.out.println(AgroPol.getDate("Select * from request").getString(0));
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),

@@ -66,6 +66,7 @@ public class MakeComplaint extends AppCompatActivity {
                 //powrót do aktywności z listą reklamacji
                 if(!howComplaint.getText().toString().equals(""))
                 {
+                    //Zmiana Statusu oraz teści reklamacji
                     AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
                     Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
                     intent.putExtra("IdUser",IdUser);
