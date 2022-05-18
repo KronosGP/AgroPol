@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Plant;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ClientCatalog extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CatalogAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Plant> plants = new ArrayList<>();
+    private ArrayList<PlantItems> plantItems = new ArrayList<>();
 
     private TextInputEditText howQuantity;
     private TextView attention;
@@ -60,7 +61,7 @@ public class ClientCatalog extends AppCompatActivity {
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CatalogAdapter(plants);
+        adapter = new CatalogAdapter(plantItems);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         if(flag==1)
@@ -99,7 +100,7 @@ public class ClientCatalog extends AppCompatActivity {
                         //walidacja danych w sensie czy liczba sadzonek nie jest liczbą ujemną lub
                         // jest większa od tej w katalogu, jeżeli coś się nie zgadza wyświetlenie
                         //uwagi w textView (attention) a wcześniej jej pokazanie bo domyślnie jest niewidoczna
-                        Cursor result=AgroPol.getDate("Select ID,Quantity from plant where ID="+plants.get(position).getId());
+                        Cursor result=AgroPol.getDate("Select ID,Quantity from plant where ID="+ plantItems.get(position).getId());
                         if(Integer.parseInt(result.getString(1))<Integer.parseInt(howQuantity.getText().toString())){
                             attention.setVisibility(View.VISIBLE);
                             attention.setText("Za duża ilość!!!");
@@ -112,14 +113,14 @@ public class ClientCatalog extends AppCompatActivity {
                         {
                             try {
                                 //Dodanie sadzonki oraz jej ilość do szczegółów zamówienia
-                                AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plants.get(position).getId()), howQuantity.getText().toString()});
+                                AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString()});
                                 result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
-                                Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())*plants.get(position).getPrice();
+                                Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())* plantItems.get(position).getPrice();
                                 //zmiana ceny zamówienia
                                 AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
-                                int update= (int) (plants.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
+                                int update= (int) (plantItems.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
                                 //zmiana ilość sztuk w szklarniach
-                                AgroPol.editData("plant","ID="+plants.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
+                                AgroPol.editData("plant","ID="+ plantItems.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);
                                 intent.putExtra("IdUser",IdUser);
@@ -155,12 +156,15 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Cursor result = AgroPol.getDate("Select * from plant");
-            while (result.isAfterLast() == false) {
-                plants.add(new Plant(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
-                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
-                result.moveToNext();
-            }
+//            Cursor result = AgroPol.getDate("Select * from plant");
+//            while (result.isAfterLast() == false) {
+//                plantItems.add(new PlantItems(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
+//                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
+//                result.moveToNext();
+//            }
+
+            Plant plant = new Plant();
+            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
         }
         catch (SQLiteException ex)
         {

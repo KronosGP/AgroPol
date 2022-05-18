@@ -1,6 +1,10 @@
 package com.example.agropol;
 
-public class Plant {
+import android.content.Context;
+
+import com.example.agropol.DBHelper.DBHelper;
+
+public class PlantItems {
     private  int id;
     private String species;
     private String variety;
@@ -8,7 +12,7 @@ public class Plant {
     private double price;
     private int image;
 
-    public Plant(int id, String species, String variety, long quantity, double price, int image)
+    public PlantItems(int id, String species, String variety, long quantity, double price, int image)
     {
         this.id=id;
         this.species=species;
@@ -59,5 +63,13 @@ public class Plant {
     public int getImage()
     {
         return image;
+    }
+
+    public  void addPlant(Context context, String s, String v, String q, String p, String i)
+    {
+        DBHelper dbHelper = new DBHelper(context);
+        String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
+        String[] value = {s,v,q,p,i};
+        dbHelper.setData("plant", col, value);
     }
 }

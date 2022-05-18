@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Plant;
 
 import java.util.ArrayList;
 
@@ -80,14 +81,18 @@ public class AddPlant extends AppCompatActivity {
                         //dodanie pozycji do bazy danych chyba raczej bez żadnej walidacji danych
                         //
                         if(editOrNew==0) {
-                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
-                                AgroPol.setData("plant", col, value);
+//                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
+//                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
+//                                AgroPol.setData("plant", col, value);
+                            Plant plant = new Plant();
+                            plant.addPlant(getApplicationContext(),currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
                         }//wpisanie danych do bazy
                         else{
-                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
-                                AgroPol.editData("plant", "Id=" + idOfPlant, col, value);
+//                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
+//                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
+//                                AgroPol.editData("plant", "Id=" + idOfPlant, col, value);
+                            Plant plant = new Plant();
+                            plant.editPlant(getApplicationContext(),idOfPlant,currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
                         }//edycja bazy danych
 
                         //powrót do aktywności Katalogu

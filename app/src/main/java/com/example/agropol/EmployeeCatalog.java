@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.agropol.DBHelper.DBHelper;
+import com.example.agropol.DBHelper.Plant;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class EmployeeCatalog extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CatalogAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<Plant> plants = new ArrayList<>();
+    private ArrayList<PlantItems> plantItems = new ArrayList<>();
     private Button btnAddNewPlant;
     private DBHelper AgroPol;
 
@@ -66,14 +67,15 @@ public class EmployeeCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Cursor result = AgroPol.getDate("Select * from plant");
-            while (result.isAfterLast() == false) {
-                plants.add(new Plant(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
-                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
-                result.moveToNext();
-            }
-            System.out.println(adapter.getItemCount());
-
+//            Cursor result = AgroPol.getDate("Select * from plant");
+//            while (result.isAfterLast() == false) {
+//                plantItems.add(new PlantItems(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
+//                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
+//                result.moveToNext();
+//            }
+//            System.out.println(adapter.getItemCount());
+            Plant plant = new Plant();
+            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
 
         }
         catch (SQLiteException ex)
@@ -87,7 +89,7 @@ public class EmployeeCatalog extends AppCompatActivity {
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new CatalogAdapter(plants);
+        adapter = new CatalogAdapter(plantItems);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -114,7 +116,7 @@ public class EmployeeCatalog extends AppCompatActivity {
     private void setNames(int position) {
         //ustawienie danych w oknie dialogowym danych z pozycji w którą klikneliśmy
         try {
-            Cursor result = AgroPol.getDate("select * from plant where id=" + plants.get(position).getId());
+            Cursor result = AgroPol.getDate("select * from plant where id=" + plantItems.get(position).getId());
             imageOfVegetable.setImageResource(Integer.parseInt(result.getString(5)));
             howVariety.setText("Odmiana: " + result.getString(2));
             howQuantity.setText("Ilość dostępnych sztuk:\n" + result.getString(3));
@@ -138,7 +140,7 @@ public class EmployeeCatalog extends AppCompatActivity {
                     {
                         //spakowanie danych w paczkę i wysłanie do aktywności Addplant w calu ich wyświetlenia
                         //i ewentualnej edycji
-                        Cursor result = AgroPol.getDate("select * from plant where id=" + plants.get(position).getId());
+                        Cursor result = AgroPol.getDate("select * from plant where id=" + plantItems.get(position).getId());
                         Intent intent = new Intent(EmployeeCatalog.super.getApplicationContext(),
                                 AddPlant.class);
                         intent.putExtra("variety",result.getString(2));

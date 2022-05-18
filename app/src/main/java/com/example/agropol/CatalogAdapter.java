@@ -9,14 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.agropol.Plant;
-import com.example.agropol.R;
-
 import java.util.List;
 
 
 public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogAdapterViewHolder> {
-    private List<Plant> plants;
+    private List<PlantItems> plantItems;
     private OnItemClickListener adapterListener;
 
     public interface OnItemClickListener { ;
@@ -54,8 +51,8 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogA
         }
     }
 
-    public CatalogAdapter(List<Plant> plants) {
-        this.plants = plants;
+    public CatalogAdapter(List<PlantItems> plantItems) {
+        this.plantItems = plantItems;
     }
 
     @Override
@@ -67,7 +64,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogA
 
     @Override
     public void onBindViewHolder(@NonNull CatalogAdapterViewHolder holder, int position) {
-        Plant currentItem = plants.get(position);
+        PlantItems currentItem = plantItems.get(position);
         holder.howImage.setImageResource(currentItem.getImage());
         holder.howSpecies.setText(holder.howSpecies.getText()+currentItem.getSpecies());
         holder.howVariety.setText(holder.howVariety.getText()+currentItem.getVariety());
@@ -80,7 +77,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogA
 
     @Override
     public int getItemCount() {
-        return plants.size();
+        return plantItems.size();
     }
 
 }
