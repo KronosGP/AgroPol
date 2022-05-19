@@ -71,11 +71,18 @@ public class EmployeeSignIn extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
+    private void findViews() {
+        login=findViewById(R.id.login);
+        password=findViewById(R.id.password);
+        btnLogIn=findViewById(R.id.btn_log_in);
+        AgroPol=new DBHelper(EmployeeSignIn.this);
+    }
+
     private void createListeners() {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Logowanie()) {
+                if (logIn()) {
                     Intent intent = new Intent(EmployeeSignIn.super.getApplicationContext(),
                             EmployeeMenu.class);
                     startActivity(intent);
@@ -85,14 +92,12 @@ public class EmployeeSignIn extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Błędne dane logowania!",
                             Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
 
 
-    private boolean Logowanie() {
-        //Już działa
+    private boolean logIn() {
         try {
             Cursor result=AgroPol.getDate("Select Count(*) from employee where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
             if(Integer.parseInt(result.getString(0))==1)
@@ -104,12 +109,5 @@ public class EmployeeSignIn extends AppCompatActivity {
         }
         return false;
 
-    }
-
-    private void findViews() {
-        login=findViewById(R.id.login);
-        password=findViewById(R.id.password);
-        btnLogIn=findViewById(R.id.btn_log_in);
-        AgroPol=new DBHelper(EmployeeSignIn.this);
     }
 }

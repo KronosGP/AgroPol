@@ -29,6 +29,11 @@ public class EmployeeOrClient extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
     }
 
+    private void findViews() {
+        btnEmployee=findViewById(R.id.btn_employee);
+        btnClient=findViewById(R.id.btn_client);
+    }
+
     private void createListeners() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -53,10 +58,5 @@ public class EmployeeOrClient extends AppCompatActivity {
         };
         btnEmployee.setOnClickListener(listener);
         btnClient.setOnClickListener(listener);
-    }
-
-    private void findViews() {
-        btnEmployee=findViewById(R.id.btn_employee);
-        btnClient=findViewById(R.id.btn_client);
     }
 }

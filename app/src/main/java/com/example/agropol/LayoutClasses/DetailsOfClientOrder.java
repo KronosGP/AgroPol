@@ -102,7 +102,6 @@ public class DetailsOfClientOrder extends AppCompatActivity {
     private void loadData() {
         Cursor result = AgroPol.getDate("Select * from client where ID=" + IdUser);
         howClient.setText(result.getString(3) + " " + result.getString(4));
-        //howId.setText(String.valueOf(IdRequest));
         result = AgroPol.getDate("Select * from request where Id=" + IdRequest);
         howDateOfOrder.setText("\n"+result.getString(3));
         howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
@@ -116,7 +115,6 @@ public class DetailsOfClientOrder extends AppCompatActivity {
 
 
         result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
-        //plant.Species,plant.Variety,plant.Price
 
         while(result.isAfterLast()==false) {
             Cursor result1 = AgroPol.getDate("Select Species,Variety,Price from Plant where ID=" + result.getString(0));
@@ -129,8 +127,6 @@ public class DetailsOfClientOrder extends AppCompatActivity {
             dataOfOrders.add(new DataOfOrders(species, Variety, Quantity, price, sum, mainImage));
             result.moveToNext();
         }
-
-
     }
 
     private void getMainImage(String species) {
@@ -139,7 +135,7 @@ public class DetailsOfClientOrder extends AppCompatActivity {
             case "Papryka":mainImage=R.drawable.image_pepper;break;
             case "Fasola":mainImage=R.drawable.image_beans;break;
             case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
-            case "Kapusta pekińska":mainImage=R.drawable.image_cabbagepekin;break;
+            case "Kapusta Pekińska":mainImage=R.drawable.image_cabbagepekin;break;
             case "Ogórek":mainImage=R.drawable.image_cucumber;break;
             case "Marchewka":mainImage=R.drawable.image_carrot;break;
             case "Pietruszka":mainImage=R.drawable.image_parsley;break;
@@ -153,10 +149,6 @@ public class DetailsOfClientOrder extends AppCompatActivity {
         btnComeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent= new Intent(DetailsOfOrder.super.getApplicationContext(),
-                                          Orders.class);
-                intent.putExtra("IdUser",IdUser);
-                startActivity(intent);*/
                 finish();
             }
         });

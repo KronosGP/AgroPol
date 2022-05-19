@@ -51,6 +51,14 @@ public class EmployeeCatalog extends AppCompatActivity {
         loadData();
     }
 
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private void createToolbar() {
         ImageView btnBack=findViewById(R.id.btn_back);
         ImageView btnLogout=findViewById(R.id.btn_logout);
@@ -80,55 +88,10 @@ public class EmployeeCatalog extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    private void createListeners() {
-        btnAddNewPlant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EmployeeCatalog.super.getApplicationContext(),
-                        AddPlant.class);
-//                intent.putExtra("species","");
-                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("species","");
-                editor.apply();
-                startActivity(intent);
-            }
-        });
-    }
-
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_view);
         btnAddNewPlant=findViewById(R.id.btn_add_new_plant);
         AgroPol=new DBHelper(EmployeeCatalog.this);
-    }
-
-    private void loadData() {
-        try {
-//            Cursor result = AgroPol.getDate("Select * from plant");
-//            while (result.isAfterLast() == false) {
-//                plantItems.add(new PlantItems(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
-//                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
-//                result.moveToNext();
-//            }
-//            System.out.println(adapter.getItemCount());
-            Plant plant = new Plant();
-            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
-
-        }
-        catch (SQLiteException ex)
-        {
-            System.out.println(ex);
-        }
-
-
     }
 
     private void startSettings() {
@@ -145,6 +108,35 @@ public class EmployeeCatalog extends AppCompatActivity {
                 openDialogWindow(position);
             }
         });
+    }
+
+    private void createListeners() {
+        btnAddNewPlant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EmployeeCatalog.super.getApplicationContext(),
+                        AddPlant.class);
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("species","");
+                editor.apply();
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void loadData() {
+        try {
+            Plant plant = new Plant();
+            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
+
+        }
+        catch (SQLiteException ex)
+        {
+            System.out.println(ex);
+        }
+
+
     }
 
     private void openDialogWindow(int position) {
@@ -197,12 +189,6 @@ public class EmployeeCatalog extends AppCompatActivity {
                         editor.putString("image",result.getString(5));
                         editor.putString("id",result.getString(0));
                         editor.apply();
-//                        intent.putExtra("variety",result.getString(2));
-//                        intent.putExtra("species",result.getString(1));
-//                        intent.putExtra("quantity",result.getString(3));
-//                        intent.putExtra("price",result.getString(4));
-//                        intent.putExtra("image",result.getString(5));
-//                        intent.putExtra("id",result.getString(0));
                         startActivity(intent);
 
                     }break;

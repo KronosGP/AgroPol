@@ -31,17 +31,19 @@ public class MakeComplaint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_make_complaint);
-//        Bundle bundle=getIntent().getExtras();
-//        IdUser=bundle.getInt("IdUser");
-//        IdComplaint=bundle.getInt("IdComplaint");
         createToolbar();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-        IdComplaint =sharedPreferences.getInt("IdComplaint",0);
+        getSharedPreferences();
         findViews();
         createListeners();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -77,12 +79,46 @@ public class MakeComplaint extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
+        IdComplaint =sharedPreferences.getInt("IdComplaint",0);
+    }
+
+    private void findViews() {
+        titleOfComplaintId=findViewById(R.id.title_of_complaint_id);
+        titleOfOrderID=findViewById(R.id.title_of_order_id);
+        name=findViewById(R.id.name);
+        surname=findViewById(R.id.surname);
+        adress=findViewById(R.id.adress);
+        email=findViewById(R.id.email);
+        number=findViewById(R.id.number);
+        howComplaint=findViewById(R.id.how_complaint);
+        btnAddComplaint=findViewById(R.id.btn_add_complaint);
+        AgroPol=new DBHelper(MakeComplaint.this);
+    }
+
+    private void createListeners() {
+        btnAddComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //walidacja treści reklamacji, czy oby nie jest pusta, po czym dodanie do bazy danych oraz
+                //powrót do aktywności z listą reklamacji
+                if(!howComplaint.getText().toString().equals(""))
+                {
+                    //Zmiana Statusu oraz teści reklamacji
+                    Complaint complaint=new Complaint();
+                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"złożono"});
+                    Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("IdUser",IdUser);
+                    editor.apply();
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
     private void loadData() {
@@ -106,43 +142,5 @@ public class MakeComplaint extends AppCompatActivity {
             System.out.println(ex);
         }
 
-    }
-
-    private void createListeners() {
-        btnAddComplaint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //walidacja treści reklamacji, czy oby nie jest pusta, po czym dodanie do bazy danych oraz
-                //powrót do aktywności z listą reklamacji
-                if(!howComplaint.getText().toString().equals(""))
-                {
-                    //Zmiana Statusu oraz teści reklamacji
-                    //AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"przetwarzane"});
-                    Complaint complaint=new Complaint();
-                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"złożono"});
-                    Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
-                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("IdUser",IdUser);
-                    editor.apply();
-//                    intent.putExtra("IdUser",IdUser);
-                    startActivity(intent);
-                }
-
-            }
-        });
-    }
-
-    private void findViews() {
-        titleOfComplaintId=findViewById(R.id.title_of_complaint_id);
-        titleOfOrderID=findViewById(R.id.title_of_order_id);
-        name=findViewById(R.id.name);
-        surname=findViewById(R.id.surname);
-        adress=findViewById(R.id.adress);
-        email=findViewById(R.id.email);
-        number=findViewById(R.id.number);
-        howComplaint=findViewById(R.id.how_complaint);
-        btnAddComplaint=findViewById(R.id.btn_add_complaint);
-        AgroPol=new DBHelper(MakeComplaint.this);
     }
 }

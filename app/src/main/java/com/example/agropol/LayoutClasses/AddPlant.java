@@ -31,18 +31,16 @@ public class AddPlant extends AppCompatActivity {
     private EditText howVariety, howQuantity, howPrice;
     private Button btnCancel, btnAccept;
     private TextView textViewRow;
-
     private int editOrNew=0;
     private String currentImage;
     private String idOfPlant;
-
+    private String currentSpecies;
     private int[] images =
             {
                     R.drawable.image_pepper, R.drawable.image_beans, R.drawable.image_aubergine,
                     R.drawable.image_cabbagepekin, R.drawable.image_cucumber, R.drawable.image_carrot,
                     R.drawable.image_parsley, R.drawable.image_pumkin, R.drawable.image_radish, R.drawable.image_tomato
             };
-    private String currentSpecies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +51,14 @@ public class AddPlant extends AppCompatActivity {
         startSettings();
         createListeners();
         setInformation();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -84,32 +90,34 @@ public class AddPlant extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+    private void startSettings() {
+        addPlantSpinnerItems = new ArrayList<>();
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Papryka",R.drawable.image_pepper));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Fasola",R.drawable.image_beans));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Bakłażan",R.drawable.image_aubergine));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Kapusta Pekińska",R.drawable.image_cabbagepekin));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Ogórek",R.drawable.image_cucumber));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Marchewka",R.drawable.image_carrot));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pietruszka",R.drawable.image_parsley));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Dynia",R.drawable.image_pumkin));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Rzodkiewka",R.drawable.image_radish));
+        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pomidor",R.drawable.image_tomato));
+
+        adapter=new AddPlantSpinnerAdapter(this,addPlantSpinnerItems);
+        howSpecies.setAdapter(adapter);
+        currentSpecies="Papryka";
     }
 
+    private void findViews() {
+        howSpecies=findViewById(R.id.how_species);
+        howVariety=findViewById(R.id.how_variety);
+        howQuantity=findViewById(R.id.how_quantity);
+        howPrice=findViewById(R.id.how_price);
+        icon=findViewById(R.id.icon);
+        btnCancel=findViewById(R.id.btn_cancel);
+        btnAccept=findViewById(R.id.btn_accept);
+        AgroPol=new DBHelper(AddPlant.this);
 
-    private void setInformation() {
-        //Bundle bundle=getIntent().getExtras();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("species","").equals("")==false)
-        {
-            editOrNew=1;
-            currentSpecies=sharedPreferences.getString("species","");
-            for(int i=0;i<howSpecies.getAdapter().getCount();i++) {
-                if (addPlantSpinnerItems.get(i).getText().contains(currentSpecies))
-                    howSpecies.setSelection(i);
-            }
-            howVariety.setText(sharedPreferences.getString("variety",""));
-            howPrice.setText(sharedPreferences.getString("price",""));
-            howQuantity.setText(sharedPreferences.getString("quantity",""));
-            idOfPlant=sharedPreferences.getString("id","");
-            howVariety.setEnabled(false);
-        }
     }
 
     private void createListeners() {
@@ -128,16 +136,10 @@ public class AddPlant extends AppCompatActivity {
                             //dodanie pozycji do bazy danych chyba raczej bez żadnej walidacji danych
                             //
                             if (editOrNew == 0) {
-//                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-//                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
-//                                AgroPol.setData("plant", col, value);
                                 Plant plant = new Plant();
                                 plant.addPlant(getApplicationContext(), currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
                             }//wpisanie danych do bazy
                             else {
-//                                String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-//                                String[] value = {currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage};
-//                                AgroPol.editData("plant", "Id=" + idOfPlant, col, value);
                                 Plant plant = new Plant();
                                 plant.editPlant(getApplicationContext(), idOfPlant, currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
                             }//edycja bazy danych
@@ -176,33 +178,23 @@ public class AddPlant extends AppCompatActivity {
         });
     }
 
-    private void startSettings() {
-        addPlantSpinnerItems = new ArrayList<>();
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Papryka",R.drawable.image_pepper));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Fasola",R.drawable.image_beans));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Bakłażan",R.drawable.image_aubergine));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Kapusta Pekińska",R.drawable.image_cabbagepekin));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Ogórek",R.drawable.image_cucumber));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Marchewka",R.drawable.image_carrot));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pietruszka",R.drawable.image_parsley));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Dynia",R.drawable.image_pumkin));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Rzodkiewka",R.drawable.image_radish));
-        addPlantSpinnerItems.add(new AddPlantSpinnerItem("Pomidor",R.drawable.image_tomato));
-
-        adapter=new AddPlantSpinnerAdapter(this,addPlantSpinnerItems);
-        howSpecies.setAdapter(adapter);
-        currentSpecies="Papryka";
+    private void setInformation() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("species","").equals("")==false)
+        {
+            editOrNew=1;
+            currentSpecies=sharedPreferences.getString("species","");
+            for(int i=0;i<howSpecies.getAdapter().getCount();i++) {
+                if (addPlantSpinnerItems.get(i).getText().contains(currentSpecies))
+                    howSpecies.setSelection(i);
+            }
+            howVariety.setText(sharedPreferences.getString("variety",""));
+            howPrice.setText(sharedPreferences.getString("price",""));
+            howQuantity.setText(sharedPreferences.getString("quantity",""));
+            idOfPlant=sharedPreferences.getString("id","");
+            howVariety.setEnabled(false);
+        }
     }
 
-    private void findViews() {
-        howSpecies=findViewById(R.id.how_species);
-        howVariety=findViewById(R.id.how_variety);
-        howQuantity=findViewById(R.id.how_quantity);
-        howPrice=findViewById(R.id.how_price);
-        icon=findViewById(R.id.icon);
-        btnCancel=findViewById(R.id.btn_cancel);
-        btnAccept=findViewById(R.id.btn_accept);
-        AgroPol=new DBHelper(AddPlant.this);
 
-    }
 }

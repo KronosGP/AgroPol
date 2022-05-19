@@ -60,6 +60,12 @@ public class EmployeeMenu extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
+    private void findViews() {
+        btnPlantCatalog=findViewById(R.id.btn_plant_catalog);
+        btnViewOrder=findViewById(R.id.btn_view_order);
+        btnViewComplaint=findViewById(R.id.btn_view_complaint);
+    }
+
     private void createListeners() {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -91,11 +97,5 @@ public class EmployeeMenu extends AppCompatActivity {
         btnPlantCatalog.setOnClickListener(listener);
         btnViewOrder.setOnClickListener(listener);
         btnViewComplaint.setOnClickListener(listener);
-    }
-
-    private void findViews() {
-        btnPlantCatalog=findViewById(R.id.btn_plant_catalog);
-        btnViewOrder=findViewById(R.id.btn_view_order);
-        btnViewComplaint=findViewById(R.id.btn_view_complaint);
     }
 }

@@ -39,8 +39,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
     private int IdRequest;
     private DBHelper AgroPol;
     private String saveData;
-
-    //---------------------------------ChangeStatusWindowViews-----------------------------------//
     private CalendarView calendar;
     private Button btnCancel, btnAccept;
 
@@ -48,8 +46,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_details_of_employee_orders);
-        Bundle bundle=getIntent().getExtras();
-        IdRequest=bundle.getInt("IdRequest");
+        getData();
         createToolbar();
         findViews();
         startSettings();
@@ -63,6 +60,11 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         super.onResume();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    private void getData() {
+        Bundle bundle=getIntent().getExtras();
+        IdRequest=bundle.getInt("IdRequest");
     }
 
     private void createToolbar() {
@@ -92,27 +94,27 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
+    private void findViews() {
+        howId=findViewById(R.id.how_id);
+        howClient=findViewById(R.id.how_client);
+        howDateOfOrder=findViewById(R.id.how_date_of_order);
+        howDateOfDelivery=findViewById(R.id.how_date_of_delivery);
+        howCostOfPlants=findViewById(R.id.how_cost_of_plants);
+        howCostOfDelivery=findViewById(R.id.how_cost_of_delivery);
+        howTotalSum=findViewById(R.id.how_total_sum);
+        howStatus=findViewById(R.id.how_status);
+        btnComeBack=findViewById(R.id.btn_come_back);
+        btnChangeStatus=findViewById(R.id.btn_change_status);
+        recyclerView=findViewById(R.id.recycler_view);
+        AgroPol=new DBHelper(DetailsOfEmployeeOrders.this);
+    }
 
-    private void loadData() {
-        //wczytanie danych do textview i recyclerview
-        Cursor result=AgroPol.getDate("Select * from request where ID="+IdRequest);
-        //howId.setText(result.getString(0));
-        howDateOfOrder.setText("\n"+result.getString(3));
-        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
-        howCostOfPlants.setText(result.getString(2));
-        howCostOfDelivery.setText(result.getString(7));
-        howTotalSum.setText("\n"+String.valueOf(result.getDouble(2)+result.getDouble(7)+0.0));
-        howStatus.setText(result.getString(6));
-        //Dane klienta
-        result=AgroPol.getDate("Select Name,Surname from client where ID="+result.getString(1));
-        howClient.setText(result.getString(0)+" "+result.getString(1));
-        //zamówienie
-        Order order = new Order();
-        dataOfOrders=order.loadDetailsOrder(getApplicationContext(),dataOfOrders,IdRequest);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar oldDate=Calendar.getInstance();
-        saveData=simpleDateFormat.format(oldDate.getTime());
+    private void startSettings() {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new DataOfOrdersAdapter(dataOfOrders);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     private void createListeners() {
@@ -130,13 +132,34 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                     {
                         String status =howStatus.getText().toString();
                         if(status.equals("złożono"))
-                        openChangeStatusWindow();
+                            openChangeStatusWindow();
                     }break;
                 }
             }
         };
         btnComeBack.setOnClickListener(listener);
         btnChangeStatus.setOnClickListener(listener);
+    }
+
+    private void loadData() {
+        //wczytanie danych do textview i recyclerview
+        Cursor result=AgroPol.getDate("Select * from request where ID="+IdRequest);
+        howDateOfOrder.setText("\n"+result.getString(3));
+        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
+        howCostOfPlants.setText(result.getString(2));
+        howCostOfDelivery.setText(result.getString(7));
+        howTotalSum.setText("\n"+String.valueOf(result.getDouble(2)+result.getDouble(7)+0.0));
+        howStatus.setText(result.getString(6));
+        //Dane klienta
+        result=AgroPol.getDate("Select Name,Surname from client where ID="+result.getString(1));
+        howClient.setText(result.getString(0)+" "+result.getString(1));
+        //zamówienie
+        Order order = new Order();
+        dataOfOrders=order.loadDetailsOrder(getApplicationContext(),dataOfOrders,IdRequest);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar oldDate=Calendar.getInstance();
+        saveData=simpleDateFormat.format(oldDate.getTime());
     }
 
     private void openChangeStatusWindow() {
@@ -230,29 +253,5 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         btnAccept=changeStatusWindow.findViewById(R.id.btn_accept);
         btnCancel=changeStatusWindow.findViewById(R.id.btn_cancel);
 
-    }
-
-    private void startSettings() {
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new DataOfOrdersAdapter(dataOfOrders);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-
-    }
-
-    private void findViews() {
-        howId=findViewById(R.id.how_id);
-        howClient=findViewById(R.id.how_client);
-        howDateOfOrder=findViewById(R.id.how_date_of_order);
-        howDateOfDelivery=findViewById(R.id.how_date_of_delivery);
-        howCostOfPlants=findViewById(R.id.how_cost_of_plants);
-        howCostOfDelivery=findViewById(R.id.how_cost_of_delivery);
-        howTotalSum=findViewById(R.id.how_total_sum);
-        howStatus=findViewById(R.id.how_status);
-        btnComeBack=findViewById(R.id.btn_come_back);
-        btnChangeStatus=findViewById(R.id.btn_change_status);
-        recyclerView=findViewById(R.id.recycler_view);
-        AgroPol=new DBHelper(DetailsOfEmployeeOrders.this);
     }
 }

@@ -32,10 +32,8 @@ public class MakeOrder extends AppCompatActivity {
     private DataOfOrdersAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
-
     private TextView priceOfTransport;
     private Button btnWithoutTransport, btnWithTransport;
-
     private DBHelper AgroPol;
     private int IdUser;
     private int IdRequest;
@@ -51,11 +49,16 @@ public class MakeOrder extends AppCompatActivity {
         findViews();
         createListeners();
         startSettings();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-//        Bundle bundle=getIntent().getExtras();
-//        IdUser=bundle.getInt("IdUser");
+        getSharedPreferences();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -77,8 +80,6 @@ public class MakeOrder extends AppCompatActivity {
                         editor.putInt("IdUser",IdUser);
                         editor.putInt("flag",1);
                         editor.apply();
-//                        intent.putExtra("IdUser", IdUser);
-//                        intent.putExtra("flag",1);
                         startActivity(intent);
                     }break;
                     case R.id.btn_logout:
@@ -94,80 +95,17 @@ public class MakeOrder extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-    private void loadData() {
-        Cursor result = AgroPol.getDate("Select * from client where ID="+IdUser);
-        name.setText(result.getString(3));
-        surname.setText(result.getString(4));
-        email.setText(result.getString(5));
-        number.setText(result.getString(6));
-        adress.setText(result.getString(7));
-        try {
-            result = AgroPol.getDate("Select * from request where IDClient=" + IdUser);
-            result.moveToLast();
-            System.out.println(result.getString(0));
-            IdRequest = Integer.parseInt(result.getString(0));
-            titleOfID.setText("Id zamówienia: " + String.valueOf(IdRequest));
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex);
-        }
-
-        result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
-        //plant.Species,plant.Variety,plant.Price
-        while(result.isAfterLast()==false)
-        {
-            Cursor result1=AgroPol.getDate("Select Species,Variety,Price from Plant where ID="+result.getString(0));
-            int Quantity=Integer.parseInt(result.getString(1));
-            Double price=Double.parseDouble(result1.getString(2));
-            Double sum=Quantity*price;
-            sumAll+=sum;
-            String species=result1.getString(0);
-            String Variety=result1.getString(1);
-            getMainImage(species);
-            try{
-            dataOfOrders.add(new DataOfOrders(species,Variety,Quantity,price,sum, mainImage));
-        }
-        catch (Exception ex)
-            {
-                System.out.println(ex);
-            }
-            result.moveToNext();
-        }
-        if(result.getCount()==0) btnContinue.setClickable(false);
-        else btnContinue.setClickable(true);
-
-    }
-
-    private void getMainImage(String species) {
-        switch (species)
-        {
-            case "Papryka":mainImage=R.drawable.image_pepper;break;
-            case "Fasola":mainImage=R.drawable.image_beans;break;
-            case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
-            case "Kapusta pekińska":mainImage=R.drawable.image_cabbagepekin;break;
-            case "Ogórek":mainImage=R.drawable.image_cucumber;break;
-            case "Marchewka":mainImage=R.drawable.image_carrot;break;
-            case "Pietruszka":mainImage=R.drawable.image_parsley;break;
-            case "Dynia":mainImage=R.drawable.image_pumkin;break;
-            case "Rzodkiweka":mainImage=R.drawable.image_radish;break;
-            case "Pomidor":mainImage=R.drawable.image_tomato;break;
-        }
-    }
-
-    private void startSettings() {
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new DataOfOrdersAdapter(dataOfOrders);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+    private void findViews() {
+        name=findViewById(R.id.name);
+        surname=findViewById(R.id.surname);
+        adress=findViewById(R.id.adress);
+        email=findViewById(R.id.email);
+        number=findViewById(R.id.number);
+        recyclerView=findViewById(R.id.recycler_view);
+        titleOfID=findViewById(R.id.title_of_id);
+        btnAddPosition=findViewById(R.id.btn_add_position);
+        btnContinue=findViewById(R.id.btn_continue);
+        AgroPol =new DBHelper(MakeOrder.this);
     }
 
     private void createListeners() {
@@ -189,9 +127,6 @@ public class MakeOrder extends AppCompatActivity {
                         editor.putInt("IdRequest",IdRequest);
                         editor.putInt("flag",1);
                         editor.apply();
-//                        intent.putExtra("flag", 1);
-//                        intent.putExtra("IdRequest", IdRequest);
-//                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_continue:
@@ -204,6 +139,79 @@ public class MakeOrder extends AppCompatActivity {
         };
         btnAddPosition.setOnClickListener(listener);
         btnContinue.setOnClickListener(listener);
+    }
+
+    private void startSettings() {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new DataOfOrdersAdapter(dataOfOrders);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
+    }
+
+    private void loadData() {
+        Cursor result = AgroPol.getDate("Select * from client where ID="+IdUser);
+        name.setText(result.getString(3));
+        surname.setText(result.getString(4));
+        email.setText(result.getString(5));
+        number.setText(result.getString(6));
+        adress.setText(result.getString(7));
+        try {
+            result = AgroPol.getDate("Select * from request where IDClient=" + IdUser);
+            result.moveToLast();
+            System.out.println(result.getString(0));
+            IdRequest = Integer.parseInt(result.getString(0));
+            titleOfID.setText("Id zamówienia: " + String.valueOf(IdRequest));
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex);
+        }
+
+        result=AgroPol.getDate("Select IDPlant,Quantity from details_request where IDRequest ="+IdRequest);
+        while(result.isAfterLast()==false)
+        {
+            Cursor result1=AgroPol.getDate("Select Species,Variety,Price from Plant where ID="+result.getString(0));
+            int Quantity=Integer.parseInt(result.getString(1));
+            Double price=Double.parseDouble(result1.getString(2));
+            Double sum=Quantity*price;
+            sumAll+=sum;
+            String species=result1.getString(0);
+            String Variety=result1.getString(1);
+            getMainImage(species);
+            try{
+            dataOfOrders.add(new DataOfOrders(species,Variety,Quantity,price,Math.round((sum) * 100.0) / 100.0, mainImage));
+        }
+        catch (Exception ex)
+            {
+                System.out.println(ex);
+            }
+            result.moveToNext();
+        }
+        if(result.getCount()==0) btnContinue.setClickable(false);
+        else btnContinue.setClickable(true);
+
+    }
+
+    private void getMainImage(String species) {
+        switch (species)
+        {
+            case "Papryka":mainImage=R.drawable.image_pepper;break;
+            case "Fasola":mainImage=R.drawable.image_beans;break;
+            case "Bakłażan":mainImage=R.drawable.image_aubergine;break;
+            case "Kapusta Pekińska":mainImage=R.drawable.image_cabbagepekin;break;
+            case "Ogórek":mainImage=R.drawable.image_cucumber;break;
+            case "Marchewka":mainImage=R.drawable.image_carrot;break;
+            case "Pietruszka":mainImage=R.drawable.image_parsley;break;
+            case "Dynia":mainImage=R.drawable.image_pumkin;break;
+            case "Rzodkiweka":mainImage=R.drawable.image_radish;break;
+            case "Pomidor":mainImage=R.drawable.image_tomato;break;
+        }
     }
 
     private void openTransportDialog() {
@@ -248,7 +256,6 @@ public class MakeOrder extends AppCompatActivity {
                         try {
                             //zmiana statusu zamówienia oraz ustawienie ceny dostawy
                             Order order=new Order();
-                            //AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
                             order.EditOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
                         }
                         catch (Exception ex)
@@ -262,8 +269,6 @@ public class MakeOrder extends AppCompatActivity {
                         editor.putInt("IdUser",IdUser);
                         editor.putInt("IdOrder",IdRequest);
                         editor.apply();
-//                        intent.putExtra("IdOrder",IdRequest);
-//                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                     case R.id.btn_with_transport:
@@ -271,7 +276,6 @@ public class MakeOrder extends AppCompatActivity {
                         try {
                             Order order=new Order();
                             //zmiana statusu zamówienia oraz ustawienie ceny dostawy
-                            //AgroPol.editData("request", "Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
                             order.EditOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
                         }
                         catch (Exception ex)
@@ -285,8 +289,6 @@ public class MakeOrder extends AppCompatActivity {
                         editor.putInt("IdUser",IdUser);
                         editor.putInt("IdOrder",IdRequest);
                         editor.apply();
-//                        intent.putExtra("IdOrder",IdRequest);
-//                        intent.putExtra("IdUser",IdUser);
                         startActivity(intent);
                     }break;
                 }
@@ -301,18 +303,5 @@ public class MakeOrder extends AppCompatActivity {
         priceOfTransport=transportDialogWindow.findViewById(R.id.price_of_transport);
         btnWithoutTransport=transportDialogWindow.findViewById(R.id.btn_without_transport);
         btnWithTransport=transportDialogWindow.findViewById(R.id.btn_with_transport);
-    }
-
-    private void findViews() {
-        name=findViewById(R.id.name);
-        surname=findViewById(R.id.surname);
-        adress=findViewById(R.id.adress);
-        email=findViewById(R.id.email);
-        number=findViewById(R.id.number);
-        recyclerView=findViewById(R.id.recycler_view);
-        titleOfID=findViewById(R.id.title_of_id);
-        btnAddPosition=findViewById(R.id.btn_add_position);
-        btnContinue=findViewById(R.id.btn_continue);
-        AgroPol =new DBHelper(MakeOrder.this);
     }
 }

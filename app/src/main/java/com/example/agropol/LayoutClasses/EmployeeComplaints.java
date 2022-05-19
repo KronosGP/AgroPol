@@ -35,8 +35,6 @@ public class EmployeeComplaints extends AppCompatActivity {
         loadData();
     }
 
-
-
     @Override
     protected void onResume() {
         View decorView = getWindow().getDecorView();
@@ -72,19 +70,9 @@ public class EmployeeComplaints extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    private void loadData() {
-        //wczytanie danych do recyclerView
-       /* Cursor result= AgroPol.getDate("Select * from complaint where Status not like 'In Make'");
-        while(result.isAfterLast()==false)
-        {
-            int IdClient=result.getInt(1);
-            int IdComplaint=result.getInt(0);
-            String status=result.getString(5);
-            dataOfEmployeeComplaints.add(new DataOfEmployeeComplaints(IdClient,IdComplaint,status));
-            result.moveToNext();
-        }*/
-        Complaint complaint=new Complaint();
-        dataOfEmployeeComplaints=complaint.loadEmployeeComplaint(getApplicationContext(),dataOfEmployeeComplaints);
+    private void findViews() {
+        recyclerView=findViewById(R.id.recycler_view);
+        AgroPol=new DBHelper(EmployeeComplaints.this);
     }
 
     private void startSettings() {
@@ -99,7 +87,6 @@ public class EmployeeComplaints extends AppCompatActivity {
             public void onShowClick(int position) {
                 //wyświetlenie szczegółów reklamacji
                 Intent intent=new Intent(EmployeeComplaints.super.getApplicationContext(),DetailsOfEmployeeComplaints.class);
-//                intent.putExtra("IdComplaint",dataOfEmployeeComplaints.get(position).getComplaintId());
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("IdComplaint",dataOfEmployeeComplaints.get(position).getComplaintId());
@@ -107,12 +94,11 @@ public class EmployeeComplaints extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
-    private void findViews() {
-        recyclerView=findViewById(R.id.recycler_view);
-        AgroPol=new DBHelper(EmployeeComplaints.this);
+    private void loadData() {
+        //wczytanie danych do recyclerView
+        Complaint complaint=new Complaint();
+        dataOfEmployeeComplaints=complaint.loadEmployeeComplaint(getApplicationContext(),dataOfEmployeeComplaints);
     }
 }

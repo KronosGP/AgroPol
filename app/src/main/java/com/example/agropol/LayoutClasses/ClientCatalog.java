@@ -33,12 +33,10 @@ public class ClientCatalog extends AppCompatActivity {
     private CatalogAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<PlantItems> plantItems = new ArrayList<>();
-
     private TextInputEditText howQuantity;
     private TextView attention;
     private Button btnCancel, btnAdd;
     private TextView title;
-
     private DBHelper AgroPol;
     private int flag;
     private int IdRequest;
@@ -52,6 +50,14 @@ public class ClientCatalog extends AppCompatActivity {
         findViews();
         startSettings();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -79,14 +85,6 @@ public class ClientCatalog extends AppCompatActivity {
         };
         btnBack.setOnClickListener(listener);
         btnLogout.setOnClickListener(listener);
-    }
-
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void findViews() {
@@ -118,6 +116,18 @@ public class ClientCatalog extends AppCompatActivity {
             }
         });
     }
+
+    private void loadData() {
+        try {
+            Plant plant = new Plant();
+            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
+        }
+        catch (SQLiteException ex)
+        {
+            System.out.println(ex);
+        }
+    }
+
 
     private void openHowQuantityDialog(int position) {
         Dialog howQuantityWindow = new Dialog(this);
@@ -180,8 +190,6 @@ public class ClientCatalog extends AppCompatActivity {
                                 System.out.println(ex);
                             }
                         }
-
-
                     }break;
                     case R.id.btn_cancel:
                     {
@@ -199,17 +207,6 @@ public class ClientCatalog extends AppCompatActivity {
         attention=howQuantityWindow.findViewById(R.id.attention);
         btnCancel=howQuantityWindow.findViewById(R.id.btn_cancel);
         btnAdd=howQuantityWindow.findViewById(R.id.btn_add);
-    }
-
-    private void loadData() {
-        try {
-            Plant plant = new Plant();
-            plantItems=plant.loadPlants(getApplicationContext(),plantItems);
-        }
-        catch (SQLiteException ex)
-        {
-            System.out.println(ex);
-        }
     }
 
 }

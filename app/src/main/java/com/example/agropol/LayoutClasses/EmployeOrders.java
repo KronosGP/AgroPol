@@ -24,6 +24,24 @@ public class EmployeOrders extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<ItemOfRecyclerViewOrder> itemOfRecyclerViewOrders = new ArrayList<>();
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_employe_orders);
+        createToolbar();
+        findViews();
+        startSettings();
+        loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private void createToolbar() {
         ImageView btnBack=findViewById(R.id.btn_back);
         ImageView btnLogout=findViewById(R.id.btn_logout);
@@ -51,27 +69,8 @@ public class EmployeOrders extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_employe_orders);
-        createToolbar();
-        findViews();
-        startSettings();
-        loadData();
-    }
-    private void loadData() {
-//        wczytanie zamówień do recyclerView
-        Order order=new Order();
-        itemOfRecyclerViewOrders = order.loadOrder(getApplicationContext(), itemOfRecyclerViewOrders, 0);
+    private void findViews() {
+        recyclerView=findViewById(R.id.recycler_view);
     }
 
     private void startSettings() {
@@ -85,16 +84,16 @@ public class EmployeOrders extends AppCompatActivity {
             @Override
             public void onShowClick(int position) {
                 //wyświetlenie w nowej aktywności szczegółów zamówienia
-                    Intent intent = new Intent(EmployeOrders.super.getApplicationContext(), DetailsOfEmployeeOrders.class);
-                    intent.putExtra("IdRequest", itemOfRecyclerViewOrders.get(position).getId());
-                    startActivity(intent);
+                Intent intent = new Intent(EmployeOrders.super.getApplicationContext(), DetailsOfEmployeeOrders.class);
+                intent.putExtra("IdRequest", itemOfRecyclerViewOrders.get(position).getId());
+                startActivity(intent);
             }
         });
     }
 
-    private void findViews() {
-        recyclerView=findViewById(R.id.recycler_view);
+    private void loadData() {
+        //wczytanie zamówień do recyclerView
+        Order order=new Order();
+        itemOfRecyclerViewOrders = order.loadOrder(getApplicationContext(), itemOfRecyclerViewOrders, 0);
     }
-
-
 }

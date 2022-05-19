@@ -31,13 +31,18 @@ public class SummaryOfOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_summary_of_order);
         createToolbar();
-
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-        IdRequest = sharedPreferences.getInt("IdOrder", 0);
+        getSharedPreferences();
         findViews();
         createListeners();
         loadDate();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -75,38 +80,23 @@ public class SummaryOfOrder extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    private void resetDB() {//funkcja wykorzystywana do przywrócenia sadzonek do sprzedaży po anulowaniu lub wylogowaniu
-        Plant plant=new Plant();
-        Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
-        while(result.isAfterLast()==false)
-        {
-            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
-            int update=result1.getInt(3)+result.getInt(2);
-            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
-            result.moveToNext();
-        }
-        AgroPol.delData("details_request","IDRequest="+IdRequest);
-        AgroPol.delData("request","ID="+IdRequest);
+
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
+        IdRequest = sharedPreferences.getInt("IdOrder", 0);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    private void loadDate() {
-        Cursor result =AgroPol.getDate("Select * from client where ID="+IdUser);
-        howClient.setText(result.getString(3)+" "+result.getString(4));
-        result=AgroPol.getDate("Select * from request where ID="+IdRequest);
-        howDateOfOrder.setText("\n"+result.getString(3));
-        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
-        howCostOfPlants.setText(result.getString(2)+" zł");
-        howCostOfDelivery.setText(result.getString(7)+" zł");
-        Double sum=Double.parseDouble(result.getString(2))+Double.parseDouble(result.getString(7));
-        howTotalSum.setText("\n"+sum+" zł");
+    private void findViews() {
+        howClient=findViewById(R.id.how_client);
+        howDateOfOrder=findViewById(R.id.how_date_of_order);
+        howDateOfDelivery=findViewById(R.id.how_date_of_delivery);
+        howCostOfPlants=findViewById(R.id.how_cost_of_plants);
+        howCostOfDelivery=findViewById(R.id.how_cost_of_delivery);
+        howTotalSum=findViewById(R.id.how_total_sum);
+        btnAddOrder=findViewById(R.id.btn_add_order);
+        btnCancelOrder=findViewById(R.id.btn_cancel_order);
+        AgroPol = new DBHelper(SummaryOfOrder.this);
     }
 
     private void createListeners() {
@@ -125,7 +115,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                         order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"złożono"});
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
-                                                   ClientOrders.class);
+                                ClientOrders.class);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("IdUser",IdUser);
@@ -136,7 +126,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     case R.id.btn_cancel_order:
                     {
                         //dodanie z powrotem do możliwości zakupu sadzonki które były dodane do zamówienia
-                       resetDB();
+                        resetDB();
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 ClientOrders.class);
@@ -153,15 +143,29 @@ public class SummaryOfOrder extends AppCompatActivity {
         btnCancelOrder.setOnClickListener(listener);
     }
 
-    private void findViews() {
-        howClient=findViewById(R.id.how_client);
-        howDateOfOrder=findViewById(R.id.how_date_of_order);
-        howDateOfDelivery=findViewById(R.id.how_date_of_delivery);
-        howCostOfPlants=findViewById(R.id.how_cost_of_plants);
-        howCostOfDelivery=findViewById(R.id.how_cost_of_delivery);
-        howTotalSum=findViewById(R.id.how_total_sum);
-        btnAddOrder=findViewById(R.id.btn_add_order);
-        btnCancelOrder=findViewById(R.id.btn_cancel_order);
-        AgroPol = new DBHelper(SummaryOfOrder.this);
+    private void loadDate() {
+        Cursor result =AgroPol.getDate("Select * from client where ID="+IdUser);
+        howClient.setText(result.getString(3)+" "+result.getString(4));
+        result=AgroPol.getDate("Select * from request where ID="+IdRequest);
+        howDateOfOrder.setText("\n"+result.getString(3));
+        howDateOfDelivery.setText("\n"+result.getString(4)+"\n");
+        howCostOfPlants.setText(result.getString(2)+" zł");
+        howCostOfDelivery.setText(result.getString(7)+" zł");
+        Double sum=Double.parseDouble(result.getString(2))+Double.parseDouble(result.getString(7));
+        howTotalSum.setText("\n"+sum+" zł");
+    }
+
+    private void resetDB() {//funkcja wykorzystywana do przywrócenia sadzonek do sprzedaży po anulowaniu lub wylogowaniu
+        Plant plant=new Plant();
+        Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
+        while(result.isAfterLast()==false)
+        {
+            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
+            int update=result1.getInt(3)+result.getInt(2);
+            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
+            result.moveToNext();
+        }
+        AgroPol.delData("details_request","IDRequest="+IdRequest);
+        AgroPol.delData("request","ID="+IdRequest);
     }
 }

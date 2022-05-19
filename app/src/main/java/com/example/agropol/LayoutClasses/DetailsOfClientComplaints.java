@@ -28,15 +28,18 @@ public class DetailsOfClientComplaints extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_details_of_client_complaints);
         createToolbar();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-        IdComplaint = sharedPreferences.getInt("IdComplaint",0);
-//        Bundle bundle =getIntent().getExtras();
-//        IdUser=bundle.getInt("IdUser");
-//        IdComplaint=bundle.getInt("IdComplaint");
+        getSharedPreferences();
         findViews();
         createListeners();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -72,12 +75,35 @@ public class DetailsOfClientComplaints extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
+        IdComplaint = sharedPreferences.getInt("IdComplaint",0);
+    }
+
+    private void findViews() {
+        howComplaintId = findViewById(R.id.how_complaint_id);
+        howClient = findViewById(R.id.how_client);
+        howDateOfComplaint = findViewById(R.id.how_date_of_complaint);
+        howIdOfOrder = findViewById(R.id.how_id_of_order);
+        howStatus = findViewById(R.id.how_status);
+        howDescribe = findViewById(R.id.how_describe);
+        btnComeBack=findViewById(R.id.btn_come_back);
+        AgroPol = new DBHelper(DetailsOfClientComplaints.this);
+    }
+
+    private void createListeners() {
+        btnComeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //powót do aktywności katalogu reklamacji
+                Intent intent = new Intent(DetailsOfClientComplaints.super.getApplicationContext(),
+                        ClientComplaints.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void loadData() {
@@ -91,29 +117,5 @@ public class DetailsOfClientComplaints extends AppCompatActivity {
         howDateOfComplaint.setText("\n"+result.getString(6));
         result=AgroPol.getDate("Select Name,Surname from client where ID="+IdUser);
         howClient.setText(result.getString(0)+" "+result.getString(1));
-    }
-
-    private void createListeners() {
-        btnComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //powót do aktywności katalogu reklamacji
-                Intent intent = new Intent(DetailsOfClientComplaints.super.getApplicationContext(),
-                                           ClientComplaints.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-
-    private void findViews() {
-            howComplaintId = findViewById(R.id.how_complaint_id);
-            howClient = findViewById(R.id.how_client);
-            howDateOfComplaint = findViewById(R.id.how_date_of_complaint);
-            howIdOfOrder = findViewById(R.id.how_id_of_order);
-            howStatus = findViewById(R.id.how_status);
-            howDescribe = findViewById(R.id.how_describe);
-            btnComeBack=findViewById(R.id.btn_come_back);
-            AgroPol = new DBHelper(DetailsOfClientComplaints.this);
     }
 }

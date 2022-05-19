@@ -15,7 +15,6 @@ public class Plant {
     double price;
     int image;
 
-
     public  void addPlant(Context context, String s, String v, String q, String p, String i)
     {
         DBHelper dbHelper = new DBHelper(context);

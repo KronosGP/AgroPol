@@ -33,6 +33,14 @@ public class ClientSignIn extends AppCompatActivity {
         createListeners();
     }
 
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
     private void createToolbar() {
         ImageView btnBack=findViewById(R.id.btn_back);
         ImageView btnLogout=findViewById(R.id.btn_logout);
@@ -62,20 +70,18 @@ public class ClientSignIn extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+    private void findViews() {
+        login=findViewById(R.id.login);
+        password=findViewById(R.id.password);
+        btnLogIn=findViewById(R.id.btn_log_in);
+        AgroPol = new DBHelper(ClientSignIn.this);
     }
 
     private void createListeners() {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Logowanie()==true) {
-                    //Todo dodać intencje
+                if(logIn()==true) {
                 Intent intent = new Intent(ClientSignIn.super.getApplicationContext(),
                                            ClientMenu.class);
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
@@ -93,7 +99,7 @@ public class ClientSignIn extends AppCompatActivity {
         });
     }
 
-    private boolean Logowanie() {
+    private boolean logIn() {
         try {
             Cursor result=AgroPol.getDate("Select Count(*) from client where Login like '"+login.getText().toString()+"' and Password like '"+password.getText().toString()+"';");
             if(Integer.parseInt(result.getString(0))==1) {
@@ -108,12 +114,5 @@ public class ClientSignIn extends AppCompatActivity {
             System.out.println(ex);
         }
         return false;
-    }
-
-    private void findViews() {
-        login=findViewById(R.id.login);
-        password=findViewById(R.id.password);
-        btnLogIn=findViewById(R.id.btn_log_in);
-        AgroPol = new DBHelper(ClientSignIn.this);
     }
 }

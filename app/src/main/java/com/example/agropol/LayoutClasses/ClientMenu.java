@@ -15,7 +15,6 @@ import com.example.agropol.R;
 public class ClientMenu extends AppCompatActivity {
 
     private ConstraintLayout btnPlantCatalog, btnOrder, btnComplaint;
-
     private int IdUser;
 
     @Override
@@ -25,9 +24,15 @@ public class ClientMenu extends AppCompatActivity {
         createToolbar();
         findViews();
         createListeners();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-        System.out.println(IdUser);
+        getSharesPreferences();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -59,14 +64,6 @@ public class ClientMenu extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
     private void findViews() {
         btnPlantCatalog=findViewById(R.id.btn_plant_catalog);
         btnOrder=findViewById(R.id.btn_order);
@@ -94,14 +91,14 @@ public class ClientMenu extends AppCompatActivity {
                     {
                         //wysyłanie flagi do aktywności świadczącej o otwarciu katalogu Orders w trybie
                         //wyświetlania zamówień
-                            Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
-                                    ClientOrders.class);
+                        Intent intent = new Intent(ClientMenu.super.getApplicationContext(),
+                                ClientOrders.class);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("Flag",0);
                         editor.putInt("IdUser", IdUser);
                         editor.apply();
-                            startActivity(intent);
+                        startActivity(intent);
                     }break;
                     case R.id.btn_complaint:
                     {
@@ -120,5 +117,11 @@ public class ClientMenu extends AppCompatActivity {
         btnPlantCatalog.setOnClickListener(listener);
         btnOrder.setOnClickListener(listener);
         btnComplaint.setOnClickListener(listener);
+    }
+
+
+    private void getSharesPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
     }
 }

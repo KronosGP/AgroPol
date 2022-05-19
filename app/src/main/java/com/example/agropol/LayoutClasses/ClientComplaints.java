@@ -25,7 +25,6 @@ public class ClientComplaints extends AppCompatActivity {
     private DataOfClientComplaintsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataOfClientComplaints> dataOfClientComplaints = new ArrayList<>();
-
     private DBHelper AgroPol;
     private int IdUser;
 
@@ -34,14 +33,19 @@ public class ClientComplaints extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_client_complaints);
         createToolbar();
-//        Bundle bundle=getIntent().getExtras();
-//        IdUser=bundle.getInt("IdUser");
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
+        getSharedPreferences();
         findViews();
         startSettings();
         createListeners();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -73,28 +77,15 @@ public class ClientComplaints extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
     }
 
-
-    private void loadData() {
-        //Usuwanie nie dokończonych reklamacji
-        AgroPol.delData("complaint","Status like 'In Make' and IDClient="+IdUser);
-        //Wczytanie danych z bazy danych do listy
-        /*Cursor result=AgroPol.getDate("Select * from complaint where IDClient="+IdUser);
-        while (result.isAfterLast()==false)
-        {
-            dataOfClientComplaints.add(new DataOfClientComplaints(result.getInt(0),result.getString(5)));
-            result.moveToNext();
-        }*/
-        Complaint complaint=new Complaint();
-        dataOfClientComplaints=complaint.loadClientComplaint(getApplicationContext(),dataOfClientComplaints,IdUser);
-
+    private void findViews() {
+        btnAddComplaint=findViewById(R.id.btn_add_complaint);
+        recyclerView=findViewById(R.id.recycler_view);
+        AgroPol=new DBHelper(ClientComplaints.this);
     }
 
     private void startSettings() {
@@ -111,8 +102,6 @@ public class ClientComplaints extends AppCompatActivity {
                 //trzeba wysłać dane z konkretnego itemu do tej reklamacji
                     Intent intent = new Intent(ClientComplaints.super.getApplicationContext(),
                             DetailsOfClientComplaints.class);
-//                    intent.putExtra("IdUser", IdUser);
-//                    intent.putExtra("IdComplaint", dataOfClientComplaints.get(position).getId());
                     System.out.println(IdUser + "    " + dataOfClientComplaints.get(position).getId());
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -138,16 +127,17 @@ public class ClientComplaints extends AppCompatActivity {
                 editor.putInt("IdUser",IdUser);
                 editor.putInt("Flag",1);
                 editor.apply();
-//                intent.putExtra("IdUser",IdUser);
-//                intent.putExtra("Flag",1);
                 startActivity(intent);
             }
         });
     }
 
-    private void findViews() {
-        btnAddComplaint=findViewById(R.id.btn_add_complaint);
-        recyclerView=findViewById(R.id.recycler_view);
-        AgroPol=new DBHelper(ClientComplaints.this);
+    private void loadData() {
+        //Usuwanie nie dokończonych reklamacji
+        AgroPol.delData("complaint","Status like 'In Make' and IDClient="+IdUser);
+        //Wczytanie danych z bazy danych do listy
+        Complaint complaint=new Complaint();
+        dataOfClientComplaints=complaint.loadClientComplaint(getApplicationContext(),dataOfClientComplaints,IdUser);
+
     }
 }

@@ -26,8 +26,6 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
     private Button btnComeBack, btnChangeStatus;
     private int IdComplaint;
     private DBHelper AgroPol;
-
-    //---------------------------------ChangeStatusWindow------------------------------------//
     private Button btn_positive_complaint, btn_negative_complaint, btn_cancel;
 
     @Override
@@ -38,6 +36,14 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
         findViews();
         createListeners();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     private void createToolbar() {
@@ -67,28 +73,16 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    private void loadData() {
-        //wczytanie danych do textView
-//        Bundle bundle=getIntent().getExtras();
-//        IdComplaint=bundle.getInt("IdComplaint");
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdComplaint = sharedPreferences.getInt("IdComplaint", 0);
-        Cursor result = AgroPol.getDate("Select * from complaint where Id="+IdComplaint);
-        Cursor result2=AgroPol.getDate("Select Name,Surname from Client where Id="+result.getInt(1));
-        howClient.setText(result2.getString(0)+" "+result2.getString(1));
-        howDateOfComplaint.setText(result.getString(6));
-        howIdOfOrder.setText(result.getString(2));
-        howStatus.setText(result.getString(5));
-        howDescribe.setText(result.getString(4));
-
+    private void findViews() {
+        howComplaintId = findViewById(R.id.how_complaint_id);
+        howClient = findViewById(R.id.how_client);
+        howDateOfComplaint = findViewById(R.id.how_date_of_complaint);
+        howIdOfOrder = findViewById(R.id.how_id_of_order);
+        howStatus = findViewById(R.id.how_status);
+        howDescribe = findViewById(R.id.how_describe);
+        btnComeBack=findViewById(R.id.btn_come_back);
+        btnChangeStatus=findViewById(R.id.btn_change_status);
+        AgroPol=new DBHelper(DetailsOfEmployeeComplaints.this);
     }
 
     private void createListeners() {
@@ -100,23 +94,32 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                 {
                     case R.id.btn_come_back:
                     {
-                        //powrót do aktywności z listą reklamacji
-                        /*Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
-                                                   EmployeeComplaints.class);
-                        startActivity(intent);*/
                         finish();
                     }break;
                     case R.id.btn_change_status:
                     {
                         String status=howStatus.getText().toString();
                         if(status.equals("złożono"))
-                        openChangeStatusWindow();
+                            openChangeStatusWindow();
                     }break;
                 }
             }
         };
         btnComeBack.setOnClickListener(listener);
         btnChangeStatus.setOnClickListener(listener);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdComplaint = sharedPreferences.getInt("IdComplaint", 0);
+        Cursor result = AgroPol.getDate("Select * from complaint where Id="+IdComplaint);
+        Cursor result2=AgroPol.getDate("Select Name,Surname from Client where Id="+result.getInt(1));
+        howClient.setText(result2.getString(0)+" "+result2.getString(1));
+        howDateOfComplaint.setText(result.getString(6));
+        howIdOfOrder.setText(result.getString(2));
+        howStatus.setText(result.getString(5));
+        howDescribe.setText(result.getString(4));
+
     }
 
     private void openChangeStatusWindow() {
@@ -142,8 +145,6 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     {
                         //update na bazie danych ze statusu złożono na rozparzono pozytywnie
                         //przejście do aktywności z listą reklamacji
-                        //
-                        //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
                         complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"rozpatrzono\npozytywnie"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                                    EmployeeComplaints.class);
@@ -153,7 +154,6 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     {
                         //update na bazie danych ze statusu złożono na rozparzono negatywnie
                         //przejście do aktywności z listą reklamacji
-                        //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
                         complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"rozpatrzono\nnegatywnie"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                 EmployeeComplaints.class);
@@ -175,17 +175,5 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
         btn_positive_complaint=changeStatusWindow.findViewById(R.id.btn_positive_complaint);
         btn_negative_complaint=changeStatusWindow.findViewById(R.id.btn_negative_complaint);
         btn_cancel=changeStatusWindow.findViewById(R.id.btn_cancel);
-    }
-
-    private void findViews() {
-        howComplaintId = findViewById(R.id.how_complaint_id);
-        howClient = findViewById(R.id.how_client);
-        howDateOfComplaint = findViewById(R.id.how_date_of_complaint);
-        howIdOfOrder = findViewById(R.id.how_id_of_order);
-        howStatus = findViewById(R.id.how_status);
-        howDescribe = findViewById(R.id.how_describe);
-        btnComeBack=findViewById(R.id.btn_come_back);
-        btnChangeStatus=findViewById(R.id.btn_change_status);
-        AgroPol=new DBHelper(DetailsOfEmployeeComplaints.this);
     }
 }

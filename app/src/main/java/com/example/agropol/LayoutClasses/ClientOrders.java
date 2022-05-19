@@ -43,10 +43,8 @@ public class ClientOrders extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_client_orders);
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
-        IdUser = sharedPreferences.getInt("IdUser", 0);
-        Flag =sharedPreferences.getInt("Flag",0);
-       createToolbar();
+        getSharedPreferences();
+        createToolbar();
         findViews();
         startSettings();
         createListeners();
@@ -54,7 +52,20 @@ public class ClientOrders extends AppCompatActivity {
         //trzeba przekazać znowu flagę w przypadku otwarcia katalogu zamówień z pozycji składania reklamacji
         //tak aby pokazało się okno informacyjnie a następnie aby pokliknięcu na konkretny item
         // zatwierdzało zamówienie którego dotyczyć ma reklamacja, następnie powrót do MakeComplaint
-        //showInfoWindow();
+    }
+
+    @Override
+    protected void onResume() {
+        View decorView = getWindow().getDecorView();
+        super.onResume();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        decorView.setSystemUiVisibility(uiOptions);
+    }
+
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
+        IdUser = sharedPreferences.getInt("IdUser", 0);
+        Flag =sharedPreferences.getInt("Flag",0);
     }
 
     private void createToolbar() {
@@ -94,42 +105,12 @@ public class ClientOrders extends AppCompatActivity {
         btnLogout.setOnClickListener(listener);
     }
 
-    @Override
-    protected void onResume() {
-        View decorView = getWindow().getDecorView();
-        super.onResume();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
+    private void findViews() {
+        recyclerView=findViewById(R.id.recycler_view);
+        btnAddOrder=findViewById(R.id.btn_add_order);
+        AgroPol=new DBHelper(ClientOrders.this);
+        order=new Order();
     }
-
-    private void showInfoWindow() {
-        Dialog showInfoWindow = new Dialog(this);
-        showInfoWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        showInfoWindow.setContentView(R.layout.layout_info_dialog);
-        showInfoWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        showInfoWindow.show();
-
-        Button btnOk=showInfoWindow.findViewById(R.id.btn_ok);
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showInfoWindow.dismiss();
-            }
-        });
-
-    }
-
-    private void loadData() {
-        //usunięcie pustych zamówień
-        AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
-        //wczytanie zamówień z bazy danych do recyclerView
-        itemOfRecyclerViewOrders = order.loadOrder(getApplicationContext(), itemOfRecyclerViewOrders, IdUser);
-
-        if(Flag==1){showInfoWindow();}
-
-    }
-
 
     private void startSettings() {
         recyclerView.setHasFixedSize(true);
@@ -142,18 +123,18 @@ public class ClientOrders extends AppCompatActivity {
             @Override
             public void onShowClick(int position) {
                 if(Flag==0) {
-                        Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
-                                DetailsOfClientOrder.class);
+                    Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
+                            DetailsOfClientOrder.class);
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("IdUser",IdUser);
                     editor.putInt("IdOrder",itemOfRecyclerViewOrders.get(position).getId());
                     editor.apply();
-                        startActivity(intent);
-               }
+                    startActivity(intent);
+                }
 
-                    //tak jak wyżej wspomniałem tutaj flaga która będzie decydowałą czy wyświetlamy szczegóły
-                    //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
+                //tak jak wyżej wspomniałem tutaj flaga która będzie decydowałą czy wyświetlamy szczegóły
+                //zamówienia jak wyżej, czy wybieramy którego zamówienia ma dotyczyć reklamacja
                 else{
                     try {
                         //Tworzenie reklamacji
@@ -190,7 +171,6 @@ public class ClientOrders extends AppCompatActivity {
                     order.AddOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),"","0.0","tworzenie");
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);
-
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("IdUser",IdUser);
@@ -203,6 +183,34 @@ public class ClientOrders extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadData() {
+        //usunięcie pustych zamówień
+        AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
+        //wczytanie zamówień z bazy danych do recyclerView
+        itemOfRecyclerViewOrders = order.loadOrder(getApplicationContext(), itemOfRecyclerViewOrders, IdUser);
+
+        if(Flag==1){showInfoWindow();}
+
+    }
+
+    private void showInfoWindow() {
+        Dialog showInfoWindow = new Dialog(this);
+        showInfoWindow.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        showInfoWindow.setContentView(R.layout.layout_info_dialog);
+        showInfoWindow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        showInfoWindow.show();
+
+        Button btnOk=showInfoWindow.findViewById(R.id.btn_ok);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showInfoWindow.dismiss();
+            }
+        });
+
     }
 
     private String DataN() {
@@ -224,10 +232,4 @@ public class ClientOrders extends AppCompatActivity {
         return newDate;
     }
 
-    private void findViews() {
-        recyclerView=findViewById(R.id.recycler_view);
-        btnAddOrder=findViewById(R.id.btn_add_order);
-        AgroPol=new DBHelper(ClientOrders.this);
-        order=new Order();
-    }
 }

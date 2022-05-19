@@ -69,9 +69,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Status TEXT NOT NULL," +
                 "Date_of_Complaint Date NOT NULL );");
 
-        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('login', 'haslo', 'stefan', 'czarnecki', '123456789');");
-        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('haslo', 'login', 'Marian', 'Wajda', '987654321');");
-        sqLiteDatabase.execSQL("INSERT INTO client (Login,Password,Name,Surname,Email,Tel,Address,City) VALUES ('klient1','klient1','Kamil','Poradnik','Poradnik@wp.pl','918273645','Radom','Fajny adres 25/6'),('klient2','klient2','Adam','Rychlicki','rychlicki@wp.pl','918273645','Radom','Jakaś inna ulica');");
+        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('login1', 'haslo1', 'Jan', 'Kowalski', '568-976-345');");
+        sqLiteDatabase.execSQL("INSERT INTO employee (Login, Password, Name, Surname, Tel) VALUES ('login2', 'haslo2', 'Marian', 'Wajda', '636-673-245');");
+        sqLiteDatabase.execSQL("INSERT INTO client (Login,Password,Name,Surname,Email,Tel,Address,City) VALUES ('klient1','klient1','Kamil','Porada','kamil.porada@wp.pl','508-345-757','Potworów 16','26-414 Potworów'),('klient2','klient2','Adam','Rychlik','rychlicki@wp.pl','918-273-645','Radom','26-600 Radom');");
 
     }
 
