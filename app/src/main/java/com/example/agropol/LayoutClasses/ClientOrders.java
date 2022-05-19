@@ -123,33 +123,8 @@ public class ClientOrders extends AppCompatActivity {
     private void loadData() {
         //usunięcie pustych zamówień
         AgroPol.delData("request","Status like 'tworzenie' and IDClient="+IdUser);
-        Cursor result = AgroPol.getDate("Select * from request where IDClient = " + IdUser);
-        while(result.isAfterLast()==false)
-        {
-            Cursor result1=AgroPol.getDate("Select count(*) from details_request where IDRequest="+result.getString(0));
-            if(Integer.parseInt(result1.getString(0))==0)
-                AgroPol.delData("request","ID="+result.getString(0));
-            result.moveToNext();
-        }
         //wczytanie zamówień z bazy danych do recyclerView
-           /* result=AgroPol.getDate("Select * from request where IDClient = " + IdUser);
-            try {
-                while (result.isAfterLast() == false) {
-                    Double price=Double.parseDouble(result.getString(2));
-                    Double delivey=Double.parseDouble(result.getString(7));
-                    int id=Integer.parseInt(result.getString(0));
-                    String data=result.getString(3);
-                    Double sum=price+delivey;
-                    String status=result.getString(6);
-                    itemOfRecyclerViewOrders.add(new ItemOfRecyclerViewOrder(id,data,sum,status));
-                    result.moveToNext();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.out.println(ex);
-            }*/
-        itemOfRecyclerViewOrders=order.loadOrder(getApplicationContext(),itemOfRecyclerViewOrders,IdUser);
+        itemOfRecyclerViewOrders = order.loadOrder(getApplicationContext(), itemOfRecyclerViewOrders, IdUser);
 
         if(Flag==1){showInfoWindow();}
 
@@ -182,7 +157,6 @@ public class ClientOrders extends AppCompatActivity {
                 else{
                     try {
                         //Tworzenie reklamacji
-                        //AgroPol.setData("complaint",new String[]{"IDClient","IDRequest","Contents","Status","Date_of_Complaint"},new String[]{String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN()});
                         Complaint complaint=new Complaint();
                         complaint.addComplaint(getApplicationContext(),String.valueOf(IdUser),String.valueOf(itemOfRecyclerViewOrders.get(position).getId())," ","In Make",DataN());
 
@@ -213,11 +187,10 @@ public class ClientOrders extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     //Tworzenie zamówienia
-                    //AgroPol.setData("request", new String[]{"IDClient","Price","Date_of_request","Date_of_delivery","Delivery","Status"}, new String[]{String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie"});
-                    order.AddOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),newDate(DataN()),"0.0","tworzenie");
+                    order.AddOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),"","0.0","tworzenie");
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);
-                    //intent.putExtra("IdUser", IdUser);
+
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("IdUser",IdUser);
@@ -248,23 +221,6 @@ public class ClientOrders extends AppCompatActivity {
         c.add(Calendar.DAY_OF_MONTH, 0);
         //Date after adding the days to the given date
         String newDate = simpleDateFormat.format(c.getTime());
-        return newDate;
-    }
-
-    private String newDate(String oldDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        try{
-            //Setting the date to the given date
-            c.setTime(sdf.parse(oldDate));
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-
-        //Number of Days to add
-        c.add(Calendar.DAY_OF_MONTH, 14);
-        //Date after adding the days to the given date
-        String newDate = sdf.format(c.getTime());
         return newDate;
     }
 

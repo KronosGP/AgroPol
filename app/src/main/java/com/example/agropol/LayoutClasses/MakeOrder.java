@@ -141,6 +141,8 @@ public class MakeOrder extends AppCompatActivity {
             }
             result.moveToNext();
         }
+        if(result.getCount()==0) btnContinue.setClickable(false);
+        else btnContinue.setClickable(true);
 
     }
 

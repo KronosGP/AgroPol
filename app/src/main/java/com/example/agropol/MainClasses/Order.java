@@ -47,11 +47,14 @@ public class Order {
             String status=result.getString(6);
             orderItems.add(new ItemOfRecyclerViewOrder(id,data,sum,status));
             String dataC=result.getString(4);
-            LocalDate dataN= LocalDate.now();
-            LocalDate date=LocalDate.of(Integer.parseInt(dataC.split("-")[0]),Integer.parseInt(dataC.split("-")[1]),Integer.parseInt(dataC.split("-")[2]));
-            //Zmiana statusu zamówienia z Zamówienie gotowe na Dostarczone
-            if(date.isEqual(dataN) || date.isBefore(dataN))
-                dbHelper.editData("request","ID="+id,new String[]{"Status"},new String[]{"Dostarczono"});
+            try {
+                LocalDate dataN = LocalDate.now();
+                LocalDate date = LocalDate.of(Integer.parseInt(dataC.split("-")[0]), Integer.parseInt(dataC.split("-")[1]), Integer.parseInt(dataC.split("-")[2]));
+                //Zmiana statusu zamówienia z Zamówienie gotowe na Dostarczone
+                if (date.isEqual(dataN) || date.isBefore(dataN))
+                    dbHelper.editData("request", "ID=" + id, new String[]{"Status"}, new String[]{"Zrealizowano"});
+            }
+            catch (Exception ex){}
             result.moveToNext();
         }
         return orderItems;

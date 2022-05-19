@@ -37,7 +37,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataOfOrders> dataOfOrders = new ArrayList<>();
     private int IdRequest;
-    private int IdItem;
     private DBHelper AgroPol;
     private String saveData;
 
@@ -51,7 +50,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         setContentView(R.layout.layout_details_of_employee_orders);
         Bundle bundle=getIntent().getExtras();
         IdRequest=bundle.getInt("IdRequest");
-        IdItem=bundle.getInt("IdItem");
         createToolbar();
         findViews();
         startSettings();
@@ -109,19 +107,6 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
         result=AgroPol.getDate("Select Name,Surname from client where ID="+result.getString(1));
         howClient.setText(result.getString(0)+" "+result.getString(1));
         //zamówienie
-        /*result=AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
-        while(result.isAfterLast()==false)
-        {
-            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
-            String species=result1.getString(1);
-            String variety=result1.getString(2);
-            int quantity=result.getInt(2);
-            double price=result1.getDouble(4);
-            double sum=quantity*price;
-            int image=result1.getInt(5);
-            dataOfOrders.add(new DataOfOrders(species,variety,quantity,price,sum,image));
-            result.moveToNext();
-        }*/
         Order order = new Order();
         dataOfOrders=order.loadDetailsOrder(getApplicationContext(),dataOfOrders,IdRequest);
 
@@ -139,15 +124,12 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                 {
                     case R.id.btn_come_back:
                     {
-                        /*Intent intent = new Intent(DetailsOfEmployeeOrders.super.getApplicationContext(),
-                                                   EmployeOrders.class);
-                        startActivity(intent);*/
                         finish();
                     }break;
                     case R.id.btn_change_status:
                     {
                         String status =howStatus.getText().toString();
-                        if(status.equals("W Przygotowaniu"))
+                        if(status.equals("Złożono"))
                         openChangeStatusWindow();
                     }break;
                 }
@@ -224,17 +206,10 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                         //zrobie jakieś wyświetlanie tych komunikatów.
                         //następnie wczytanie daty do bazy danych oraz powrót to aktywności z zamówieniami.
 
-                        /*Intent intent = new Intent(DetailsOfEmployeeOrders.super.getApplicationContext(),
-                                                   EmployeOrders.class);
-                        startActivity(intent);*/
                         //Edycja tabli Request(zamówienie) zmiana z Przetwarzanie na Zamówienie Gotowe oraz zmiana w dacie dostarczenia
-                        //AgroPol.editData("Request","ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
                         Order order=new Order();
-                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"Zamówienie gotowe"});
-                        Intent wynik=new Intent();
-                        wynik.putExtra("ID",IdItem);
-                        setResult(1,wynik);
-                        //finish();
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"W Przygotowaniu"});
+
                         Intent intent = new Intent(DetailsOfEmployeeOrders.super.getApplicationContext(),
                                                    EmployeeMenu.class);
                         startActivity(intent);

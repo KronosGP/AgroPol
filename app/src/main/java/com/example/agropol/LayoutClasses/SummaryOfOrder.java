@@ -31,9 +31,7 @@ public class SummaryOfOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_summary_of_order);
         createToolbar();
-//        Bundle bundle=getIntent().getExtras();
-//        IdRequest=bundle.getInt("IdOrder");
-//        IdUser=bundle.getInt("IdUser");
+
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
         IdUser = sharedPreferences.getInt("IdUser", 0);
         IdRequest = sharedPreferences.getInt("IdOrder", 0);
@@ -56,8 +54,6 @@ public class SummaryOfOrder extends AppCompatActivity {
                     {
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 MakeOrder.class);
-//                        intent.putExtra("IdUser", IdUser);
-//                        intent.putExtra("Flag",0);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("IdUser",IdUser);
@@ -67,6 +63,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     }break;
                     case R.id.btn_logout:
                     {
+                        resetDB();
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 EmployeeOrClient.class);
                         startActivity(intent);
@@ -76,6 +73,20 @@ public class SummaryOfOrder extends AppCompatActivity {
         };
         btnBack.setOnClickListener(listener);
         btnLogout.setOnClickListener(listener);
+    }
+
+    private void resetDB() {//funkcja wykorzystywana do przywrócenia sadzonek do sprzedaży po anulowaniu lub wylogowaniu
+        Plant plant=new Plant();
+        Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
+        while(result.isAfterLast()==false)
+        {
+            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
+            int update=result1.getInt(3)+result.getInt(2);
+            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
+            result.moveToNext();
+        }
+        AgroPol.delData("details_request","IDRequest="+IdRequest);
+        AgroPol.delData("request","ID="+IdRequest);
     }
 
     @Override
@@ -111,36 +122,24 @@ public class SummaryOfOrder extends AppCompatActivity {
                     {
                         //zmiana statusu zamówienia
                         Order order=new Order();
-                        //AgroPol.editData("request","ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
-                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"W Przygotowaniu"});
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"Złożono"});
+
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    ClientOrders.class);
-//                        intent.putExtra("IdUser",IdUser);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("IdUser",IdUser);
+                        editor.putInt("Flag",0);
                         editor.apply();
                         startActivity(intent);
                     }break;
                     case R.id.btn_cancel_order:
                     {
                         //dodanie z powrotem do możliwości zakupu sadzonki które były dodane do zamówienia
-                        Plant plant=new Plant();
-                        Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
-                        while(result.isAfterLast()==false)
-                        {
-                            Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
-                            int update=result1.getInt(3)+result.getInt(2);
-                            //AgroPol.editData("plant","ID="+result.getString(1),new String[]{"Quantity"},new String[]{String.valueOf(update)});
-                            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
-                            result.moveToNext();
-                        }
-                        AgroPol.delData("details_request","IDRequest="+IdRequest);
-                        AgroPol.delData("request","ID="+IdRequest);
+                       resetDB();
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 ClientOrders.class);
-//                        intent.putExtra("IdUser",IdUser);
                         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("IdUser",IdUser);

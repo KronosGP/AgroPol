@@ -97,10 +97,6 @@ public class ClientCatalog extends AppCompatActivity {
         IdUser = sharedPreferences.getInt("IdUser", 0);
         IdRequest = sharedPreferences.getInt("IdRequest",0);
         flag =sharedPreferences.getInt("flag",0);
-//        Bundle bundle=getIntent().getExtras();
-//        flag=bundle.getInt("flag");
-//        IdRequest=bundle.getInt("IdRequest");
-//        IdUser=bundle.getInt("IdUser");
     }
 
     private void startSettings() {
@@ -150,42 +146,39 @@ public class ClientCatalog extends AppCompatActivity {
                             attention.setVisibility(View.VISIBLE);
                             attention.setText("Za duża ilość!!!");
                         }
-                        else if(Integer.parseInt(howQuantity.getText().toString())<0) {
+                        else if(Integer.parseInt(howQuantity.getText().toString())<=0) {
                             attention.setVisibility(View.VISIBLE);
-                            attention.setText("Mniejsze od zera!!!");
+                            attention.setText("Musi być większe od 0!!!");
                         }
                         else
                         {
                             try {
                                 Order order=new Order();
                                 //Dodanie sadzonki oraz jej ilość do szczegółów zamówienia
-                                //AgroPol.setData("details_request", new String[]{"IDRequest", "IDPlant", "Quantity"}, new String[]{String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString()});
                                 order.AddDetailsOrder(getApplicationContext(),String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString());
                                 result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
                                 Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())* plantItems.get(position).getPrice();
+
                                 //zmiana ceny zamówienia
-                                //AgroPol.editData("request","ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
                                 order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
                                 int update= (int) (plantItems.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
+
                                 //zmiana ilość sztuk w szklarniach
-                                //AgroPol.editData("plant","ID="+ plantItems.get(position).getId(),new String[]{"Quantity"},new String[]{String.valueOf(update)});
                                 Plant plant=new Plant();
                                 plant.editPlant(getApplicationContext(),String.valueOf(plantItems.get(position).getId()),plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(),String.valueOf(update),String.valueOf(plantItems.get(position).getPrice()),String.valueOf(plantItems.get(position).getImage()));
+
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);
                                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putInt("IdUser",IdUser);
                                 editor.apply();
-//                                intent.putExtra("IdUser",IdUser);
                                 startActivity(intent);//moje testy Adam
-                                //finish();
                             }
                             catch (Exception ex)
                             {
                                 System.out.println(ex);
                             }
-                            //finish();
                         }
 
 
@@ -210,13 +203,6 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-//            Cursor result = AgroPol.getDate("Select * from plant");
-//            while (result.isAfterLast() == false) {
-//                plantItems.add(new PlantItems(Integer.parseInt(result.getString(0)),result.getString(1), result.getString(2), (long) Integer.parseInt(result.getString(3)), Double.parseDouble(result.getString(4)), Integer.parseInt(result.getString(5))));
-//                //System.out.println(result.getString(0)+" " +result.getString(1)+" "+ result.getString(2)+" "+  (long) Integer.parseInt(result.getString(3))+" "+  Double.parseDouble(result.getString(4))+" "+  Integer.parseInt(result.getString(5)));
-//                result.moveToNext();
-//            }
-
             Plant plant = new Plant();
             plantItems=plant.loadPlants(getApplicationContext(),plantItems);
         }
