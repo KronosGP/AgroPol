@@ -10,61 +10,61 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgroPol">
         <activity
-            android:name=".DetailsOfEmployeeComplaints"
+            android:name=".LayoutClasses.DetailsOfEmployeeComplaints"
             android:exported="false" />
         <activity
-            android:name=".EmployeeComplaints"
+            android:name=".LayoutClasses.EmployeeComplaints"
             android:exported="false" />
         <activity
-            android:name=".DetailsOfEmployeeOrders"
+            android:name=".LayoutClasses.DetailsOfEmployeeOrders"
             android:exported="false" />
         <activity
-            android:name=".EmployeOrders"
+            android:name=".LayoutClasses.EmployeOrders"
             android:exported="false" />
         <activity
-            android:name=".DetailsOfClientComplaints"
+            android:name=".LayoutClasses.DetailsOfClientComplaints"
             android:exported="false" />
         <activity
-            android:name=".MakeComplaint"
+            android:name=".LayoutClasses.MakeComplaint"
             android:exported="false" />
         <activity
-            android:name=".ClientComplaints"
+            android:name=".LayoutClasses.ClientComplaints"
             android:exported="false" />
         <activity
-            android:name=".DetailsOfClientOrder"
+            android:name=".LayoutClasses.DetailsOfClientOrder"
             android:exported="false" />
         <activity
-            android:name=".SummaryOfOrder"
+            android:name=".LayoutClasses.SummaryOfOrder"
             android:exported="false" />
         <activity
-            android:name=".MakeOrder"
+            android:name=".LayoutClasses.MakeOrder"
             android:exported="false" />
         <activity
-            android:name=".ClientOrders"
+            android:name=".LayoutClasses.ClientOrders"
             android:exported="false" />
         <activity
-            android:name=".ClientCatalog"
+            android:name=".LayoutClasses.ClientCatalog"
             android:exported="false" />
         <activity
-            android:name=".ClientMenu"
+            android:name=".LayoutClasses.ClientMenu"
             android:exported="false" />
         <activity
-            android:name=".AddPlant"
+            android:name=".LayoutClasses.AddPlant"
             android:exported="false" />
         <activity
-            android:name=".EmployeeCatalog"
+            android:name=".LayoutClasses.EmployeeCatalog"
             android:exported="false" />
         <activity
-            android:name=".EmployeeMenu"
+            android:name=".LayoutClasses.EmployeeMenu"
             android:exported="false" />
         <activity
-            android:name=".ClientSignIn"
+            android:name=".LayoutClasses.ClientSignIn"
             android:exported="false" />
         <activity
-            android:name=".EmployeeSignIn"
+            android:name=".LayoutClasses.EmployeeSignIn"
             android:exported="false" />
         <activity
-            android:name=".EmployeeOrClient"
+            android:name=".LayoutClasses.EmployeeOrClient"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -20,7 +20,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_catalog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_complaint.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_data_of_orders.xml" value="0.264" />
-        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_employee_order.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_employee_order.xml" value="0.264" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/item_of_order.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_add_plant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_catalog.xml" value="0.25416666666666665" />
@@ -35,6 +35,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_details_of_employee_complaints.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_details_of_employee_orders.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_details_of_order.xml" value="0.264" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_dialog_change_status_complaint.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_dialog_how_quantity.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_dialog_transport.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_dialog_window_in_catalog.xml" value="0.12360688956433637" />
@@ -50,6 +51,7 @@
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_orders.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_spinner_add_plant_row.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/layout_summary_of_order.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Kamil/AndroidStudioProjects/AgroPol/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_details_of_complaints.xml" value="0.24728260869565216" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/studia/mobilne/AgroPol/app/src/main/res/layout/item_of_catalog.xml" value="0.1" />

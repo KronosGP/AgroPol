@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmployeeSignIn"
+    tools:context=".LayoutClasses.EmployeeSignIn"
     android:background="@color/background_color">
+
+    <include layout="@layout/toolbar"/>
 
     <ImageView
         android:id="@+id/title_image"
@@ -15,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:padding="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/image_employee"
         />
 

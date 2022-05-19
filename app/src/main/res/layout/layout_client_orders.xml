@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClientOrders"
+    tools:context=".LayoutClasses.ClientOrders"
     android:background="@color/background_color">
+
+    <include layout="@layout/toolbar"/>
 
     <TextView
         android:id="@+id/title"
@@ -17,6 +19,7 @@
         app:layout_constraintBottom_toTopOf="@id/recycler_view"
         android:layout_marginStart="5dp"
         android:textSize="30sp"
+        android:layout_marginTop="70dp"
         android:textColor="@color/black"
         android:fontFamily="@font/crete_round"
         android:text="Moje zamówienia"/>
