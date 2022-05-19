@@ -75,26 +75,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void onAlter()
-    {
-        SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("Drop Table IF EXISTS szczegoly_zamowienia");
-        db.execSQL("Drop Table IF EXISTS sadzonki");
-        db.execSQL("Drop Table IF EXISTS pracownik");
-        db.execSQL("Drop Table IF EXISTS klient");
-        db.execSQL("Drop Table IF EXISTS zamowienie");
-        db.execSQL("Drop Table IF EXISTS reklamacja");
-        db.execSQL("Drop Table IF EXISTS employee");
-        db.execSQL("Drop Table IF EXISTS client");
-        db.execSQL("Drop Table IF EXISTS plant");
-        db.execSQL("Drop Table IF EXISTS request");
-        db.execSQL("Drop Table IF EXISTS details_request");
-        db.execSQL("Drop Table IF EXISTS complaint");
-        onCreate(db);//Resetowanie Bazy danych*/
-        db.close();
-    }
-
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         onCreate(sqLiteDatabase);
@@ -135,36 +115,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         db.update(table,contentValues,where,null);
         System.out.println("wykonano");
-        db.close();
-    }
-    public void showAllColumnsName()//tymczasowa klasa
-    {
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor result=db.rawQuery("select * from employee",null);
-        System.out.println("employee");
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nclient");
-        result=db.rawQuery("select * from client",null);
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nplant");
-        result=db.rawQuery("select * from plant",null);
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\nrequest");
-        result=db.rawQuery("select * from request",null);
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\ndetails_request");
-        result=db.rawQuery("select * from details_request",null);
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println("\ncomplaint");
-        result=db.rawQuery("select * from complaint",null);
-        for(int i=0;i<result.getColumnCount();i++)
-            System.out.print(result.getColumnName(i)+" ");
-        System.out.println();
         db.close();
     }
 }
