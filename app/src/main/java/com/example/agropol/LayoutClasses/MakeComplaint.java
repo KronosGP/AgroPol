@@ -31,6 +31,7 @@ public class MakeComplaint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_make_complaint);
         createToolbar();
         getSharedPreferences();
         findViews();
@@ -104,11 +105,10 @@ public class MakeComplaint extends AppCompatActivity {
             public void onClick(View v) {
                 //walidacja treści reklamacji, czy oby nie jest pusta, po czym dodanie do bazy danych oraz
                 //powrót do aktywności z listą reklamacji
-                if(!howComplaint.getText().toString().equals(""))
-                {
+                if (!howComplaint.getText().toString().equals("")) {
                     //Zmiana Statusu oraz teści reklamacji
                     Complaint complaint=new Complaint();
-                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"złożono"});
+                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint, new String[]{"Contents", "Status"}, new String[]{howComplaint.getText().toString(), "złożono"});
                     Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -139,7 +139,7 @@ public class MakeComplaint extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-            System.out.println(ex);
+            System.out.println(4+" "+ex);
         }
 
     }
