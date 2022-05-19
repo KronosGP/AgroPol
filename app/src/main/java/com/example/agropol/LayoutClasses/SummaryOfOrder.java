@@ -122,7 +122,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     {
                         //zmiana statusu zamówienia
                         Order order=new Order();
-                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"Złożono"});
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"złożono"});
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                                    ClientOrders.class);

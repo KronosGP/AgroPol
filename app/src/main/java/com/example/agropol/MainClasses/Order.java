@@ -52,7 +52,7 @@ public class Order {
                 LocalDate date = LocalDate.of(Integer.parseInt(dataC.split("-")[0]), Integer.parseInt(dataC.split("-")[1]), Integer.parseInt(dataC.split("-")[2]));
                 //Zmiana statusu zamówienia z Zamówienie gotowe na Dostarczone
                 if (date.isEqual(dataN) || date.isBefore(dataN))
-                    dbHelper.editData("request", "ID=" + id, new String[]{"Status"}, new String[]{"Zrealizowano"});
+                    dbHelper.editData("request", "ID=" + id, new String[]{"Status"}, new String[]{"zrealizowano"});
             }
             catch (Exception ex){}
             result.moveToNext();

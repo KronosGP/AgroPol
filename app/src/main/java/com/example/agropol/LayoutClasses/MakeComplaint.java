@@ -117,9 +117,9 @@ public class MakeComplaint extends AppCompatActivity {
                 if(!howComplaint.getText().toString().equals(""))
                 {
                     //Zmiana Statusu oraz teści reklamacji
-                    //AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
+                    //AgroPol.editData("complaint","ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"przetwarzane"});
                     Complaint complaint=new Complaint();
-                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"Przetwarzane"});
+                    complaint.editComplaint(getApplicationContext(),"ID="+IdComplaint,new String[]{"Contents","Status"},new String[]{howComplaint.getText().toString(),"złożono"});
                     Intent intent=new Intent(MakeComplaint.super.getApplicationContext(), ClientComplaints.class);
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

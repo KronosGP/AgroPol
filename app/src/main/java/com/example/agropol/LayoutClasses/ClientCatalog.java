@@ -144,11 +144,11 @@ public class ClientCatalog extends AppCompatActivity {
                         Cursor result=AgroPol.getDate("Select ID,Quantity from plant where ID="+ plantItems.get(position).getId());
                         if(Integer.parseInt(result.getString(1))<Integer.parseInt(howQuantity.getText().toString())){
                             attention.setVisibility(View.VISIBLE);
-                            attention.setText("Za duża ilość!!!");
+                            attention.setText("Brak tylu sadzonek na stanie!\nPodaj mniejszą liczbę!");
                         }
                         else if(Integer.parseInt(howQuantity.getText().toString())<=0) {
                             attention.setVisibility(View.VISIBLE);
-                            attention.setText("Musi być większe od 0!!!");
+                            attention.setText("Podaj ilość większą od 0!");
                         }
                         else
                         {

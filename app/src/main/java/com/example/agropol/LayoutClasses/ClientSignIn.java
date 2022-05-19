@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.agropol.MainClasses.DBHelper;
 import com.example.agropol.R;
@@ -85,6 +86,11 @@ public class ClientSignIn extends AppCompatActivity {
                     editor.putInt("IdUser", IdUser);
                     editor.apply();
                 startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Błędne dane logowania!",
+                                   Toast.LENGTH_LONG).show();
                 }
             }
         });

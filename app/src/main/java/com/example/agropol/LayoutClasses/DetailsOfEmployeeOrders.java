@@ -129,7 +129,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
                     case R.id.btn_change_status:
                     {
                         String status =howStatus.getText().toString();
-                        if(status.equals("Złożono"))
+                        if(status.equals("złożono"))
                         openChangeStatusWindow();
                     }break;
                 }
@@ -208,7 +208,7 @@ public class DetailsOfEmployeeOrders extends AppCompatActivity {
 
                         //Edycja tabli Request(zamówienie) zmiana z Przetwarzanie na Zamówienie Gotowe oraz zmiana w dacie dostarczenia
                         Order order=new Order();
-                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"W Przygotowaniu"});
+                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Date_of_delivery","Status"},new String[]{saveData,"w przygotowaniu"});
 
                         Intent intent = new Intent(DetailsOfEmployeeOrders.super.getApplicationContext(),
                                                    EmployeeMenu.class);

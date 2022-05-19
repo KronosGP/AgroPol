@@ -109,7 +109,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                     case R.id.btn_change_status:
                     {
                         String status=howStatus.getText().toString();
-                        if(status.equals("Przetwarzane"))
+                        if(status.equals("złożono"))
                         openChangeStatusWindow();
                     }break;
                 }
@@ -144,7 +144,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                         //przejście do aktywności z listą reklamacji
                         //
                         //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
-                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"Przyjęto"});
+                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"rozpatrzono\npozytywnie"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                                    EmployeeComplaints.class);
                         startActivity(intent);
@@ -154,7 +154,7 @@ public class DetailsOfEmployeeComplaints extends AppCompatActivity {
                         //update na bazie danych ze statusu złożono na rozparzono negatywnie
                         //przejście do aktywności z listą reklamacji
                         //AgroPol.editData("complaint","Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
-                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"Odrzucono"});
+                        complaint.editComplaint(getApplicationContext(),"Id="+IdComplaint,new String[]{"Status"},new String[]{"rozpatrzono\nnegatywnie"});
                         Intent intent = new Intent(DetailsOfEmployeeComplaints.super.getApplicationContext(),
                                 EmployeeComplaints.class);
                         startActivity(intent);
