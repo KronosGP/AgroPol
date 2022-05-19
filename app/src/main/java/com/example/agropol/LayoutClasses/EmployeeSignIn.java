@@ -32,8 +32,6 @@ public class EmployeeSignIn extends AppCompatActivity {
         createToolbar();
         findViews();
         createListeners();
-        //AgroPol.showAllColumnsName();
-        //AgroPol.onAlter();
     }
 
     @Override

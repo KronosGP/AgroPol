@@ -31,9 +31,6 @@ public class ClientSignIn extends AppCompatActivity {
         createToolbar();
         findViews();
         createListeners();
-        //AgroPol.onAlter();
-//        AgroPol.showAllColumnsName();
-       // AgroPol.setData("client",new String[]{"Login","Password","Name","Surname","Email","Tel","Address","City"},new String[]{"asd","asd","asd","asd","asd","asd","asd","asd"});
     }
 
     private void createToolbar() {
