@@ -9,12 +9,6 @@ import java.util.ArrayList;
 
 public class Plant {
 
-    String species;
-    String variety;
-    int quantity;
-    double price;
-    int image;
-
     public  void addPlant(Context context, String s, String v, String q, String p, String i)
     {
         DBHelper dbHelper = new DBHelper(context);

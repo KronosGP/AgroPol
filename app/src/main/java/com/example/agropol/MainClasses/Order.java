@@ -10,12 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Order {
-    int IdClient;
-    float Price;
-    String Date_of_request;
-    String Date_of_delivery;
-    String Status;
-    float Delivery;
+
     public void AddOrder(Context context,String Id,String p,String DoR,String DoD,String s,String d)
     {
         DBHelper dbHelper= new DBHelper(context);

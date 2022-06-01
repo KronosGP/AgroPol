@@ -9,12 +9,6 @@ import com.example.agropol.LayoutClasses.DataOfEmployeeComplaints;
 import java.util.ArrayList;
 
 public class Complaint {
-    int IdClient;
-    int IdRequest;
-    int IdEmployee;
-    String Contents;
-    String Status;
-    String Date_of_Complaint;
 
     public void addComplaint(Context context,String IdC,String IdR,String C,String S,String DoC)
     {
