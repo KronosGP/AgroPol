@@ -119,7 +119,7 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Plant plant = new Plant("Papryka", "Muriel", 20000, 2.2, R.drawable.image_pepper);
+            Plant plant = new Plant();
             plantItems=plant.loadPlants(getApplicationContext(),plantItems);
         }
         catch (SQLiteException ex)
@@ -174,8 +174,8 @@ public class ClientCatalog extends AppCompatActivity {
                                 int update= (int) (plantItems.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
 
                                 //zmiana ilość sztuk w szklarniach
-                                Plant plant = new Plant(plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(), update, plantItems.get(position).getPrice(), plantItems.get(position).getImage());
-                                plant.editPlant(getApplicationContext(), String.valueOf(plantItems.get(position).getId()));
+                                Plant plant = new Plant();
+                                plant.editPlant(getApplicationContext(),String.valueOf(plantItems.get(position).getId()),plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(),String.valueOf(update),String.valueOf(plantItems.get(position).getPrice()),String.valueOf(plantItems.get(position).getImage()));
 
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Order {
 
-    public void AddOrder(Context context,String Id,String p,String DoR,String DoD,String s,String d)
+    public void addOrder(Context context,String Id,String p,String DoR,String DoD,String s,String d)
     {
         DBHelper dbHelper= new DBHelper(context);
         String[] col={"IDClient","Price","Date_of_request","Date_of_delivery","Status","Delivery"};
@@ -19,7 +19,7 @@ public class Order {
         dbHelper.setData("request",col,val);
     }
 
-    public void EditOrder(Context context,String where ,String[] col,String[] val)
+    public void editOrder(Context context,String where ,String[] col,String[] val)
     {
         DBHelper dbHelper= new DBHelper(context);
         dbHelper.editData("request",where,col,val);
@@ -56,7 +56,7 @@ public class Order {
     }
 
 
-    public void AddDetailsOrder(Context context,String IdR,String IdP,String Q)
+    public void addDetailsOrder(Context context,String IdR,String IdP,String Q)
     {
         DBHelper dbHelper= new DBHelper(context);
         String[] col={"IDRequest", "IDPlant", "Quantity"};

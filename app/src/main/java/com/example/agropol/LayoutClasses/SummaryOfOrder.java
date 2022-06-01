@@ -161,8 +161,8 @@ public class SummaryOfOrder extends AppCompatActivity {
         {
             Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
             int update=result1.getInt(3)+result.getInt(2);
-            Plant plant=new Plant(result1.getString(1),result1.getString(2), update, Double.parseDouble(result1.getString(4)), Integer.parseInt(result1.getString(5)));
-            plant.editPlant(getApplicationContext(),result1.getString(0));
+            Plant plant=new Plant();
+            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
             result.moveToNext();
         }
         AgroPol.delData("details_request","IDRequest="+IdRequest);

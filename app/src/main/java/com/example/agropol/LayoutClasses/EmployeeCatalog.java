@@ -127,7 +127,7 @@ public class EmployeeCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Plant plant = new Plant("Papryka", "Muriel", 20000, 2.2, R.drawable.image_pepper);
+            Plant plant = new Plant();
             plantItems=plant.loadPlants(getApplicationContext(),plantItems);
 
         }
