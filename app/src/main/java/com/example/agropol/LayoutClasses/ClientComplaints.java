@@ -108,7 +108,7 @@ public class ClientComplaints extends AppCompatActivity {
                 editor.putInt("IdUser",IdUser);
                 editor.putInt("IdComplaint",dataOfClientComplaints.get(position).getId());
                 editor.apply();
-                    startActivity(intent);
+                startActivity(intent);
             }
         });
 

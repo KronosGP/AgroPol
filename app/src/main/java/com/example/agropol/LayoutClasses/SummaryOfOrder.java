@@ -112,7 +112,7 @@ public class SummaryOfOrder extends AppCompatActivity {
                     {
                         //zmiana statusu zamówienia
                         Order order=new Order();
-                        order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"złożono"});
+                        order.editOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Status"},new String[]{"złożono"});
 
                         Intent intent = new Intent(SummaryOfOrder.super.getApplicationContext(),
                                 ClientOrders.class);
@@ -156,13 +156,13 @@ public class SummaryOfOrder extends AppCompatActivity {
     }
 
     private void resetDB() {//funkcja wykorzystywana do przywrócenia sadzonek do sprzedaży po anulowaniu lub wylogowaniu
-        Plant plant=new Plant();
         Cursor result =AgroPol.getDate("Select * from details_request where IDRequest="+IdRequest);
         while(result.isAfterLast()==false)
         {
             Cursor result1=AgroPol.getDate("Select * from plant where ID="+result.getString(1));
             int update=result1.getInt(3)+result.getInt(2);
-            plant.editPlant(getApplicationContext(),result1.getString(0),result1.getString(1),result1.getString(2),String.valueOf(update),result1.getString(4),result1.getString(5));
+            Plant plant=new Plant(result1.getString(1),result1.getString(2), update, Double.parseDouble(result1.getString(4)), Integer.parseInt(result1.getString(5)));
+            plant.editPlant(getApplicationContext(),result1.getString(0));
             result.moveToNext();
         }
         AgroPol.delData("details_request","IDRequest="+IdRequest);

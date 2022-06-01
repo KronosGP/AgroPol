@@ -136,12 +136,12 @@ public class AddPlant extends AppCompatActivity {
                             //dodanie pozycji do bazy danych chyba raczej bez żadnej walidacji danych
                             //
                             if (editOrNew == 0) {
-                                Plant plant = new Plant();
-                                plant.addPlant(getApplicationContext(), currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
+                                Plant plant = new Plant(currentSpecies,howVariety.getText().toString(), Integer.parseInt(howQuantity.getText().toString()), Double.parseDouble(howPrice.getText().toString()), Integer.parseInt(currentImage) );
+                                plant.addPlant(getApplicationContext());
                             }//wpisanie danych do bazy
                             else {
-                                Plant plant = new Plant();
-                                plant.editPlant(getApplicationContext(), idOfPlant, currentSpecies, howVariety.getText().toString(), howQuantity.getText().toString(), howPrice.getText().toString(), currentImage);
+                                Plant plant = new Plant(currentSpecies,howVariety.getText().toString(), Integer.parseInt(howQuantity.getText().toString()), Double.parseDouble(howPrice.getText().toString()), Integer.parseInt(currentImage));
+                                plant.editPlant(getApplicationContext(), idOfPlant);
                             }//edycja bazy danych
 
                             //powrót do aktywności Katalogu

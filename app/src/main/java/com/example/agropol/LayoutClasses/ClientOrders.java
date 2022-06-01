@@ -168,7 +168,7 @@ public class ClientOrders extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     //Tworzenie zamówienia
-                    order.AddOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),"","0.0","tworzenie");
+                    order.addOrder(getApplicationContext(),String.valueOf(IdUser),"0.0",DataN(),"","0.0","tworzenie");
                     Intent intent = new Intent(ClientOrders.super.getApplicationContext(),
                             MakeOrder.class);
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("HELP_DATA", Context.MODE_PRIVATE);

@@ -119,7 +119,7 @@ public class ClientCatalog extends AppCompatActivity {
 
     private void loadData() {
         try {
-            Plant plant = new Plant();
+            Plant plant = new Plant("Papryka", "Muriel", 20000, 2.2, R.drawable.image_pepper);
             plantItems=plant.loadPlants(getApplicationContext(),plantItems);
         }
         catch (SQLiteException ex)
@@ -165,17 +165,17 @@ public class ClientCatalog extends AppCompatActivity {
                             try {
                                 Order order=new Order();
                                 //Dodanie sadzonki oraz jej ilość do szczegółów zamówienia
-                                order.AddDetailsOrder(getApplicationContext(),String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString());
+                                order.addDetailsOrder(getApplicationContext(),String.valueOf(IdRequest), String.valueOf(plantItems.get(position).getId()), howQuantity.getText().toString());
                                 result=AgroPol.getDate("Select Price from request where ID="+IdRequest);
                                 Double cost=Double.parseDouble(result.getString(0))+Integer.parseInt(howQuantity.getText().toString())* plantItems.get(position).getPrice();
 
                                 //zmiana ceny zamówienia
-                                order.EditOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
+                                order.editOrder(getApplicationContext(),"ID="+IdRequest,new String[]{"Price"},new String[]{String.valueOf(cost)});
                                 int update= (int) (plantItems.get(position).getQuantity()-Integer.parseInt(howQuantity.getText().toString()));
 
                                 //zmiana ilość sztuk w szklarniach
-                                Plant plant=new Plant();
-                                plant.editPlant(getApplicationContext(),String.valueOf(plantItems.get(position).getId()),plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(),String.valueOf(update),String.valueOf(plantItems.get(position).getPrice()),String.valueOf(plantItems.get(position).getImage()));
+                                Plant plant = new Plant(plantItems.get(position).getSpecies(),plantItems.get(position).getVariety(), update, plantItems.get(position).getPrice(), plantItems.get(position).getImage());
+                                plant.editPlant(getApplicationContext(), String.valueOf(plantItems.get(position).getId()));
 
                                 Intent intent = new Intent(ClientCatalog.super.getApplicationContext(),
                                         MakeOrder.class);

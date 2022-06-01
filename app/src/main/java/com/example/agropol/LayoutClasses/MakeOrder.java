@@ -256,7 +256,7 @@ public class MakeOrder extends AppCompatActivity {
                         try {
                             //zmiana statusu zamówienia oraz ustawienie ceny dostawy
                             Order order=new Order();
-                            order.EditOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
+                            order.editOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{"0.0","złożono"});
                         }
                         catch (Exception ex)
                         {
@@ -276,7 +276,7 @@ public class MakeOrder extends AppCompatActivity {
                         try {
                             Order order=new Order();
                             //zmiana statusu zamówienia oraz ustawienie ceny dostawy
-                            order.EditOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
+                            order.editOrder(getApplicationContext(),"Id=" + IdRequest, new String[]{"Delivery","Status"}, new String[]{String.valueOf(delivery),"złożono"});
                         }
                         catch (Exception ex)
                         {
