@@ -9,24 +9,32 @@ import java.util.ArrayList;
 
 public class Plant {
 
-    String species;
-    String variety;
-    int quantity;
-    double price;
-    int image;
+    private String species;
+    private String variety;
+    private int quantity;
+    private double price;
+    private int image;
 
-    public  void addPlant(Context context, String s, String v, String q, String p, String i)
+    public Plant(String species, String variety, int quantity, double price, int image) {
+        this.species = species;
+        this.variety = variety;
+        this.quantity = quantity;
+        this.price = price;
+        this.image = image;
+    }
+
+    public  void addPlant(Context context)
     {
         DBHelper dbHelper = new DBHelper(context);
         String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-        String[] value = {s,v,q,p,i};
+        String[] value = {species,variety,String.valueOf(quantity), String.valueOf(price), String.valueOf(image)};
         dbHelper.setData("plant", col, value);
     }
-    public  void editPlant(Context context, String id, String s, String v, String q, String p, String i)
+    public  void editPlant(Context context, String id)
     {
         DBHelper dbHelper = new DBHelper(context);
         String[] col = {"Species", "Variety", "Quantity", "Price", "Image"};
-        String[] value = {s,v,q,p,i};
+        String[] value = {species, variety, String.valueOf(quantity), String.valueOf(price), String.valueOf(image)};
         dbHelper.editData("plant", "Id=" + id, col, value);
     }
     public ArrayList<PlantItems> loadPlants(Context context, ArrayList<PlantItems> plantItems) {
